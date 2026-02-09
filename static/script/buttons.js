@@ -194,7 +194,9 @@ function importMicroCodeFromFile(event) {
 
     const reader = new FileReader();
     reader.onload = function (e) {
-        const lines = e.target.result.split(/\r?\n/);
+        const lines = e.target.result.split(/\r?\n/)
+            .map(line => line.split('#')[0].trim()) // Remove in-line comments and trim whitespace
+            .filter(line => line); // Remove empty lines
 
         if (lines.length < MICROCODE_SIZE) {
             console.error(`Invalid microcode file: expected at least ${MICROCODE_SIZE} lines, but got ${lines.length}.`);

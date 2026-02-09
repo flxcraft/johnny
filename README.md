@@ -78,6 +78,7 @@ A `.mc` file describes the initial contents of the microprogram (microcode).
 #### Comments & Empty Lines
 - **Empty lines** are ignored
 - Lines starting with `#` are considered **comments** and are ignored
+- In-line comments are also supported: any text after a `#` on a line is ignored, allowing for comments at the end of lines with values
 
 #### File Length
 - The file may **not be shorter than the microcode size**, as the names of the macro instructions are stored at the end
