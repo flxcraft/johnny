@@ -151,10 +151,11 @@ function importRamFromFile(event) {
 
         let address = 0;
         for (let i = 0; i < lines.length && address < RAM_SIZE; i++) {
-            const line = lines[i].trim();
+            // Remove in-line comments and trim whitespace
+            const line = lines[i].split('#')[0].trim();
 
             // Skip empty lines and comments
-            if (!line || line.startsWith('#')) continue;
+            if (!line) continue;
 
             // Validate that the line contains a valid number within the allowed range
             const value = Number(line);
