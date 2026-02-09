@@ -78,7 +78,7 @@ function manualRamInput() {
     }
     writeToRam(selectedRamAddress, inputData);
     selectedRamAddress = (selectedRamAddress + 1) % RAM_SIZE;
-    updateRamTableHighlighting();
+    updateRamTableHighlighting(false); // Update highlighting without scrolling to selected address
 }
 
 /**
