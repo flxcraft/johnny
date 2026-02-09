@@ -10,9 +10,9 @@ function generateMicroCodeTable() {
     // Create table header
     const headerRow = document.createElement("tr");
     const addressHeader = document.createElement("th");
-    addressHeader.textContent = "Adresse";
+    addressHeader.textContent = "Address";
     const actionHeader = document.createElement("th");
-    actionHeader.textContent = "Aktion";
+    actionHeader.textContent = "Action";
     headerRow.appendChild(addressHeader);
     headerRow.appendChild(actionHeader);
     mcTable.appendChild(headerRow);

@@ -41,7 +41,7 @@ function executeMicroInstruction(id, animate = true, isManual = false) {
         stopMacroProgram();
 
         console.error(`Invalid micro-instruction ID ${id} at MC=${microCodeCounter}`);
-        alert(`Microcode error! Programm stopped!\n\n` +
+        alert(`Microcode error! Program stopped!\n\n` +
             `Unknown micro-instruction ID: ${id}\n` +
             `Microcode Counter: ${microCodeCounter}`);
 
@@ -155,7 +155,7 @@ function stopStep() {
     isHlt = true;
 
     setTimeout(() => { // delay alert to allow UI updates before blocking
-        alert("Programm stopped");
+        alert("Program stopped");
     }, 0);
 }
 
