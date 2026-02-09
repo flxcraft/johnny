@@ -38,6 +38,7 @@ A `.ram` file defines the initial contents of the main memory (RAM).
 #### Comments & Empty Lines
 - **Empty lines** are ignored
 - Lines starting with `#` are considered **comments** and are ignored
+- In-line comments are also supported: any text after a `#` on a line is ignored, allowing for comments at the end of lines with values
 
 #### File Length
 - The file may be **shorter than the RAM size** - missing addresses are automatically filled with `0`
@@ -51,10 +52,13 @@ A `.ram` file defines the initial contents of the main memory (RAM).
 <summary>Example RAM file</summary>
 
 ```text
+# This is an example comment line
 9006
-1005
+1005 # This is an in-line comment
 2005
 4006
+# The nex line is empty and will be ignored
+
 0
 42
 
