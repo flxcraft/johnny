@@ -22,7 +22,11 @@ function runMacroProgram() {
     }
 
     if (isMacroRunning) {
-        console.warn("Macro program is already running.");
+        console.warn("Macro program is already running. Maybe stuck in an endless loop? Check for missing HLT instruction.");
+        alert(
+            "The program is already running. Please stop it before starting again.\n\n" +
+            "Maybe stuck in an endless loop? Check for missing HLT instruction or other issues in the code that might prevent it from reaching a HLT instruction."
+        );
         return;
     }
 
