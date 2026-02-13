@@ -32,6 +32,10 @@ function initialize() {
     generateRamTable();
     generateMicroCodeTable();
 
+    // Load control unit visibility setting from localStorage
+    showControlUnit = JSON.parse(localStorage.getItem("johnny-showControlUnit")) || false;
+    updateControlUnitVisibility();
+
     initialized = true;
     console.info("Simulator initialized.");
 }

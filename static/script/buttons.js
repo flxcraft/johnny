@@ -221,17 +221,42 @@ function importMicroCodeFromFile(event) {
 }
 
 /**
- * Toggles the visibility of the control unit overlay.
+ * Toggles the visibility of the control unit and updates the localStorage setting accordingly.
  * 
  * @returns {void}
  */
 function toggleControlUnit() {
-    const controlUnitCover = document.getElementById("overlay-control-unit-cover");
-    controlUnitCover.classList.toggle("active");
+    showControlUnit = !showControlUnit;
+    localStorage.setItem("johnny-showControlUnit", showControlUnit);
+    
+    updateControlUnitVisibility();
+}
 
+/**
+ * Updates the visibility of the control unit elements based on the current state of showControlUnit.
+ * 
+ * @returns {void}
+ */
+function updateControlUnitVisibility() {
+    const controlUnitCover = document.getElementById("overlay-control-unit-cover");
     const controlUnitElements = document.getElementsByClassName("control-unit-element");
-    for (let element of controlUnitElements) {
-        element.classList.toggle("hidden");
+
+    if (showControlUnit) { // Show control unit
+        // Hide control unit cover
+        controlUnitCover.classList.remove("active");
+
+        // Show control unit elements
+        for (let element of controlUnitElements) {
+            element.classList.remove("hidden");
+        }
+    } else { // Hide control unit
+        // Show control unit cover
+        controlUnitCover.classList.add("active");
+
+        // Hide control unit elements
+        for (let element of controlUnitElements) {
+            element.classList.add("hidden");
+        }
     }
 }
 
