@@ -46,7 +46,7 @@ function importMicroCodeArray(microCodeArray) {
  */
 function saveMicroCodeToLocalStorage() {
     const microCodeData = [...microCode, ...Object.values(instructionNames)];
-    localStorage.setItem("johnny-microcode", JSON.stringify(microCodeData));
+    localStorage.setItem("johnny-microCode", JSON.stringify(microCodeData));
     console.debug("Microcode saved to localStorage.");
 }
 

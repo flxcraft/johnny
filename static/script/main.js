@@ -26,7 +26,7 @@ let fixRamAfterShift = true; // flag to indicate if RAM needs to be fixed after 
 function initialize() {
     // Load RAM and microcode from localStorage or initialize with defaults
     ram = JSON.parse(localStorage.getItem("johnny-ram")) || generateEmptyRam();
-    importMicroCodeArray(JSON.parse(localStorage.getItem("johnny-microcode"))); // loads default if null
+    importMicroCodeArray(JSON.parse(localStorage.getItem("johnny-microCode"))); // loads default if null
 
     // Generate the tables in the UI based on the loaded data
     generateRamTable();
