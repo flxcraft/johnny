@@ -10,7 +10,20 @@ function microStep(animate = true) {
         return;
     }
 
+    // Get the micro-instruction ID from the microcode at the current counter
     const id = Number(microCode[microCodeCounter]);
+
+    // Handle the case where microcode at the current counter is 0 (no-op) - this may indicate an error in the microcode for the current instruction
+    if (id === 0) {
+        console.warn(`Microcode at counter ${microCodeCounter} is 0, which is a no-op. This may indicate an error in the microcode for the current instruction. Halting program execution. Please check the microcode for the current instruction and ensure it is correct.`);
+        alert(`Microcode error! Program stopped!\n\n` +
+            `Microcode at counter ${microCodeCounter} is 0, which is a no-op. This may indicate an error in the microcode for the current instruction.`);
+        isHlt = true;
+        stopMacroProgram();
+        return;
+    }
+
+    // Execute the micro-instruction with the given ID
     executeMicroInstruction(id, animate);
 }
 
