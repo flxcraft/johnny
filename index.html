@@ -57,8 +57,8 @@
             class="icon" title="New Microcode">
         <img src="./static/img/micro-step.png" onclick="microStep()" tabindex="0" alt="Micro Step" class="icon"
             title="Micro Step">
-        <img src="./static/img/save-microcode.svg" onclick="downloadMicrocodeAsFile()" tabindex="0"
-            alt="Save Microcode" class="icon" title="Save Microcode">
+        <img src="./static/img/save-microcode.svg" onclick="downloadMicrocodeAsFile()" tabindex="0" alt="Save Microcode"
+            class="icon" title="Save Microcode">
         <img src="./static/img/open-microcode.svg" onclick="document.getElementById('mc-file-input').click()"
             tabindex="0" alt="Open Microcode" class="icon" title="Open Microcode">
         <input type="file" id="mc-file-input" onchange="importMicroCodeFromFile(event)" accept=".mc"
@@ -66,10 +66,12 @@
     </div>
 
     <div class="header control-unit-element hidden" id="mc-record-panel">
-        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0"
-            alt="Record Macrocode" class="icon" title="Record Instruction">
-        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110" title="Address of the new Instruction in RAM (must be a multiple of 10)">
-        <input type="text" id="record-instruction-name" maxlength="5" value="NN" title="Name of the Instruction (max. 5 characters)">
+        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
+            class="icon" title="Record Instruction">
+        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
+            title="Address of the new Instruction in RAM (must be a multiple of 10)">
+        <input type="text" id="record-instruction-name" maxlength="5" value="NN"
+            title="Name of the Instruction (max. 5 characters)">
     </div>
 
     <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
@@ -135,8 +137,8 @@
         title="Stop Microcode">STOP</button>
         
     <!-- add row above button -->
-    <button class="button" id="add-row-above-button" onclick="insertRamRowAbove()"
-        title="Insert RAM row above">Insert Row</button>
+    <button class="button" id="add-row-above-button" onclick="insertRamRowAbove()" title="Insert RAM row above">Insert
+        Row</button>
     <button class="button" id="delete-row-button" onclick="deleteRamRow()" title="Delete RAM row">Delete Row</button>
 
     <!-- ram table -->
