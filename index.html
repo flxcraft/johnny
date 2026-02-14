@@ -164,7 +164,7 @@
 
     <!-- settings modal -->
     <div id="settings-modal" class="modal" onclick="toggleSettingsModal()">
-        <div class="modal-content">
+        <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-button" onclick="toggleSettingsModal()">&times;</span>
             <h2>Settings</h2>
             <p>This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You can find the
