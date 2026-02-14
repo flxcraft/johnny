@@ -29,19 +29,23 @@ body {
 // ----- header div positions -----
 .header {
     position: fixed;
+    display: flex;
+    align-items: flex-end; // align items to the bottom of the panel
+    height: fit-content;
+    gap: 0.2dvw;
 
     &.ram-options {
         left: 2dvw;
         top: 2dvh;
-
-        input[type="range"] {
-            width: 7dvw;
-        }
     }
 
     &.ram-control-options {
         left: 12dvw;
         top: 2dvh;
+
+        input[type="range"] {
+            width: 8dvw;
+        }
     }
 
     &.control-unit-toggle {
@@ -56,11 +60,9 @@ body {
 
     &.mc-record-panel {
         left: 60dvw;
-        top: 1.7dvh;
+        top: 2dvh;
 
         input {
-            margin-right: 0.2dvw;
-            margin-bottom: 0.5dvh;
             padding: 0;
             width: 5dvw;
         }
@@ -87,6 +89,8 @@ body {
         }
 
         &.blackborder {
+            width: calc(4dvmin - 2px) !important;
+            height: calc(4dvmin - 2px) !important;
             border: 1px solid black;
         }
     }
