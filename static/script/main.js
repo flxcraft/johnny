@@ -21,6 +21,9 @@ let isMacroRunning = false; // indicates if the macro program is currently runni
 let macroExecutionDelay = 500; // default delay between macro steps in ms
 let initialized = false; // indicates if the simulator has been initialized
 
+let isRecording = false; // indicates if a macro recording is in progress
+let recordMicroCodeAddress = null; // the current microcode address being recorded to
+
 let fixRamAfterShift = true; // flag to indicate if RAM needs to be fixed after a shift operation
 
 function initialize() {

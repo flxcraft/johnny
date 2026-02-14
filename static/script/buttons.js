@@ -228,7 +228,7 @@ function importMicroCodeFromFile(event) {
 function toggleControlUnit() {
     showControlUnit = !showControlUnit;
     localStorage.setItem("johnny-showControlUnit", showControlUnit);
-    
+
     updateControlUnitVisibility();
 }
 
@@ -257,6 +257,24 @@ function updateControlUnitVisibility() {
         for (let element of controlUnitElements) {
             element.classList.add("hidden");
         }
+    }
+}
+
+/**
+ * Toggles the recording state for macro instructions and updates the UI to reflect the current state.
+ * When recording is active, the record panel will have a "recording" class added for visual feedback.
+ * 
+ * @returns {void}
+ */
+function toggleRecording() {
+    isRecording = !isRecording;
+    const recordPanel = document.getElementById("mc-record-panel");
+    if (isRecording) {
+        if (!startRecording()) return;
+        recordPanel.classList.add("recording");
+    } else {
+        recordMicroCodeAddress = null;
+        recordPanel.classList.remove("recording");
     }
 }
 

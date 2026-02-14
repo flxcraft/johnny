@@ -51,6 +51,11 @@ function executeMicroInstruction(id, animate = true, isManual = false) {
     // Execute the micro-instruction
     microStep.exec();
 
+    // Record the micro-step if currently recording a macro instruction and this is a manual step
+    if (isRecording && isManual) {
+        recordMicroStep(id);
+    }
+
     // Increment microcode counter if specified and not a manual step
     if (microStep.increment && !isManual) {
         writeToMicroCodeCounter(microCodeCounter + 1);

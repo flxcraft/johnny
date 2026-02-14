@@ -66,10 +66,10 @@
     </div>
 
     <div class="header control-unit-element hidden" id="mc-record-panel">
-        <img src="./static/img/record-macro.svg" onclick="alert('This is not implemented yet')" tabindex="0"
-            alt="Record Macrocode" class="icon" title="Record Macrocode">
-        <input type="number" min="0" max="199" step="10" value="110" title="Address of the new Macrocode">
-        <input type="text" maxlength="5" value="NN" title="Name of the Macrocode (max. 5 characters)">
+        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0"
+            alt="Record Macrocode" class="icon" title="Record Instruction">
+        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110" title="Address of the new Instruction in RAM (must be a multiple of 10)">
+        <input type="text" id="record-instruction-name" maxlength="5" value="NN" title="Name of the Instruction (max. 5 characters)">
     </div>
 
     <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
@@ -182,6 +182,7 @@
     <script src="./static/script/microstep.js"></script>
     <script src="./static/script/ram-table.js"></script>
     <script src="./static/script/ram.js"></script>
+    <script src="./static/script/record.js"></script>
     <script src="./static/script/writing.js"></script>
 </body>
 
