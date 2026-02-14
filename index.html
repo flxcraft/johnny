@@ -24,7 +24,7 @@
         class="overlay active"></img>
 
     <!-- simulator header with options -->
-    <div class="header ram-options">
+    <div class="header" id="ram-options">
         <img src="./static/img/new-ram.svg" onclick="resetRamToEmpty()" tabindex="0" alt="New RAM" class="icon"
             title="New RAM">
         <img src="./static/img/save-ram.svg" onclick="downloadRamAsFile()" tabindex="0" alt="Save RAM" class="icon"
@@ -34,7 +34,7 @@
         <input type="file" id="ram-file-input" onchange="importRamFromFile(event)" accept=".ram" style="display: none;">
     </div>
 
-    <div class="header ram-control-options">
+    <div class="header" id="ram-control-options">
         <img src="./static/img/macro-step.png" onclick="singleMacroStep()" tabindex="0" alt="Macro Step"
             class="icon blackborder" title="Macro Step">
         <img src="./static/img/macro-run.png" onclick="runMacroProgram()" tabindex="0" alt="Run Program"
@@ -47,12 +47,12 @@
             class="icon blackborder" title="Reset Simulator">
     </div>
 
-    <div class="header control-unit-toggle">
+    <div class="header" id="control-unit-toggle">
         <img src="./static/img/control-unit-toggle.svg" onclick="toggleControlUnit()" tabindex="0"
             alt="Control Unit Toggle" class="icon" title="Control Unit Toggle">
     </div>
 
-    <div class="header mc-options control-unit-element hidden">
+    <div class="header control-unit-element hidden" id="mc-options">
         <img src="./static/img/new-microcode.svg" onclick="resetMicrocodeToDefault()" tabindex="0" alt="New Microcode"
             class="icon" title="New Microcode">
         <img src="./static/img/micro-step.png" onclick="microStep()" tabindex="0" alt="Micro Step" class="icon"
@@ -65,14 +65,14 @@
             style="display: none;">
     </div>
 
-    <div class="header mc-record-panel control-unit-element hidden">
+    <div class="header control-unit-element hidden" id="mc-record-panel">
         <img src="./static/img/record-macro.svg" onclick="alert('This is not implemented yet')" tabindex="0"
             alt="Record Macrocode" class="icon" title="Record Macrocode">
         <input type="number" min="0" max="199" step="10" value="110" title="Address of the new Macrocode">
         <input type="text" maxlength="5" value="NN" title="Name of the Macrocode (max. 5 characters)">
     </div>
 
-    <button class="header settings-button" onclick="toggleSettingsModal()">Settings</button>
+    <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
 
     <!-- manual input fields -->
     <form action="javascript:manualAddressBus();">

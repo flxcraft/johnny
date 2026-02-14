@@ -34,12 +34,12 @@ body {
     height: fit-content;
     gap: 0.2dvw;
 
-    &.ram-options {
+    &#ram-options {
         left: 2dvw;
         top: 2dvh;
     }
 
-    &.ram-control-options {
+    &#ram-control-options {
         left: 12dvw;
         top: 2dvh;
 
@@ -48,17 +48,17 @@ body {
         }
     }
 
-    &.control-unit-toggle {
+    &#control-unit-toggle {
         left: 40dvw;
         top: 2dvh;
     }
 
-    &.mc-options {
+    &#mc-options {
         left: 50dvw;
         top: 2dvh;
     }
 
-    &.mc-record-panel {
+    &#mc-record-panel {
         left: 60dvw;
         top: 2dvh;
 
@@ -68,7 +68,7 @@ body {
         }
     }
 
-    &.settings-button {
+    &#settings-button {
         position: fixed;
         left: 90dvw;
         top: 2.5dvh;
