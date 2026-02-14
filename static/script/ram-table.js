@@ -46,6 +46,7 @@ function generateRamTable() {
         newRow.onclick = () => {
             selectedRamAddress = address;
             updateRamTableHighlighting(false); // Update highlighting without scrolling to selected address
+            document.getElementById("ram-input").focus(); // Focus the RAM input field for immediate editing
         };
 
         // Append cells to the row and the row to the table
