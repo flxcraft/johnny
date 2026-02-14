@@ -1,0 +1,136 @@
+---
+---
+
+.modal {
+    display: none; // Hidden by default
+    position: fixed;
+    z-index: 100; // Sit on top
+    inset: 0; // Cover the entire viewport
+    backdrop-filter: blur(5px); // Add a blur effect to the background
+    background-color: rgba(0, 0, 0, 0.5); // Black background with opacity
+
+    &.active {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 2px;
+        width: min(60dvw, 1200px);
+        max-height: 80dvh;
+        overflow-y: auto;
+        text-align: center;
+        position: relative;
+
+        &.modal-content-edit {
+            width: min(40dvw, 800px);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+
+            small {
+                display: block;
+                font-size: 0.9rem;
+                color: #666;
+                margin-top: 4px;
+
+                span {
+                    color: #c51313;
+                }
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+
+            &:hover,
+            &:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+
+        // Add styles for form elements inside the modal
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            label {
+                font-weight: bold;
+                color: #444;
+            }
+
+            select {
+                padding: 10px 12px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                font-family: monospace;
+                font-size: 0.95rem;
+
+                &:focus {
+                    outline: none;
+                    border-color: #3b82f6;
+                    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+                }
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #45a049;
+                }
+            }
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+
+
+            button {
+                padding: 8px 16px;
+                border-radius: 6px;
+                border: none;
+                cursor: pointer;
+
+                &.save-button {
+                    background-color: #4CAF50;
+                    color: white;
+
+                    &:hover {
+                        background-color: #45a049;
+                    }
+                }
+
+                &.cancel-button {
+                    background-color: #f44336;
+                    color: white;
+
+                    &:hover {
+                        background-color: #da190b;
+                    }
+                }
+            }
+        }
+    }
+}

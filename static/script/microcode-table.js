@@ -42,6 +42,10 @@ function generateMicroCodeTable() {
         // Set row ID for future reference
         newRow.id = `microcode-row-${address}`;
 
+        newRow.ondblclick = () => {
+            openMicroCodeEditModal(address);
+        }
+
         // Append cells to the row and the row to the table
         newRow.appendChild(addressCell);
         newRow.appendChild(actionCell);
@@ -130,6 +134,68 @@ function updateMicrocodeTableHighlighting() {
     }
 
     scrollToMicrocodeAddress(microCodeCounter);
+}
+
+/**
+ * Opens the microcode edit modal for the given address, allowing the user to edit the micro instruction at that address.
+ *
+ * @param {number} address the microcode address to edit
+ * @returns {void}
+ */
+function openMicroCodeEditModal(address) {
+    const editModal = document.getElementById("microcode-edit-modal");
+    const addressDisplay = document.getElementById("microcode-edit-address");
+    const microInstructionSelect = document.getElementById("micro-instruction-select");
+
+    addressDisplay.textContent = address;
+
+    // Populate the micro instruction select dropdown with options
+    microInstructionSelect.innerHTML = ""; // Clear existing options
+    for (const [code, description] of Object.entries(MICROCODE_TEXT)) {
+        const option = document.createElement("option");
+        option.value = code;
+        option.textContent = `${code}: ${description}`;
+
+        // Pre-select the current microcode value for the address
+        if (Number(code) === microCode[address]) {
+            option.selected = true;
+        }
+
+        microInstructionSelect.appendChild(option);
+    }
+
+    editModal.classList.add("active");
+}
+
+/**
+ * Closes the microcode edit modal.
+ *
+ * @returns {void}
+ */
+function closeMicroCodeEditModal() {
+    const editModal = document.getElementById("microcode-edit-modal");
+    editModal.classList.remove("active");
+}
+
+/**
+ * Saves the changes made in the microcode edit modal, updating the microcode data and the corresponding table row.
+ *
+ * @returns {void}
+ */
+function saveMicroCodeEdit() {
+    try {
+        const address = Number(document.getElementById("microcode-edit-address").textContent);
+        const microInstructionSelect = document.getElementById("micro-instruction-select");
+        const selectedMicroInstruction = Number(microInstructionSelect.value);
+        microCode[address] = selectedMicroInstruction;
+        saveMicroCodeToLocalStorage();
+
+        updateMicroCodeTableRow(address);
+        closeMicroCodeEditModal();
+    } catch (error) {
+        console.error("Error saving microcode edit:", error);
+        alert("An error occurred while saving the microcode edit. Please try again.");
+    }
 }
 
 /**

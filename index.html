@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./static/style/style.css">
+    <link rel="stylesheet" href="./static/style/modal.css">
     <title>Johnny Simulator</title>
 </head>
 
@@ -135,7 +136,7 @@
         title="Set Microcode to Zero">MC:=0</button>
     <button class="button control-unit-element hidden" id="mc-stop-button" onclick="manualMicroStep(19)"
         title="Stop Microcode">STOP</button>
-        
+
     <!-- add row above button -->
     <button class="button" id="add-row-above-button" onclick="insertRamRowAbove()" title="Insert RAM row above">Insert
         Row</button>
@@ -172,6 +173,24 @@
                     target="_blank">https://github.com/flxcraft/johnny</a>.</p>
             <p>Feel free to report issues or feature requests on the <a href="https://github.com/flxcraft/johnny/issues"
                     target="_blank">GitHub Issues page</a>.</p>
+        </div>
+    </div>
+
+    <!-- microcode edit modal -->
+    <div id="microcode-edit-modal" class="modal" onclick="closeMicroCodeEditModal()">
+        <div class="modal-content modal-content-edit" onclick="event.stopPropagation()">
+            <span class="close-button" onclick="closeMicroCodeEditModal()">&times;</span>
+            <h2>Edit Microcode <small>Address <span id="microcode-edit-address"></span></small></h2>
+
+            <form action="javascript:saveMicroCodeEdit()" class="edit-form">
+                <label for="micro-instruction-select">Micro Instruction</label>
+                <select id="micro-instruction-select"></select>
+
+                <div class="modal-actions">
+                    <button type="submit" class="save-button">Update</button>
+                    <button type="button" class="cancel-button" onclick="closeMicroCodeEditModal()">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 
