@@ -37,7 +37,7 @@ function generateRamTable() {
         addressCell.textContent = formatAddress(address);
         dataCell.textContent = formatData(ram[address]);
         assemblerCell.textContent = asm.instruction;
-        operandCell.textContent = asm.operand;
+        operandCell.textContent = asm.operand !== 0 ? formatAddress(asm.operand) : "";
 
         // Set row ID for future reference
         newRow.id = `ram-row-${address}`;
@@ -83,7 +83,7 @@ function updateRamTableRow(address) {
     dataCell.textContent = formatData(ram[address]);
     const asm = dataToAsm(ram[address]);
     assemblerCell.textContent = asm.instruction;
-    operandCell.textContent = asm.operand;
+    operandCell.textContent = asm.operand !== 0 ? formatAddress(asm.operand) : "";
 }
 
 /**

@@ -61,7 +61,7 @@ function formatDataLow(data) {
 
 /**
  * Converts data to its corresponding assembly instruction and operand.
- * Ignores the FETCH instruction (opcode 0) and treats it as empty for display purposes.
+ * If the opcode is 0 (FETCH) or not found in instructionNames, it returns an empty instruction and the operand as is.
  * 
  * @param {number} data 
  * @returns {Object} An object containing the instruction name and operand.
@@ -72,7 +72,7 @@ function dataToAsm(data) {
 
     const instruction = instructionNames[opCode];
     if (!instruction || opCode === 0) { // if opcode is 0 (FETCH) or not found in instructionNames, treat as empty
-        return { instruction: "", operand: "" };
+        return { instruction: "", operand: operand };
     }
 
     return { instruction, operand };
