@@ -49,6 +49,13 @@ function generateRamTable() {
             document.getElementById("ram-input").focus(); // Focus the RAM input field for immediate editing
         };
 
+        // double-click event to insert the current RAM data into the input field for smoother editing
+        // onclick is still triggered on double-click, so the row will be selected and highlighted as well
+        newRow.ondblclick = () => {
+            const ramInput = document.getElementById("ram-input");
+            ramInput.value = formatDataHigh(ram[address]) + "." + formatDataLow(ram[address]); // Insert the current RAM data into the input field
+        };
+
         // Append cells to the row and the row to the table
         newRow.appendChild(addressCell);
         newRow.appendChild(dataCell);

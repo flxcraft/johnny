@@ -16,6 +16,7 @@ The whole project is implemented in **HTML, SCSS and JavaScript** and runs entir
 - Step-by-step execution (micro steps and macro steps) with visual feedback
 - Support for loading RAM and microcode from `.ram` and `.mc` files
 - Insert and delete RAM rows **at arbitrary positions** to restructure programs, including automatic shifting and operand adjustment
+- Editing RAM values by clicking on the row and using the input field in the arrow (double-clicking on the row also inserts the current RAM value into the input field for smoother editing)
 - **Recording own macro instructions** by simply executing a sequence of microinstructions after clicking the "Record Macro" button
 - Editing single microcode rows directly in the microcode table with **a double-click**
 - Persistence of RAM and microcode state in the browser's local storage
