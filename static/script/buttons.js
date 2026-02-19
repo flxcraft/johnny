@@ -221,19 +221,19 @@ function importMicroCodeFromFile(event) {
 }
 
 /**
- * Toggles the visibility of the control unit and updates the localStorage setting accordingly.
+ * Toggles the visibility of the control unit, updates the corresponding setting and saves it to localStorage.
  * 
  * @returns {void}
  */
 function toggleControlUnit() {
-    showControlUnit = !showControlUnit;
-    localStorage.setItem("johnny-showControlUnit", showControlUnit);
+    settings.showControlUnit = !settings.showControlUnit;
+    settings.save(); // Save the updated setting to localStorage
 
     updateControlUnitVisibility();
 }
 
 /**
- * Updates the visibility of the control unit elements based on the current state of showControlUnit.
+ * Updates the visibility of the control unit elements based on the current state of the `showControlUnit` setting.
  * 
  * @returns {void}
  */
@@ -241,7 +241,7 @@ function updateControlUnitVisibility() {
     const controlUnitCover = document.getElementById("overlay-control-unit-cover");
     const controlUnitElements = document.getElementsByClassName("control-unit-element");
 
-    if (showControlUnit) { // Show control unit
+    if (settings.showControlUnit) { // Show control unit
         // Hide control unit cover
         controlUnitCover.classList.remove("active");
 

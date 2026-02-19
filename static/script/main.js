@@ -8,7 +8,7 @@ let microCodeCounter = 0;
 let selectedRamAddress = 0; // yellow
 let lastAccessedRamAddress = null; // green | null means no address
 
-let showControlUnit = false;
+let settings; // instance of the Settings class to manage user settings
 const RAM_SIZE = 1000;
 const MICROCODE_SIZE = 200;
 const RAM_MAX_VALUE = (MICROCODE_SIZE * 100) - 1; // 19999
@@ -27,6 +27,12 @@ let recordMicroCodeAddress = null; // the current microcode address being record
 let fixRamAfterShift = true; // flag to indicate if RAM needs to be fixed after a shift operation
 
 function initialize() {
+    // Initialize settings first to ensure they are available for other components
+    settings = new Settings();
+
+    // Update the control unit visibility based on the loaded settings
+    updateControlUnitVisibility();
+
     // Load RAM and microcode from localStorage or initialize with defaults
     ram = JSON.parse(localStorage.getItem("johnny-ram")) || generateEmptyRam();
     importMicroCodeArray(JSON.parse(localStorage.getItem("johnny-microCode"))); // loads default if null
@@ -34,10 +40,6 @@ function initialize() {
     // Generate the tables in the UI based on the loaded data
     generateRamTable();
     generateMicroCodeTable();
-
-    // Load control unit visibility setting from localStorage
-    showControlUnit = JSON.parse(localStorage.getItem("johnny-showControlUnit")) || false;
-    updateControlUnitVisibility();
 
     initialized = true;
     console.info("Simulator initialized.");
