@@ -44,6 +44,7 @@ function startRecording() {
         instructionNames[opcode] = recordInstructionNameInput.value.trim() || "NN";
         updateMicroCodeTableMacroInstructionName(opcode); // Update the corresponding row in the microcode table with the new instruction name
         populateInstructionSelect(); // Update the instruction select dropdown with the new instruction name
+        updateRamTable(); // Update the RAM table to reflect any changes in instruction names
 
         return true; // Indicate that recording has successfully started
     } catch (error) {

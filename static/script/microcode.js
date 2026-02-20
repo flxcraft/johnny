@@ -33,6 +33,7 @@ function importMicroCodeArray(microCodeArray) {
         updateMicroCodeTable();
         populateInstructionSelect();
         updateMicroCodeTableMacroInstructionNames();
+        updateRamTable(); // Update to show new instruction names in RAM table if necessary
         console.info("Microcode imported from string.", microCode, instructionNames);
     } else {
         console.info("Microcode imported from string during initialization.", microCode, instructionNames);
