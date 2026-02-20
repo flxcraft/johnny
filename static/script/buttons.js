@@ -226,8 +226,13 @@ function importMicroCodeFromFile(event) {
  * @returns {void}
  */
 function toggleControlUnit() {
-    settings.showControlUnit = !settings.showControlUnit;
-    settings.save(); // Save the updated setting to localStorage
+    try {
+        settings.set("showControlUnit", !settings.get("showControlUnit"));
+    } catch (error) {
+        console.error("Error toggling control unit visibility:", error);
+        alert("An error occurred while toggling control unit visibility.");
+        return;
+    }
 
     updateControlUnitVisibility();
 }
@@ -241,22 +246,27 @@ function updateControlUnitVisibility() {
     const controlUnitCover = document.getElementById("overlay-control-unit-cover");
     const controlUnitElements = document.getElementsByClassName("control-unit-element");
 
-    if (settings.showControlUnit) { // Show control unit
-        // Hide control unit cover
-        controlUnitCover.classList.remove("active");
+    try {
+        if (settings.get("showControlUnit")) { // Show control unit
+            // Hide control unit cover
+            controlUnitCover.classList.remove("active");
 
-        // Show control unit elements
-        for (let element of controlUnitElements) {
-            element.classList.remove("hidden");
-        }
-    } else { // Hide control unit
-        // Show control unit cover
-        controlUnitCover.classList.add("active");
+            // Show control unit elements
+            for (let element of controlUnitElements) {
+                element.classList.remove("hidden");
+            }
+        } else { // Hide control unit
+            // Show control unit cover
+            controlUnitCover.classList.add("active");
 
-        // Hide control unit elements
-        for (let element of controlUnitElements) {
-            element.classList.add("hidden");
+            // Hide control unit elements
+            for (let element of controlUnitElements) {
+                element.classList.add("hidden");
+            }
         }
+    } catch (error) {
+        console.error("Error updating control unit visibility:", error);
+        alert("An error occurred while updating control unit visibility.");
     }
 }
 

@@ -1,4 +1,5 @@
 class Settings {
+    #values = {};
     static STORAGE_KEY = "johnny-settings";
     static SETTINGS_SCHEME = {
         showControlUnit: {
@@ -21,7 +22,7 @@ class Settings {
      */
     #loadDefaultSettings() {
         for (const [settingKey, settingScheme] of Object.entries(Settings.SETTINGS_SCHEME)) {
-            this[settingKey] = settingScheme.default;
+            this.#values[settingKey] = settingScheme.default;
         }
     }
 
@@ -71,7 +72,7 @@ class Settings {
                 continue; // Invalid type, keep default
             }
 
-            this[settingKey] = loadedValue; // Valid setting, apply loaded value
+            this.#values[settingKey] = loadedValue; // Valid setting, apply loaded value
         }
     }
 
@@ -80,10 +81,10 @@ class Settings {
      * 
      * @returns {void}
      */
-    save() {
+    #save() {
         const outputSettings = {};
         for (const settingKey of Object.keys(Settings.SETTINGS_SCHEME)) {
-            outputSettings[settingKey] = this[settingKey];
+            outputSettings[settingKey] = this.#values[settingKey];
         }
 
         // Attempt to save the settings to localStorage, with error handling for storage issues or other exceptions
@@ -93,5 +94,42 @@ class Settings {
             console.error("Failed to save settings to localStorage.", error);
             alert("Failed to save settings. Please check console for details.");
         }
+    }
+
+    /**
+     * Retrieves the value of a setting by its key.
+     *
+     * @param {string} key The key of the setting to retrieve.
+     * @returns {*} The value of the setting, or undefined if the setting does not exist.
+     * @throws {Error} If the setting key does not exist in the SETTINGS_SCHEME.
+     */
+    get(key) {
+        if (!(key in Settings.SETTINGS_SCHEME)) {
+            throw new Error(`Setting "${key}" does not exist`);
+        }
+        return this.#values[key];
+    }
+
+    /**
+     * Updates the value of a setting by its key, with validation against the SETTINGS_SCHEME to ensure type correctness and existence of the setting.
+     *
+     * @param {string} key The key of the setting to update.
+     * @param {*} value The new value for the setting, which must match the expected type defined in SETTINGS_SCHEME.
+     * @throws {Error} If the setting key does not exist or if the value is undefined.
+     * @throws {TypeError} If the value does not match the expected type defined in SETTINGS_SCHEME.
+     */
+    set(key, value) {
+        if (!(key in Settings.SETTINGS_SCHEME)) {
+            throw new Error(`Setting "${key}" does not exist`);
+        }
+        if (value === undefined) {
+            throw new Error(`Setting "${key}" cannot be undefined`);
+        }
+        if (typeof value !== Settings.SETTINGS_SCHEME[key].type) {
+            throw new TypeError(`Setting "${key}" must be of type ${Settings.SETTINGS_SCHEME[key].type}`);
+        }
+
+        this.#values[key] = value;
+        this.#save(); // Save the updated settings to localStorage
     }
 }
