@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/style/style.css">
+    <link rel="stylesheet" href="./static/style/modal.css">
+    <link rel="icon" href="./static/icons/favicon.ico">
+    <link rel="icon" href="./static/icons/favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="./static/icons/apple-touch-icon.png" sizes="180x180" type="image/png">
+    <link rel="manifest" href="./manifest.json">
+    <title>Johnny Simulator</title>
+    <meta name="description"
+        content="Johnny is a simple, educational web-based simulator for a Von Neumann architecture computer, featuring RAM, microcode, and instruction execution. Created by Felix Heidisch (flxcraft).">
+</head>
+
+<body onload="initialize()">
+    <!-- data movement images -->
+    <img src="./static/img/overlays/db-ram.png" id="overlay-db-ram" class="overlay"></img>
+    <img src="./static/img/overlays/ram-db.png" id="overlay-ram-db" class="overlay"></img>
+    <img src="./static/img/overlays/db-ins.png" id="overlay-db-ins" class="overlay"></img>
+    <img src="./static/img/overlays/db-acc.png" id="overlay-db-acc" class="overlay"></img>
+    <img src="./static/img/overlays/acc-db.png" id="overlay-acc-db" class="overlay"></img>
+    <img src="./static/img/overlays/ins-mc.png" id="overlay-ins-mc" class="overlay"></img>
+    <img src="./static/img/overlays/ins-ab.png" id="overlay-ins-ab" class="overlay"></img>
+    <img src="./static/img/overlays/ins-pc.png" id="overlay-ins-pc" class="overlay"></img>
+    <img src="./static/img/overlays/pc-ab.png" id="overlay-pc-ab" class="overlay"></img>
+    <img src="./static/img/overlays/equal-zero.png" id="overlay-equal-zero" class="overlay active"></img>
+    <img src="./static/img/overlays/control-unit-cover.png" id="overlay-control-unit-cover"
+        class="overlay active"></img>
+
+    <!-- simulator header with options -->
+    <div class="header" id="ram-options">
+        <img src="./static/img/new-ram.svg" onclick="resetRamToEmpty()" tabindex="0" alt="New RAM" class="icon"
+            title="New RAM">
+        <img src="./static/img/save-ram.svg" onclick="downloadRamAsFile()" tabindex="0" alt="Save RAM" class="icon"
+            title="Save RAM">
+        <img src="./static/img/open-ram.svg" onclick="document.getElementById('ram-file-input').click()" tabindex="0"
+            alt="Open RAM" class="icon" title="Open RAM">
+        <input type="file" id="ram-file-input" onchange="importRamFromFile(event)" accept=".ram" style="display: none;">
+    </div>
+
+    <div class="header" id="ram-control-options">
+        <img src="./static/img/macro-step.png" onclick="singleMacroStep()" tabindex="0" alt="Macro Step"
+            class="icon blackborder" title="Macro Step">
+        <img src="./static/img/macro-run.png" onclick="runMacroProgram()" tabindex="0" alt="Run Program"
+            class="icon blackborder" title="Run Program">
+        <input type="range" min="0" max="1000" step="1" onchange="updateMacroExecutionDelay()" id="macro-run-speed"
+            title="Execution Speed">
+        <img src="./static/img/macro-pause.png" onclick="stopMacroProgram()" tabindex="0" alt="Pause Program"
+            class="icon blackborder" title="Pause Program">
+        <img src="./static/img/macro-reset.png" onclick="resetSimulator()" tabindex="0" alt="Reset Simulator"
+            class="icon blackborder" title="Reset Simulator">
+    </div>
+
+    <div class="header" id="control-unit-toggle">
+        <img src="./static/img/control-unit-toggle.svg" onclick="toggleControlUnit()" tabindex="0"
+            alt="Control Unit Toggle" class="icon" title="Control Unit Toggle">
+    </div>
+
+    <div class="header control-unit-element hidden" id="mc-options">
+        <img src="./static/img/new-microcode.svg" onclick="resetMicrocodeToDefault()" tabindex="0" alt="New Microcode"
+            class="icon" title="New Microcode">
+        <img src="./static/img/micro-step.png" onclick="microStep()" tabindex="0" alt="Micro Step" class="icon"
+            title="Micro Step">
+        <img src="./static/img/save-microcode.svg" onclick="downloadMicrocodeAsFile()" tabindex="0" alt="Save Microcode"
+            class="icon" title="Save Microcode">
+        <img src="./static/img/open-microcode.svg" onclick="document.getElementById('mc-file-input').click()"
+            tabindex="0" alt="Open Microcode" class="icon" title="Open Microcode">
+        <input type="file" id="mc-file-input" onchange="importMicroCodeFromFile(event)" accept=".mc"
+            style="display: none;">
+    </div>
+
+    <div class="header control-unit-element hidden" id="mc-record-panel">
+        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
+            class="icon" title="Record Instruction">
+        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
+            title="Address of the new Instruction in RAM (must be a multiple of 10)">
+        <input type="text" id="record-instruction-name" maxlength="5" value="NN"
+            title="Name of the Instruction (max. 5 characters)">
+    </div>
+
+    <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
+
+    <!-- manual input fields -->
+    <form action="javascript:manualAddressBus();">
+        <input type="number" class="manual-input" id="ab-manual-input" min="0" max="999">
+        <button type="submit" class="manual-input" id="ab-manual-button" title="Set Address Bus">Manual AB</button>
+    </form>
+
+    <form action="javascript:manualDataBus();">
+        <input type="number" class="manual-input" id="db-manual-input" min="0" max="19999">
+        <button type="submit" class="manual-input" id="db-manual-button" title="Set Data Bus">Manual DB</button>
+    </form>
+
+    <!-- display fields -->
+    <p class="field" id="ab-field">000</p>
+    <p class="field" id="db-field">00.000</p>
+    <p class="field" id="acc-field">00.000</p>
+    <p class="field control-unit-element hidden" id="ins-field"><span id="ins-high">00</span>.<span
+            id="ins-low">000</span></p>
+    <p class="field control-unit-element hidden" id="pc-field">000</p>
+    <p class="field control-unit-element hidden" id="mc-field">000</p>
+
+    <!-- normal buttons -->
+    <button class="button" id="ram-db-button" onclick="manualMicroStep(2)"
+        title="Set Data Bus to value from RAM">RAM-->DB</button>
+    <button class="button" id="db-ram-button" onclick="manualMicroStep(1)"
+        title="Set value from Data Bus in RAM">DB-->RAM</button>
+    <button class="button" id="db-acc-button" onclick="manualMicroStep(18)"
+        title="Set Accumulator to value from Data Bus">DB-->ACC</button>
+    <button class="button" id="acc-db-button" onclick="manualMicroStep(15)"
+        title="Set value from Accumulator in Data Bus">ACC-->DB</button>
+    <button class="button" id="acc-add-button" onclick="manualMicroStep(13)"
+        title="Add value from Data Bus to Accumulator">Plus</button>
+    <button class="button" id="acc-sub-button" onclick="manualMicroStep(14)"
+        title="Subtract value from Data Bus from Accumulator">Minus</button>
+    <button class="button" id="acc-inc-button" onclick="manualMicroStep(16)"
+        title="Increment Accumulator">ACC++</button>
+    <button class="button" id="acc-dec-button" onclick="manualMicroStep(17)"
+        title="Decrement Accumulator">ACC--</button>
+    <button class="button" id="acc-null-button" onclick="manualMicroStep(12)"
+        title="Set Accumulator to Zero">ACC:=0</button>
+
+    <!-- control unit buttons -->
+    <button class="button control-unit-element hidden" id="db-ins-button" onclick="manualMicroStep(3)"
+        title="Set Instruction Register to value from Data Bus">DB-->INS</button>
+    <button class="button control-unit-element hidden" id="ins-pc-button" onclick="manualMicroStep(11)"
+        title="Set Program Counter to value from Instruction Register">INS-->PC</button>
+    <button class="button control-unit-element hidden" id="ins-ab-button" onclick="manualMicroStep(4)"
+        title="Set Address Bus to value from Instruction Register">INS-->AB</button>
+    <button class="button control-unit-element hidden" id="ins-mc-button" onclick="manualMicroStep(5)"
+        title="Set Microcode to value from Instruction Register">INS-->MC</button>
+    <button class="button control-unit-element hidden" id="pc-ab-button" onclick="manualMicroStep(8)"
+        title="Set Address Bus to value from Program Counter">PC-->AB</button>
+    <button class="button control-unit-element hidden" id="pc-inc-button" onclick="manualMicroStep(9)"
+        title="Increment Program Counter">PC++</button>
+    <button class="button control-unit-element hidden" id="pc-inc-null-button" onclick="manualMicroStep(10)"
+        title="Increment Program Counter if Accumulator is Zero">=0?PC++</button>
+    <button class="button control-unit-element hidden" id="mc-null-button" onclick="manualMicroStep(7)"
+        title="Set Microcode to Zero">MC:=0</button>
+    <button class="button control-unit-element hidden" id="mc-stop-button" onclick="manualMicroStep(19)"
+        title="Stop Microcode">STOP</button>
+
+    <!-- add row above button -->
+    <button class="button" id="add-row-above-button" onclick="insertRamRowAbove()" title="Insert RAM row above">Insert
+        Row</button>
+    <button class="button" id="delete-row-button" onclick="deleteRamRow()" title="Delete RAM row">Delete Row</button>
+
+    <!-- ram table -->
+    <div id="ram-table-container">
+        <table id="ram-table">
+            <!-- RAM rows will be dynamically generated here -->
+        </table>
+    </div>
+
+    <!-- microcode table -->
+    <div id="microcode-table-container" class="control-unit-element hidden">
+        <table id="microcode-table">
+            <!-- Microcode rows will be dynamically generated here -->
+        </table>
+    </div>
+
+    <!-- ram input arrow -->
+    <form action="javascript:manualRamInput()" class="ram-input" id="ram-input-arrow">
+        <input type="number" id="ram-input" min="0" max="19999" step="0.001">
+        <select id="ram-input-instruction-select" onchange="instructionSelectOnChange()"></select>
+        <button id="ram-input-button">Write</button>
+    </form>
+
+    <!-- settings modal -->
+    <div id="settings-modal" class="modal" onclick="toggleSettingsModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-button" onclick="toggleSettingsModal()">&times;</span>
+            <h2>Settings</h2>
+            <p>This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You can find the
+                sourcecode and more information at <a href="https://github.com/flxcraft/johnny"
+                    target="_blank">https://github.com/flxcraft/johnny</a>.</p>
+            <p>Feel free to report issues or feature requests on the <a href="https://github.com/flxcraft/johnny/issues"
+                    target="_blank">GitHub Issues page</a>.</p>
+        </div>
+    </div>
+
+    <!-- microcode edit modal -->
+    <div id="microcode-edit-modal" class="modal" onclick="closeMicroCodeEditModal()">
+        <div class="modal-content modal-content-edit" onclick="event.stopPropagation()">
+            <span class="close-button" onclick="closeMicroCodeEditModal()">&times;</span>
+            <h2>Edit Microcode <small>Address <span id="microcode-edit-address"></span></small></h2>
+
+            <form action="javascript:saveMicroCodeEdit()" class="edit-form">
+                <label for="micro-instruction-select">Micro Instruction</label>
+                <select id="micro-instruction-select"></select>
+
+                <div class="modal-actions">
+                    <button type="submit" class="save-button">Update</button>
+                    <button type="button" class="cancel-button" onclick="closeMicroCodeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./static/script/buttons.js"></script>
+    <script src="./static/script/formatter.js"></script>
+    <script src="./static/script/macrocode.js"></script>
+    <script src="./static/script/main.js"></script>
+    <script src="./static/script/microcode-table.js"></script>
+    <script src="./static/script/microcode.js"></script>
+    <script src="./static/script/microstep.js"></script>
+    <script src="./static/script/ram-table.js"></script>
+    <script src="./static/script/ram.js"></script>
+    <script src="./static/script/record.js"></script>
+    <script src="./static/script/settings.js"></script>
+    <script src="./static/script/writing.js"></script>
+</body>
+
+</html>
