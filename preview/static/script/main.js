@@ -41,6 +41,9 @@ function initialize() {
     generateRamTable();
     generateMicroCodeTable();
 
+    // Load version information for the settings modal
+    loadVersionInfo();
+
     initialized = true;
     console.info("Simulator initialized.");
 }
