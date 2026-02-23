@@ -129,5 +129,14 @@
                 }
             }
         }
+
+        #version-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 0.75rem;
+            color: #888;
+            font-family: monospace;
+        }
     }
 }

@@ -173,12 +173,16 @@
     <div id="settings-modal" class="modal" onclick="toggleSettingsModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-button" onclick="toggleSettingsModal()">&times;</span>
-            <h2>Settings</h2>
+
+            <h2>Settings<small id="version-tag">Loading...</small></h2>
+
             <p>This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You can find the
                 sourcecode and more information at <a href="https://github.com/flxcraft/johnny"
                     target="_blank">https://github.com/flxcraft/johnny</a>.</p>
             <p>Feel free to report issues or feature requests on the <a href="https://github.com/flxcraft/johnny/issues"
                     target="_blank">GitHub Issues page</a>.</p>
+
+            <div id="version-footer"></div>
         </div>
     </div>
 
@@ -207,6 +211,7 @@
     <script src="./static/script/microcode-table.js"></script>
     <script src="./static/script/microcode.js"></script>
     <script src="./static/script/microstep.js"></script>
+    <script src="./static/script/modal.js"></script>
     <script src="./static/script/ram-table.js"></script>
     <script src="./static/script/ram.js"></script>
     <script src="./static/script/record.js"></script>
