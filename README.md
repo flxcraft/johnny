@@ -8,7 +8,16 @@ The design and behavior of this simulator are inspired by the following projects
 
 Many thanks to the original authors for their work and inspiration. This project is a complete rewrite of the original codebase to improve code quality, maintainability and add new features. It also incorporates some ideas from other similar projects and adds some of my own ideas to enhance the learning experience.
 
-The whole project is implemented in **HTML, SCSS and JavaScript** and runs entirely in the browser, so no installation is required. If you want to run it locally you have to compile the SCSS to CSS (e.g. using the `Live Sass Compiler` extension in VS Code) and then open the `index.html` file in your browser. The project is also hosted on GitHub Pages, so you can access it directly at: [https://flxcraft.github.io/johnny/](https://flxcraft.github.io/johnny/)
+The whole project is implemented in **HTML, SCSS and JavaScript** and runs entirely in the browser, so no installation is required. If you want to run it locally you can simply download the zip from any release and open the `index.html` file in your browser. Alternatively, you can also clone the repository and run it with a local development server (e.g. using the `Live Server` extension in VS Code) to get live reloading during development.
+
+## Live Demo & Versions
+The project is hosted on GitHub Pages and is available in different versions. Note that the Beta version is only updated during pre-releases and may not always be available or differ from the stable version.
+
+| Version | Description | URL |
+|---------|-------------|-----|
+| Stable  | The latest stable version with all tested features and bug fixes. Updated regularly. | [https://flxcraft.github.io/johnny/](https://flxcraft.github.io/johnny/) |
+| Beta    | The latest beta version with new features and changes that are still being tested. May contain bugs and is updated less frequently. | [https://flxcraft.github.io/johnny/beta/](https://flxcraft.github.io/johnny/beta/) |
+| Preview | The latest preview version with the most recent changes and features that are still in development. May contain significant bugs and is updated very frequently. | [https://flxcraft.github.io/johnny/preview/](https://flxcraft.github.io/johnny/preview/) |
 
 ## Features
 - Simulation of a simple Von Neumann computer with RAM, a control unit (with microcode) and an ALU (Arithmetic Logic Unit)

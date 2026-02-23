@@ -1,0 +1,77 @@
+name: "Preview Deployment Pipeline"
+
+on:
+  push:
+    branches: 
+      - main
+    paths-ignore: 
+      - .github/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview-deployment
+  cancel-in-progress: false
+
+jobs:
+  # 1. Job: Compiling Assets and Preparing the Workspace
+  build-assets:
+    name: "Compile and Prepare"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install Sass
+        run: npm install -g sass
+
+      - name: Compile SCSS
+        run: sass static/style:static/style --style=compressed --no-source-map
+
+      - name: Remove Source Files
+        run: |
+          rm -f .gitignore
+          rm -f ./static/style/*.scss
+
+      - name: Generate Version Info
+        run: |
+          echo "{" > version.json
+          echo "  \"version\": \"${{ github.sha }}\"," >> version.json
+          echo "  \"channel\": \"preview\"," >> version.json
+          echo "  \"build_time\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.json
+          echo "}" >> version.json
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: compiled-workspace
+          path: .
+          if-no-files-found: error
+          include-hidden-files: true
+
+  # 2. Job: Deploy to the preview folder on gh-pages
+  deploy-to-pages:
+    name: "Deploy to Preview Site"
+    needs: build-assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Compiled Workspace
+        uses: actions/download-artifact@v7
+        with:
+          name: compiled-workspace
+          path: .
+
+      - name: Push to gh-pages Branch (Preview)
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: .
+          target-folder: preview
+          clean: true

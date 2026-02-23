@@ -1,0 +1,121 @@
+name: "Production Release Pipeline"
+
+on:
+  release:
+    types: published
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-deployment
+  cancel-in-progress: false
+
+jobs:
+  # 1. Job: Compiling Assets and Preparing the Workspace
+  build-assets:
+    name: "Compile and Prepare"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install Sass
+        run: npm install -g sass
+
+      - name: Compile SCSS
+        run: sass static/style:static/style --style=compressed --no-source-map
+
+      - name: Remove Source Files
+        run: |
+          rm -f .gitignore
+          rm -f ./static/style/*.scss
+
+      - name: Generate Version Info
+        run: |
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            CHANNEL="beta"
+          else
+            CHANNEL="production"
+          fi
+
+          echo "{" > version.json
+          echo "  \"version\": \"${{ github.ref_name }}\"," >> version.json
+          echo "  \"channel\": \"$CHANNEL\"," >> version.json
+          echo "  \"build_time\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.json
+          echo "}" >> version.json
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: compiled-workspace
+          path: .
+          if-no-files-found: error
+          include-hidden-files: true
+
+  # 2. Job: Creating the Offline ZIP and attaching it to the release
+  publish-release-assets:
+    name: "Attach ZIP to Release"
+    needs: build-assets
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch' # Only run for actual releases
+    steps:
+      - name: Download Compiled Workspace
+        uses: actions/download-artifact@v7
+        with:
+          name: compiled-workspace
+          path: .
+
+      - name: Clean Artifact for ZIP
+        run: |
+          rm -rf .github .git
+          rm -f manifest.json
+          rm -f static/icons/web-app-manifest*
+          rm -f static/icons/apple-touch-icon.png
+    
+      - name: Create Offline Bundle
+        run: |
+          zip -r johnny-flxcraft-${{ github.ref_name }}.zip .
+
+      - name: Upload ZIP to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: johnny-flxcraft-${{ github.ref_name }}.zip
+          fail_on_unmatched_files: true
+
+  # 3. Job: Deploying the Files to the gh-pages Branch
+  deploy-to-pages:
+    name: "Deploy to GitHub Pages"
+    needs: build-assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Compiled Workspace
+        uses: actions/download-artifact@v7
+        with:
+          name: compiled-workspace
+          path: .
+    
+      - name: Determine Environment
+        id: env-config
+        run: |
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            echo "target_dir=beta" >> $GITHUB_OUTPUT
+          else
+            echo "target_dir=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push to gh-pages Branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: .
+          target-folder: ${{ steps.env-config.outputs.target_dir }}
+          clean: true
+          clean-exclude: |
+            preview/
+            beta/
