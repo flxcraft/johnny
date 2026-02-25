@@ -41,7 +41,7 @@ jobs:
           if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
             CHANNEL="beta"
           else
-            CHANNEL="production"
+            CHANNEL="stable"
           fi
 
           echo "{" > version.json
@@ -109,6 +109,13 @@ jobs:
             echo "target_dir=." >> $GITHUB_OUTPUT
           fi
 
+      - name: Override Beta Folder for Stable Releases
+        if: github.event.release.prerelease == false
+        run: |
+          mkdir -p beta
+          echo "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><title>No Beta Available</title><style>body{font-family: sans-serif;text-align: center;padding: 50px;color: #666;}</style></head>" > beta/index.html
+          echo "<body><h1>No active Beta</h1><p>There is currently no beta version available for testing.</p><p><a href='../'>Go to Main Release</a></p></body></html>" >> beta/index.html
+
       - name: Push to gh-pages Branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -118,4 +125,3 @@ jobs:
           clean: true
           clean-exclude: |
             preview/
-            beta/
