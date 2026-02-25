@@ -7,6 +7,12 @@ class Settings {
             default: false,
             showInModal: false,
             description: "Show the control unit in the UI"
+        },
+        autoScrollMicroCode: {
+            type: "boolean",
+            default: true,
+            showInModal: true,
+            description: "Automatically scroll the microcode view to the current instruction"
         }
     }
 

@@ -205,6 +205,8 @@ function saveMicroCodeEdit() {
  * @returns {void}
  */
 function scrollToMicrocodeAddress(address) {
+    if (!settings.get("autoScrollMicroCode")) return; // only auto-scroll if the setting is enabled
+
     const row = document.getElementById(`microcode-row-${address}`);
     const container = document.getElementById("microcode-table-container");
     const rowsAbove = 5; // Number of rows to show above the selected row
