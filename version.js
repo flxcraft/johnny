@@ -1,0 +1,1 @@
+window.BUILD_INFO = null; // This will be replaced with actual build info by the build script

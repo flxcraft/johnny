@@ -42,11 +42,11 @@ jobs:
 
       - name: Generate Version Info
         run: |
-          echo "{" > version.json
-          echo "  \"version\": \"${{ github.sha }}\"," >> version.json
-          echo "  \"channel\": \"preview\"," >> version.json
-          echo "  \"build_time\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.json
-          echo "}" >> version.json
+          echo "window.BUILD_INFO = {" > version.js
+          echo "  \"version\": \"${{ github.sha }}\"," >> version.js
+          echo "  \"channel\": \"preview\"," >> version.js
+          echo "  \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.js
+          echo "};" >> version.js
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v6

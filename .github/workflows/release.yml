@@ -44,11 +44,11 @@ jobs:
             CHANNEL="stable"
           fi
 
-          echo "{" > version.json
-          echo "  \"version\": \"${{ github.ref_name }}\"," >> version.json
-          echo "  \"channel\": \"$CHANNEL\"," >> version.json
-          echo "  \"build_time\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.json
-          echo "}" >> version.json
+          echo "window.BUILD_INFO = {" > version.js
+          echo "  \"version\": \"${{ github.ref_name }}\"," >> version.js
+          echo "  \"channel\": \"$CHANNEL\"," >> version.js
+          echo "  \"buildTime\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"" >> version.js
+          echo "};" >> version.js
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v6
