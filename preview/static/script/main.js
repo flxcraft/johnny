@@ -29,6 +29,7 @@ let fixRamAfterShift = true; // flag to indicate if RAM needs to be fixed after 
 function initialize() {
     // Initialize settings first to ensure they are available for other components
     settings = new Settings();
+    generateSettingsUI(); // Populate the settings UI based on the loaded settings
 
     // Update the control unit visibility based on the loaded settings
     updateControlUnitVisibility();

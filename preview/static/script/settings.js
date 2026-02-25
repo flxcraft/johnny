@@ -5,6 +5,7 @@ class Settings {
         showControlUnit: {
             type: "boolean",
             default: false,
+            showInModal: false,
             description: "Show the control unit in the UI"
         }
     }
@@ -131,5 +132,28 @@ class Settings {
 
         this.#values[key] = value;
         this.#save(); // Save the updated settings to localStorage
+    }
+
+    /**
+     * Returns the entire settings scheme, which defines the available settings, their types, default values, and descriptions.
+     *
+     * @returns {Object} The settings scheme object.
+     */
+    getSettingsScheme() {
+        return Settings.SETTINGS_SCHEME;
+    }
+
+    /**
+     * Retrieves the settings scheme for a specific setting key, providing details such as type, default value, and description.
+     *
+     * @param {string} key The key of the setting for which to retrieve the scheme.
+     * @returns {Object} The settings scheme for the specified key, or undefined if the key does not exist.
+     * @throws {Error} If the setting key does not exist in the SETTINGS_SCHEME.
+     */
+    getSettingsSchemeByKey(key) {
+        if (!(key in Settings.SETTINGS_SCHEME)) {
+            throw new Error(`Setting "${key}" does not exist`);
+        }
+        return Settings.SETTINGS_SCHEME[key];
     }
 }
