@@ -60,7 +60,7 @@ function formatData(data) {
  * @returns {number}
  */
 function getDataHigh(data) {
-    return Math.trunc(data / RAM_SIZE);
+    return Math.trunc(data / 1000); // 1000 because the low part is 3 digits
 }
 
 /**
@@ -70,7 +70,7 @@ function getDataHigh(data) {
  * @returns {number}
  */
 function getDataLow(data) {
-    return data % RAM_SIZE;
+    return data % 1000; // 1000 because the low part is 3 digits
 }
 
 /**
