@@ -23,7 +23,7 @@ function writeToRam(address, value) {
  */
 function writeToMicroCode(address, value) {
     address = normalizeInt(address, 0, MICROCODE_SIZE - 1, "Microcode address");
-    value = normalizeInt(value, 0, getObjectBiggestKey(MICROCODE_TEXT), "Microcode data");
+    value = normalizeInt(value, 0, getObjectBiggestKey(MicroInstructionNames), "Microcode data");
 
     microCode[address] = value;
     saveMicroCodeToLocalStorage();

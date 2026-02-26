@@ -37,7 +37,7 @@ function generateMicroCodeTable() {
         }
 
         // Convert microcode entry to human-readable text and set it in the action cell
-        actionCell.textContent = microCodeToText(microCode[address]);
+        actionCell.textContent = getMicroInstructionName(microCode[address]);
 
         // Set row ID for future reference
         newRow.id = `microcode-row-${address}`;
@@ -83,7 +83,7 @@ function updateMicroCodeTable() {
 function updateMicroCodeTableRow(address) {
     const row = document.getElementById(`microcode-row-${address}`);
     const actionCell = row.children[1];
-    actionCell.textContent = microCodeToText(microCode[address]);
+    actionCell.textContent = getMicroInstructionName(microCode[address]);
 }
 
 /**
@@ -151,7 +151,7 @@ function openMicroCodeEditModal(address) {
 
     // Populate the micro instruction select dropdown with options
     microInstructionSelect.innerHTML = ""; // Clear existing options
-    for (const [code, description] of Object.entries(MICROCODE_TEXT)) {
+    for (const [code, description] of Object.entries(MicroInstructionNames)) {
         const option = document.createElement("option");
         option.value = code;
         option.textContent = `${code}: ${description}`;

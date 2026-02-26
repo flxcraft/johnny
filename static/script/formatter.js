@@ -1,3 +1,37 @@
+// A mapping of microcode instruction codes to their human-readable names for display in the microcode table.
+const MicroInstructionNames = Object.freeze({
+    0: "---",
+    1: "db ---> ram",
+    2: "ram ---> db",
+    3: "db ---> ins",
+    4: "ins ---> ab",
+    5: "ins ---> mc",
+    7: "mc:=0",
+    8: "pc ---> ab",
+    9: "pc++",
+    10: "acc=0?->pc++",
+    11: "ins ---> pc",
+    12: "acc:=0",
+    13: "plus",
+    14: "minus",
+    15: "acc ---> db",
+    16: "acc++",
+    17: "acc--",
+    18: "db ---> acc",
+    19: "stop"
+});
+
+/**
+ * Returns the human-readable name of a micro instruction based on its code.
+ * If the code is not found in the microInstructionNames mapping, it returns "Unknown (code)".
+ * 
+ * @param {number} code the micro instruction code to get the name for
+ * @returns {string} the name of the micro instruction
+ */
+function getMicroInstructionName(code) {
+    return MicroInstructionNames[code] || `Unknown (${code})`;
+}
+
 /**
  * Formats an address to a 3-digit string with leading zeros. (e.g., 5 -> "005")
  * 
