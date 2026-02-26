@@ -6,7 +6,7 @@
  * @returns {void}
  */
 function recordMicroStep(microStepId) {
-    if (!isRecording || !recordMicroCodeAddress) return;
+    if (!isRecording || recordMicroCodeAddress === null) return;
 
     project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
