@@ -52,8 +52,8 @@ A `.johnny` file is a JSON-based project file that contains the complete state o
 #### Basic Rules
 - The file must be valid **JSON**
 - The file contains three main objects: `ram` (array), `microCode` (array), and `instructionNames` (object)
-- `ram`: An array of non-negative integers representing the RAM contents, indexed from `0`
-- `microCode`: An array of non-negative integers representing the microcode instructions, indexed from `0`
+- `ram`: An array of non-negative integers representing the RAM contents, indexed from `0` (missing addresses at the end of the array are filled with `0`)
+- `microCode`: An array of non-negative integers representing the microcode instructions, indexed from `0` (missing addresses at the end of the array are filled with `0`)
 - `instructionNames`: An object mapping instruction indices to their display names (e.g., `{"0": "FETCH", "1": "TAKE", ...}`)
 
 #### File Structure
