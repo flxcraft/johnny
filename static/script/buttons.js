@@ -317,4 +317,5 @@ function resetSimulator() {
     selectedRamAddress = 0;
     lastAccessedRamAddress = null;
     updateRamTableHighlighting();
+    updateMicrocodeTableHighlighting();
 }
