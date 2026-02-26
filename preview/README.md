@@ -10,6 +10,17 @@ Many thanks to the original authors for their work and inspiration. This project
 
 The whole project is implemented in **HTML, SCSS and JavaScript** and runs entirely in the browser, so no installation is required. If you want to run it locally you can simply download the zip from any release and open the `index.html` file in your browser. Alternatively, you can also clone the repository and run it with a local development server (e.g. using the `Live Server` extension in VS Code) to get live reloading during development.
 
+## Table of Contents
+- [Live Demo & Versions](#live-demo--versions)
+- [Features](#features)
+- [File Format Specifications](#file-format-specifications)
+    - [`.johnny` File Format](#johnny-file-format)
+    - [`.ram` File Format](#ram-file-format)
+    - [`.mc` File Format](#mc-file-format)
+- [Notes & Limitations](#notes--limitations)
+    - [Styling](#styling)
+- [Motivation & Future Plans](#motivation--future-plans)
+
 ## Live Demo & Versions
 The project is hosted on GitHub Pages and is available in different versions. Note that the Beta version is only updated during pre-releases and may not always be available or differ from the stable version.
 
@@ -23,7 +34,7 @@ The project is hosted on GitHub Pages and is available in different versions. No
 - Simulation of a simple Von Neumann computer with RAM, a control unit (with microcode) and an ALU (Arithmetic Logic Unit)
 - Visualization of RAM and microcode tables with clear highlighting of the current instruction and execution flow
 - Step-by-step execution (micro steps and macro steps) with visual feedback
-- Support for loading RAM and microcode from `.ram` and `.mc` files
+- Support for loading complete projects from `.johnny` files or individual RAM and microcode from `.ram` and `.mc` files
 - Insert and delete RAM rows **at arbitrary positions** to restructure programs, including automatic shifting and operand adjustment
 - Editing RAM values by clicking on the row and using the input field in the arrow (double-clicking on the row also inserts the current RAM value into the input field for smoother editing)
 - **Recording own macro instructions** by simply executing a sequence of microinstructions after clicking the "Record Macro" button
@@ -33,7 +44,45 @@ The project is hosted on GitHub Pages and is available in different versions. No
 - Responsive design for different screen sizes
 
 ## File Format Specifications
-The simulator supports loading RAM and microcode from text files with specific formats. Below are the specifications for the `.ram` and `.mc` file formats.
+The simulator supports loading RAM and microcode from text files with specific formats, as well as complete project files. Below are the specifications for the `.johnny`, `.ram` and `.mc` file formats.
+
+### `.johnny` File Format
+A `.johnny` file is a JSON-based project file that contains the complete state of a simulator project, including RAM contents, microcode, and macro instruction names. This format allows you to save and load entire projects in a single file.
+
+#### Basic Rules
+- The file must be valid **JSON**
+- The file contains three main objects: `ram` (array), `microCode` (array), and `instructionNames` (object)
+- `ram`: An array of non-negative integers representing the RAM contents, indexed from `0`
+- `microCode`: An array of non-negative integers representing the microcode instructions, indexed from `0`
+- `instructionNames`: An object mapping instruction indices to their display names (e.g., `{"0": "FETCH", "1": "TAKE", ...}`)
+
+#### File Structure
+
+```json
+{
+  "ram": [9006, 1005, 2005, 4006, 0, 42, ...],
+  "microCode": [8, 2, 3, 5, 0, 0, ...],
+  "instructionNames": {
+    "0": "FETCH",
+    "1": "TAKE",
+    "2": "ADD",
+    "3": "SUB",
+    "4": "SAVE",
+    "5": "JMP",
+    "6": "TST",
+    "7": "INC",
+    "8": "DEC",
+    "9": "NULL",
+    "10": "HLT"
+  }
+}
+```
+
+#### Usage
+- The `.johnny` format allows you to save and share complete project configurations
+- Use the "Download Project" button in the simulator to export your current project as a `.johnny` file
+- Use the "Upload Project" button to import a previously saved `.johnny` file, which will restore both RAM and microcode state
+- This is the recommended format for sharing and backing up complete simulator projects
 
 ### `.ram` File Format
 A `.ram` file defines the initial contents of the RAM. Each line corresponds to a RAM address, starting from `0`. The value on each line represents the content of that RAM address.
@@ -66,7 +115,7 @@ A `.ram` file defines the initial contents of the RAM. Each line corresponds to 
 1005 # This is an in-line comment
 2005
 4006
-# The nex line is empty and will be ignored
+# The next line is empty and will be ignored
 
 0
 42
@@ -344,7 +393,7 @@ HLT
 
 ## Notes & Limitations
 - This simulator is designed for educational purposes, not performance
-- RAM and microcode changes are persisted using `localStorage`, but there is no versioning or backup, so be careful when editing and always keep a backup of your `.ram` and `.mc` files if they contain important data
+- RAM and microcode changes are persisted using `localStorage`. While there is no built-in versioning, you can easily create backups by regularly exporting your projects as `.johnny` files
 - The RAM and microcode sizes are fixed (default: 1000 RAM addresses, 200 Micro Code Addresses), but can be changed in the code if needed (see `RAM_SIZE` and `MICROCODE_SIZE` constants in `main.js` - ***Warning:** Changing these values has not been thoroughly tested and may cause unexpected issues. Maybe you also need to adjust some places in the code where these constants aren't used)*
 
 ### Styling
@@ -353,7 +402,9 @@ The project uses SCSS for styling, which is compiled to CSS for production (host
 ## Motivation & Future Plans
 The motivation for this project was to create a more modern, user-friendly and feature-rich version of the original Johnny simulator, which was a great learning tool but had some limitations in terms of code quality, maintainability and user experience. I wanted to rewrite the codebase from scratch to improve these aspects and add new features that I think would enhance the learning experience.
 
+I'm very proud that my entire computer science advanced course (LK) uses my version of this simulator, and everyone in my class used it for their exam. It's incredibly rewarding to see how this rewrite helps students understand computer architecture in a more intuitive and interactive way.
+
 In the future, I plan to add more features such as:
-- Support for importing and exporting RAM and microcode as a single project file (e.g. JSON format) to allow saving and sharing complete setups
+- **✅ Implemented:** Support for importing and exporting RAM and microcode as a single project file (e.g. JSON format) to allow saving and sharing complete setups
 - Some predefined example RAM and microcode files for common algorithms (e.g. addition, multiplication, loops, etc.) to provide ready-to-use examples for learning and testing
-- Settings to to customize some aspects of the simulator without changing the code
+- **✅ Implemented (more following):** Settings to to customize some aspects of the simulator without changing the code
