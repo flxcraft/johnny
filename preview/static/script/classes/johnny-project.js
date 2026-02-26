@@ -258,8 +258,25 @@ class JohnnyProject {
     }
 
     /**
+     * Remove trailing zeros from an array.
+     * 
+     * @param {number[]} array the array to trim
+     * @returns {number[]} the array with trailing zeros removed
+     */
+    #trimTrailingZeros(array) {
+        let lastNonZeroIndex = -1;
+        for (let i = array.length - 1; i >= 0; i--) {
+            if (array[i] !== 0) {
+                lastNonZeroIndex = i;
+                break;
+            }
+        }
+        return array.slice(0, lastNonZeroIndex + 1);
+    }
+
+    /**
      * Convert the current project state to a JSON object for saving or exporting. Includes RAM, microcode, and instruction name mappings.
-     * Also includes RAM_SIZE and MICROCODE_SIZE for completeness, although these are currently fixed and not meant to be changed by the user.
+     * Trailing zeros in RAM and microcode arrays are omitted to reduce file size.
      * 
      * @returns {object} a JSON representation of the current project state
      */
@@ -267,8 +284,8 @@ class JohnnyProject {
         return {
             // RAM_SIZE: this.RAM_SIZE,
             // MICROCODE_SIZE: this.MICROCODE_SIZE,
-            ram: this.#ram,
-            microCode: this.#microCode,
+            ram: this.#trimTrailingZeros(this.#ram),
+            microCode: this.#trimTrailingZeros(this.#microCode),
             instructionNames: this.#instructionNames,
         };
     }
@@ -276,7 +293,7 @@ class JohnnyProject {
     /**
      * Load the project state from a JSON object. This can be used for loading from localStorage or importing from a file.
      * It updates the RAM, microcode, and instruction name mappings based on the provided JSON data. These values are required and must be valid otherwise an error is thrown.
-     * It also updates RAM_SIZE and MICROCODE_SIZE if they are provided in the JSON, although currently these are fixed and not meant to be changed by the user.
+     * For RAM and microcode, if the provided arrays are shorter than RAM_SIZE or MICROCODE_SIZE, they will be padded with zeros to ensure they have the correct size. If they are longer, an error is thrown.
      * 
      * @param {object} json the JSON object containing the project state to load
      * @returns {void}
@@ -294,25 +311,37 @@ class JohnnyProject {
         // }
 
         // Validate and set RAM
-        if (json.ram && Array.isArray(json.ram) && json.ram.length === this.RAM_SIZE) {
-            if (json.ram.every(val => typeof val === "number" && val >= 0 && val <= this.MAX_RAM_VALUE)) {
-                this.#ram = json.ram;
+        if (json.ram && Array.isArray(json.ram)) {
+            // Pad with zeros if the array is shorter than RAM_SIZE
+            const paddedRam = [...json.ram];
+            while (paddedRam.length < this.RAM_SIZE) {
+                paddedRam.push(0);
+            }
+            
+            if (paddedRam.length === this.RAM_SIZE && paddedRam.every(val => typeof val === "number" && val >= 0 && val <= this.MAX_RAM_VALUE)) {
+                this.#ram = paddedRam;
             } else {
                 throw new Error("Invalid RAM values in imported data.");
             }
         } else {
-            throw new Error("Invalid RAM data in imported JSON. Expected an array of length " + this.RAM_SIZE + ".");
+            throw new Error("Invalid RAM data in imported JSON. Expected an array.");
         }
 
         // Validate and set microcode
-        if (json.microCode && Array.isArray(json.microCode) && json.microCode.length === this.MICROCODE_SIZE) {
-            if (json.microCode.every(val => typeof val === "number" && val >= 0 && val <= 19 && val !== 6)) {
-                this.#microCode = json.microCode;
+        if (json.microCode && Array.isArray(json.microCode)) {
+            // Pad with zeros if the array is shorter than MICROCODE_SIZE
+            const paddedMicroCode = [...json.microCode];
+            while (paddedMicroCode.length < this.MICROCODE_SIZE) {
+                paddedMicroCode.push(0);
+            }
+            
+            if (paddedMicroCode.length === this.MICROCODE_SIZE && paddedMicroCode.every(val => typeof val === "number" && val >= 0 && val <= 19 && val !== 6)) {
+                this.#microCode = paddedMicroCode;
             } else {
                 throw new Error("Invalid microcode values in imported data.");
             }
         } else {
-            throw new Error("Invalid microcode data in imported JSON. Expected an array of length " + this.MICROCODE_SIZE + ".");
+            throw new Error("Invalid microcode data in imported JSON. Expected an array.");
         }
 
         // Validate and set instruction names
