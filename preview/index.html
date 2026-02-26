@@ -36,9 +36,8 @@
             title="New RAM">
         <img src="./static/img/save-ram.svg" onclick="downloadRamAsFile()" tabindex="0" alt="Save RAM" class="icon"
             title="Save RAM">
-        <img src="./static/img/open-ram.svg" onclick="document.getElementById('ram-file-input').click()" tabindex="0"
-            alt="Open RAM" class="icon" title="Open RAM">
-        <input type="file" id="ram-file-input" onchange="importRamFromFile(event)" accept=".ram" style="display: none;">
+        <img src="./static/img/open-ram.svg" onclick="uploadRamAsFile()" tabindex="0" alt="Open RAM" class="icon"
+            title="Open RAM">
     </div>
 
     <div class="header" id="ram-control-options">
@@ -66,10 +65,8 @@
             title="Micro Step">
         <img src="./static/img/save-microcode.svg" onclick="downloadMicrocodeAsFile()" tabindex="0" alt="Save Microcode"
             class="icon" title="Save Microcode">
-        <img src="./static/img/open-microcode.svg" onclick="document.getElementById('mc-file-input').click()"
-            tabindex="0" alt="Open Microcode" class="icon" title="Open Microcode">
-        <input type="file" id="mc-file-input" onchange="importMicroCodeFromFile(event)" accept=".mc"
-            style="display: none;">
+        <img src="./static/img/open-microcode.svg" onclick="uploadMicroCodeAsFile()" tabindex="0" alt="Open Microcode"
+            class="icon" title="Open Microcode">
     </div>
 
     <div class="header control-unit-element hidden" id="mc-record-panel">
@@ -187,7 +184,8 @@
                 </div> -->
             </div>
 
-            <p id="license-info">This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You can find the
+            <p id="license-info">This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You
+                can find the
                 sourcecode and more information at <a href="https://github.com/flxcraft/johnny"
                     target="_blank">https://github.com/flxcraft/johnny</a>.</p>
             <p>Feel free to report issues or feature requests on the <a href="https://github.com/flxcraft/johnny/issues"
@@ -216,19 +214,19 @@
     </div>
 
     <script src="./version.js"></script>
+    <script src="./static/script/classes/johnny-project.js"></script>
+    <script src="./static/script/classes/settings.js"></script>
+    <script src="./static/script/utils/files.js"></script>
+    <script src="./static/script/utils/formatter.js"></script>
+    <script src="./static/script/utils/writing.js"></script>
     <script src="./static/script/buttons.js"></script>
-    <script src="./static/script/formatter.js"></script>
     <script src="./static/script/macrocode.js"></script>
     <script src="./static/script/main.js"></script>
     <script src="./static/script/microcode-table.js"></script>
-    <script src="./static/script/microcode.js"></script>
     <script src="./static/script/microstep.js"></script>
     <script src="./static/script/modal.js"></script>
     <script src="./static/script/ram-table.js"></script>
-    <script src="./static/script/ram.js"></script>
     <script src="./static/script/record.js"></script>
-    <script src="./static/script/settings.js"></script>
-    <script src="./static/script/writing.js"></script>
 </body>
 
 </html>

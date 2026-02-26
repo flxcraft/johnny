@@ -11,10 +11,10 @@ function microStep(animate = true) {
     }
 
     // Get the micro-instruction ID from the microcode at the current counter
-    const id = Number(microCode[microCodeCounter]);
+    const id = Number(project.getMicroCode(microCodeCounter));
 
     // Check if FETCH is getting an instruction with opcode 0, which is leading to an infinite loop of executing the FETCH instruction.
-    if (id === 5) {
+    if (id === 5) { // 5 is the ins --> mc step, which is the last step of the FETCH instruction sequence
         const instruction = getDataHigh(instructionRegister);
 
         // If the instruction is 0, the FETCH instruction is calling itself repeatedly, which is likely an error in the program code.
@@ -106,7 +106,7 @@ function dbToRamStep() {
 }
 
 function ramToDbStep() {
-    writeToDataBus(ram[addressBus]);
+    writeToDataBus(project.getRam(addressBus));
     lastAccessedRamAddress = addressBus;
     updateRamTableHighlighting();
 }

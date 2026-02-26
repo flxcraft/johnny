@@ -6,10 +6,9 @@
  * @returns {void}
  */
 function recordMicroStep(microStepId) {
-    if (!isRecording || !recordMicroCodeAddress) return;
+    if (!isRecording || recordMicroCodeAddress === null) return;
 
-    microCode[recordMicroCodeAddress] = microStepId;
-    saveMicroCodeToLocalStorage(); // Save the updated microcode to localStorage
+    project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
     recordMicroCodeAddress++; // Move to the next microcode address for the next step
 }
@@ -30,7 +29,7 @@ function startRecording() {
         recordMicroCodeAddress = toNumberStrict(recordStartAddressInput.value, "Record start address");
 
         // Check if the given address is within the valid range for microcode addresses
-        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (MICROCODE_SIZE - 10)) {
+        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (project.MICROCODE_SIZE - 10)) {
             throw new Error("Record start address is out of bounds.");
         }
 
@@ -39,9 +38,19 @@ function startRecording() {
             throw new Error("Record start address must be a multiple of 10.");
         }
 
+        // Validate the instruction name input (max length of 5 characters)
+        const instructionName = recordInstructionNameInput.value.trim();
+        if (instructionName.length === 0) {
+            throw new Error("Instruction name cannot be empty.");
+        }
+
+        if (instructionName.length > 5) {
+            throw new Error("Instruction name is too long (max 5 characters).");
+        }
+
         // Update the instructionNames mapping with the new instruction name for the corresponding opcode
         const opcode = recordMicroCodeAddress / 10;
-        instructionNames[opcode] = recordInstructionNameInput.value.trim() || "NN";
+        project.setInstructionName(opcode, instructionName); // Update the instruction name for the given opcode in the project data
         updateMicroCodeTableMacroInstructionName(opcode); // Update the corresponding row in the microcode table with the new instruction name
         populateInstructionSelect(); // Update the instruction select dropdown with the new instruction name
         updateRamTable(); // Update the RAM table to reflect any changes in instruction names
@@ -55,7 +64,6 @@ function startRecording() {
         // Reset recording state on error
         isRecording = false;
         recordMicroCodeAddress = null;
+        return false; // Indicate that recording did not start due to an error
     }
-
-    return false; // Indicate that recording did not start due to an error
 }

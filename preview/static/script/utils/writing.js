@@ -6,28 +6,11 @@
  * @returns {void}
  */
 function writeToRam(address, value) {
-    address = normalizeInt(address, 0, RAM_SIZE - 1, "RAM address");
-    value = normalizeInt(value, 0, RAM_MAX_VALUE, "RAM data");
+    address = normalizeInt(address, 0, project.RAM_SIZE - 1, "RAM address");
+    value = normalizeInt(value, 0, project.MAX_RAM_VALUE, "RAM data");
 
-    ram[address] = value;
-    saveRamToLocalStorage();
+    project.setRam(address, value);
     updateRamTableRow(address);
-}
-
-/**
- * Writes a value to the specified microcode address and updates the microcode table.
- *
- * @param {number|string} address Microcode address (0 … MICROCODE_SIZE-1)
- * @param {number|string} value Microcode data value (0 … max microcode value)
- * @returns {void}
- */
-function writeToMicroCode(address, value) {
-    address = normalizeInt(address, 0, MICROCODE_SIZE - 1, "Microcode address");
-    value = normalizeInt(value, 0, getObjectBiggestKey(MICROCODE_TEXT), "Microcode data");
-
-    microCode[address] = value;
-    saveMicroCodeToLocalStorage();
-    updateMicroCodeTableRow(address);
 }
 
 /**
@@ -37,8 +20,8 @@ function writeToMicroCode(address, value) {
  * @returns {void}
  */
 function writeToAddressBus(value) {
-    addressBus = normalizeInt(value, 0, RAM_SIZE - 1, "Address bus value");
-    document.getElementById("ab-field").innerText = formatAddress(addressBus);
+    addressBus = normalizeInt(value, 0, project.RAM_SIZE - 1, "Address bus value");
+    document.getElementById("ab-field").innerText = formatRamAddress(addressBus);
 }
 
 /**
@@ -48,7 +31,7 @@ function writeToAddressBus(value) {
  * @returns {void}
  */
 function writeToDataBus(value) {
-    dataBus = normalizeInt(value, 0, RAM_MAX_VALUE, "Data bus value");
+    dataBus = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Data bus value");
     document.getElementById("db-field").innerText = formatData(dataBus);
 }
 
@@ -59,7 +42,7 @@ function writeToDataBus(value) {
  * @returns {void}
  */
 function writeToAccumulator(value) {
-    accumulator = normalizeInt(value, 0, RAM_MAX_VALUE, "Accumulator value");
+    accumulator = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Accumulator value");
     document.getElementById("acc-field").innerText = formatData(accumulator);
 
     // Update accumulator zero indicator
@@ -79,8 +62,8 @@ function writeToAccumulator(value) {
  * @returns {void}
  */
 function writeToProgramCounter(value) {
-    programCounter = normalizeInt(value, 0, RAM_SIZE - 1, "Program counter value");;
-    document.getElementById("pc-field").innerText = formatAddress(programCounter);
+    programCounter = normalizeInt(value, 0, project.RAM_SIZE - 1, "Program counter value");
+    document.getElementById("pc-field").innerText = formatRamAddress(programCounter);
 }
 
 /**
@@ -90,7 +73,7 @@ function writeToProgramCounter(value) {
  * @returns {void}
  */
 function writeToInstructionRegister(value) {
-    instructionRegister = normalizeInt(value, 0, RAM_MAX_VALUE, "Instruction register value");
+    instructionRegister = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Instruction register value");
     document.getElementById("ins-high").innerText = formatDataHigh(instructionRegister);
     document.getElementById("ins-low").innerText = formatDataLow(instructionRegister);
 }
@@ -102,8 +85,8 @@ function writeToInstructionRegister(value) {
  * @returns {void}
  */
 function writeToMicroCodeCounter(value) {
-    microCodeCounter = normalizeInt(value, 0, MICROCODE_SIZE - 1, "Microcode counter value");
-    document.getElementById("mc-field").innerText = formatAddress(microCodeCounter);
+    microCodeCounter = normalizeInt(value, 0, project.MICROCODE_SIZE - 1, "Microcode counter value");
+    document.getElementById("mc-field").innerText = formatMicroCodeAddress(microCodeCounter);
     updateMicrocodeTableHighlighting();
 }
 
@@ -112,17 +95,20 @@ function writeToMicroCodeCounter(value) {
  * Throws an error if conversion fails.
  *
  * @param {number|string} value Value to convert
- * @param {string} [context="Value"] Optional context for error messages
+ * @param {string} context Optional context for error messages (default: "Value")
  * @returns {number} Converted finite number
  * @throws {TypeError} If value is not a finite number
  */
 function toNumberStrict(value, context = "Value") {
-    const num = Number(value);
-    if (!Number.isFinite(num)) { // check for NaN and Infinity
+    if (typeof value === "string") {
+        value = Number(value.trim()); // Convert string to number, trimming whitespace
+    }
+
+    if (!Number.isFinite(value)) { // check for NaN and Infinity
         console.error(context + " is not a valid finite number:", value);
         throw new TypeError(context + " is not a valid finite number: " + value);
     }
-    return num;
+    return value;
 }
 
 /**
@@ -144,13 +130,18 @@ function clamp(value, min, max) {
  * @param {number|string} value Value to normalize
  * @param {number} min Minimum allowed value
  * @param {number} max Maximum allowed value
- * @param {string} [context="Value"] Context used for logging
+ * @param {string} context Context used for logging (default: "Value")
  * @returns {number} Normalized (finite and clamped) number
  */
 function normalizeInt(value, min, max, context = "Value") {
-    const num = Math.trunc(toNumberStrict(value, context));
-    if (num < min || num > max) {
-        console.warn(`${context} out of range: ${num} (clamped to ${min}-${max})`);
+    try {
+        const num = Math.trunc(toNumberStrict(value, context));
+        if (num < min || num > max) {
+            console.warn(`${context} out of range: ${num} (clamped to ${min}-${max})`);
+        }
+        return clamp(num, min, max);
+    } catch (error) {
+        console.error(`Error normalizing ${context}. Returning default value: 0`, error);
+        return 0; // Return a default value (0) instead of throwing the error
     }
-    return clamp(num, min, max);
 }
