@@ -33,13 +33,35 @@ function getMicroInstructionName(code) {
 }
 
 /**
+ * Returns the length of a number when converted to a string, ignoring the minus sign. (e.g., -123 -> 3)
+ * 
+ * @param {number} number the number to get the length of
+ * @returns {number} the length of the number when converted to a string
+ */
+function getNumberLength(number) {
+    return Math.abs(number).toString().length;
+}
+
+/**
  * Formats an address to a 3-digit string with leading zeros. (e.g., 5 -> "005")
  * 
  * @param {*} address 
  * @returns {string}
  */
-function formatAddress(address) {
-    return String(address).padStart(3, '0');
+function formatRamAddress(address) {
+    const length = getNumberLength(project.RAM_SIZE - 1);
+    return String(address).padStart(length, '0');
+}
+
+/**
+ * Formats an address to a 3-digit string with leading zeros. (e.g., 5 -> "005")
+ * 
+ * @param {*} address 
+ * @returns {string}
+ */
+function formatMicroCodeAddress(address) {
+    const length = getNumberLength(project.MICROCODE_SIZE - 1);
+    return String(address).padStart(length, '0');
 }
 
 /**
@@ -49,8 +71,9 @@ function formatAddress(address) {
  * @returns {string}
  */
 function formatData(data) {
-    const s = String(data).padStart(5, '0');
-    return s.slice(0, 2) + '.' + s.slice(2);
+    const length = getNumberLength(project.MAX_RAM_VALUE);
+    const s = String(data).padStart(length, '0');
+    return s.slice(0, length - 3) + '.' + s.slice(length - 3);
 }
 
 /**
@@ -80,7 +103,8 @@ function getDataLow(data) {
  * @returns {string}
  */
 function formatDataHigh(data) {
-    return String(getDataHigh(data)).padStart(2, '0');
+    const length = getNumberLength(project.MAX_RAM_VALUE) - 3; // 3 digits for the low part
+    return String(getDataHigh(data)).padStart(length, '0');
 }
 
 /**
@@ -104,7 +128,7 @@ function dataToAsm(data) {
     const opCode = getDataHigh(data);
     const operand = getDataLow(data);
 
-    const instruction = instructionNames[opCode];
+    const instruction = project.getInstructionName(opCode);
     if (!instruction || opCode === 0) { // if opcode is 0 (FETCH) or not found in instructionNames, treat as empty
         return { instruction: "", operand: operand };
     }
@@ -119,5 +143,5 @@ function dataToAsm(data) {
  * @return {number} The largest numeric key in the object.
  */
 function getObjectBiggestKey(object) {
-    return Math.max(...Object.keys(object).map(Number))
+    return Math.max(...Object.keys(object).map(Number));
 }

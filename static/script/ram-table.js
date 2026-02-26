@@ -25,7 +25,7 @@ function generateRamTable() {
     ramTable.appendChild(headerRow);
 
     // Create table rows for each RAM address
-    for (let address = 0; address < ram.length; address++) {
+    for (let address = 0; address < project.RAM_SIZE; address++) {
         const newRow = document.createElement("tr");
         const addressCell = document.createElement("td");
         const dataCell = document.createElement("td");
@@ -33,11 +33,11 @@ function generateRamTable() {
         const operandCell = document.createElement("td");
 
         // Populate cells based on whether to load data or initialize with defaults
-        const asm = dataToAsm(ram[address]);
-        addressCell.textContent = formatAddress(address);
-        dataCell.textContent = formatData(ram[address]);
+        const asm = dataToAsm(project.getRam(address));
+        addressCell.textContent = formatRamAddress(address);
+        dataCell.textContent = formatData(project.getRam(address));
         assemblerCell.textContent = asm.instruction;
-        operandCell.textContent = (asm.instruction || asm.operand !== 0) ? formatAddress(asm.operand) : "";
+        operandCell.textContent = (asm.instruction || asm.operand !== 0) ? formatRamAddress(asm.operand) : "";
 
         // Set row ID for future reference
         newRow.id = `ram-row-${address}`;
@@ -53,7 +53,7 @@ function generateRamTable() {
         // onclick is still triggered on double-click, so the row will be selected and highlighted as well
         newRow.ondblclick = () => {
             const ramInput = document.getElementById("ram-input");
-            ramInput.value = formatDataHigh(ram[address]) + "." + formatDataLow(ram[address]); // Insert the current RAM data into the input field
+            ramInput.value = formatDataHigh(project.getRam(address)) + "." + formatDataLow(project.getRam(address)); // Insert the current RAM data into the input field
         };
 
         // Append cells to the row and the row to the table
@@ -80,10 +80,10 @@ function updateRamTableRow(address) {
     const assemblerCell = row.children[2];
     const operandCell = row.children[3];
 
-    dataCell.textContent = formatData(ram[address]);
-    const asm = dataToAsm(ram[address]);
+    dataCell.textContent = formatData(project.getRam(address));
+    const asm = dataToAsm(project.getRam(address));
     assemblerCell.textContent = asm.instruction;
-    operandCell.textContent = (asm.instruction || asm.operand !== 0) ? formatAddress(asm.operand) : "";
+    operandCell.textContent = (asm.instruction || asm.operand !== 0) ? formatRamAddress(asm.operand) : "";
 }
 
 /**
@@ -92,7 +92,7 @@ function updateRamTableRow(address) {
  * @returns {void}
  */
 function updateRamTable() {
-    for (let address = 0; address < ram.length; address++) {
+    for (let address = 0; address < project.RAM_SIZE; address++) {
         updateRamTableRow(address);
     }
 }
@@ -103,7 +103,7 @@ function updateRamTable() {
  * @return {void}
  */
 function updateRamTableHighlighting(scrollToSelected = true) {
-    for (let address = 0; address < ram.length; address++) {
+    for (let address = 0; address < project.RAM_SIZE; address++) {
         const row = document.getElementById(`ram-row-${address}`);
         row.classList.remove("selected");
         row.classList.remove("last-executed");
@@ -161,13 +161,13 @@ function scrollToRamAddress(address) {
  */
 function insertRamRowAbove() {
     // Find last used address in RAM (the last address that is not 0; if all are 0, it will be -1)
-    let lastUsedAddress = getLastUsedRamAddress();
+    let lastUsedAddress = project.getLastUsedRamAddress();
 
     // If RAM is empty, we don't need to do anything
     if (lastUsedAddress === -1) return;
 
     // If there is no empty address to shift down, we cannot insert a new row
-    if (lastUsedAddress >= ram.length - 1) {
+    if (lastUsedAddress >= project.RAM_SIZE - 1) {
         console.error("Cannot insert new row: RAM is full.");
         alert("Cannot insert new row: RAM is full.");
         return;
@@ -176,18 +176,15 @@ function insertRamRowAbove() {
     // Shift rows down from the last used address to the selected address to create space for the new row
     for (let i = lastUsedAddress + 1; i > selectedRamAddress; i--) {
         console.debug(`Shifting RAM address ${i - 1} to ${i}`);
-        ram[i] = ram[i - 1];
+        project.setRam(i, project.getRam(i - 1), false);
         updateRamTableRow(i);
     }
 
     // Clear the selected address for new input
-    ram[selectedRamAddress] = 0;
+    project.setRam(selectedRamAddress, 0); // save all changes to localStorage after the loop to avoid multiple saves during shifting
     updateRamTableRow(selectedRamAddress);
 
     fixOperandAfterRamShift(selectedRamAddress);
-
-    // Save the updated RAM to localStorage
-    saveRamToLocalStorage();
 }
 
 /**
@@ -197,7 +194,7 @@ function insertRamRowAbove() {
  */
 function deleteRamRow() {
     // Find last used address in RAM (the last address that is not 0; if all are 0, it will be -1)
-    let lastUsedAddress = getLastUsedRamAddress();
+    let lastUsedAddress = project.getLastUsedRamAddress();
 
     // If RAM is empty, we don't need to do anything
     if (lastUsedAddress === -1) return;
@@ -205,18 +202,15 @@ function deleteRamRow() {
     // Shift rows up from the selected address to the last used address to fill the gap of the deleted row
     for (let i = selectedRamAddress; i < lastUsedAddress; i++) {
         console.debug(`Shifting RAM address ${i + 1} to ${i}`);
-        ram[i] = ram[i + 1];
+        project.setRam(i, project.getRam(i + 1), false);
         updateRamTableRow(i);
     }
 
     // Clear the last address after shifting
-    ram[lastUsedAddress] = 0;
+    project.setRam(lastUsedAddress, 0); // save all changes to localStorage after the loop to avoid multiple saves during shifting
     updateRamTableRow(lastUsedAddress);
 
     fixOperandAfterRamShift(selectedRamAddress, -1);
-
-    // Save the updated RAM to localStorage
-    saveRamToLocalStorage();
 }
 
 /**
@@ -228,17 +222,17 @@ function deleteRamRow() {
 function fixOperandAfterRamShift(startAddress, delta = 1) {
     if (!settings.get("fixRamAfterShift")) return; // only fix RAM if the flag is set
 
-    for (let address = 0; address < ram.length; address++) {
-        const data = ram[address];
+    for (let address = 0; address < project.RAM_SIZE; address++) {
+        const data = project.getRam(address);
         const opcode = getDataHigh(data);
         const operand = getDataLow(data);
 
         // Skip if opcode is 0 (FETCH) or 10 (HLT) since they don't have operands
         if (opcode === 0 || opcode === 10) continue;
 
-        // If operand is greater than or equal to the startAddress, it needs to be incremented by 1
+        // If operand is greater than or equal to the startAddress, it needs to be incremented by delta to point to the correct address after the shift
         if (operand >= startAddress) {
-            ram[address] = (opcode * 1000) + (operand + delta);
+            project.setRam(address, (opcode * 1000) + (operand + delta));
             updateRamTableRow(address);
         }
     }
