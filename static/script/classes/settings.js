@@ -1,3 +1,10 @@
+/**
+ * The Settings class manages user-configurable settings for the application, providing functionality to load, save, and validate settings against a defined scheme.
+ * It uses localStorage to persist settings across sessions and includes comprehensive error handling to ensure robustness in various environments and scenarios.
+ * 
+ * The SETTINGS_SCHEME defines the available settings, their types, default values, and descriptions, which are used for validation and UI representation.
+ * The showInModal property in the SETTINGS_SCHEME indicates whether a setting should be displayed in the settings modal, allowing for flexible UI design.
+ */
 class Settings {
     #values = {};
     static STORAGE_KEY = "johnny-settings";
@@ -18,7 +25,7 @@ class Settings {
             type: "boolean",
             default: true,
             showInModal: true,
-            description: "Automatically scroll the microcode view to the current instruction"
+            description: "Automatically scroll the microcode table to the current instruction"
         }
     }
 
