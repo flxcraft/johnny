@@ -24,8 +24,6 @@ let initialized = false; // indicates if the simulator has been initialized
 let isRecording = false; // indicates if a macro recording is in progress
 let recordMicroCodeAddress = null; // the current microcode address being recorded to
 
-let fixRamAfterShift = true; // flag to indicate if RAM needs to be fixed after a shift operation
-
 function initialize() {
     // Initialize settings first to ensure they are available for other components
     settings = new Settings();

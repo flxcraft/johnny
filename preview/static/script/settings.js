@@ -8,6 +8,12 @@ class Settings {
             showInModal: false,
             description: "Show the control unit in the UI"
         },
+        fixRamAfterShift: {
+            type: "boolean",
+            default: true,
+            showInModal: true,
+            description: "Automatically fix operands of RAM values after shifting rows (e.g. inserting / deleting)"
+        },
         autoScrollMicroCode: {
             type: "boolean",
             default: true,

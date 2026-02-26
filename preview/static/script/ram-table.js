@@ -226,7 +226,7 @@ function deleteRamRow() {
  * @returns {void}
  */
 function fixOperandAfterRamShift(startAddress, delta = 1) {
-    if (!fixRamAfterShift) return; // only fix RAM if the flag is set
+    if (!settings.get("fixRamAfterShift")) return; // only fix RAM if the flag is set
 
     for (let address = 0; address < ram.length; address++) {
         const data = ram[address];
