@@ -1,3 +1,8 @@
+/**
+ * JohnnyProject class represents the state of the Johnny Simulator project, including RAM, microcode, and instruction name mappings.
+ * It provides methods for getting and setting RAM and microcode values, as well as for saving and loading the project state to and from localStorage.
+ * The class also includes functionality for importing and exporting project data in JSON format, as well as in a legacy format for RAM and microcode.
+ */
 class JohnnyProject {
     // Constant values
     RAM_SIZE = 1000;
