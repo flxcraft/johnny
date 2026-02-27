@@ -1,8 +1,14 @@
+/**
+ * JohnnyProject class represents the state of the Johnny Simulator project, including RAM, microcode, and instruction name mappings.
+ * It provides methods for getting and setting RAM and microcode values, as well as for saving and loading the project state to and from localStorage.
+ * The class also includes functionality for importing and exporting project data in JSON format, as well as in a legacy format for RAM and microcode.
+ */
 class JohnnyProject {
     // Constant values
     RAM_SIZE = 1000;
     MICROCODE_SIZE = 200;
     MAX_RAM_VALUE = (this.MICROCODE_SIZE * 100) - 1; // 19999
+    static STORAGE_KEY = "johnny:project";
 
     // Data structures for instruction and micro-instruction name mappings
     #instructionNames = {}; // mapping of opcodes to their names, e.g., {1: "TAKE", 2: "ADD", ...}
@@ -361,7 +367,7 @@ class JohnnyProject {
     #saveProject() {
         try {
             const projectData = this.#toJSON();
-            localStorage.setItem("johnnyProject", JSON.stringify(projectData));
+            localStorage.setItem(JohnnyProject.STORAGE_KEY, JSON.stringify(projectData));
             console.debug("Project saved to localStorage.");
         } catch (error) {
             console.error("Failed to save project to localStorage:", error);
@@ -378,7 +384,7 @@ class JohnnyProject {
      */
     #loadProject() {
         try {
-            const projectData = JSON.parse(localStorage.getItem("johnnyProject"));
+            const projectData = JSON.parse(localStorage.getItem(JohnnyProject.STORAGE_KEY));
             if (projectData) {
                 this.#fromJSON(projectData);
                 console.debug("Project loaded from localStorage.");
