@@ -7,7 +7,7 @@
  */
 class Settings {
     #values = {};
-    static STORAGE_KEY = "johnny-settings";
+    static STORAGE_KEY = "johnny:settings";
     static SETTINGS_SCHEME = {
         showControlUnit: {
             type: "boolean",
