@@ -143,17 +143,22 @@ function updateRamInputArrowPosition() {
 }
 
 /**
- * Scrolls the RAM table container to ensure that the specified RAM address is visible and centered in the view.
+ * Scrolls the RAM table container to ensure that the specified RAM address is visible in the view.
  * 
  * @param {number} address the RAM address to scroll to
  * @returns {void}
  */
 function scrollToRamAddress(address) {
     const row = document.getElementById(`ram-row-${address}`);
-    const ramTablecontainer = document.getElementById("ram-table-container");
-    const rowsAbove = 5; // Number of rows to show above the target row
+    const container = document.getElementById("ram-table-container");
+    if (!row || !container) return;
 
-    if (row) ramTablecontainer.scrollTop = row.offsetTop - (rowsAbove * row.clientHeight);
+    const targetOffsetFromTop = container.clientHeight * 0.2; // 20% from top
+    const targetScrollTop = row.offsetTop - targetOffsetFromTop;
+
+    // Keep scrollTop in valid bounds
+    const maxScrollTop = container.scrollHeight - container.clientHeight;
+    container.scrollTop = Math.max(0, Math.min(targetScrollTop, maxScrollTop));
 }
 
 /**
