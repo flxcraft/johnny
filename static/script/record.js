@@ -10,6 +10,10 @@ function recordMicroStep(microStepId) {
 
     project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
+
+    scrollToMicroCodeAddress(recordMicroCodeAddress); // Scroll the microcode table to the new address being recorded
+    highlightMicroCodeTableRow(recordMicroCodeAddress); // Highlight the new row being recorded
+    
     recordMicroCodeAddress++; // Move to the next microcode address for the next step
 }
 

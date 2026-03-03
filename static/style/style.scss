@@ -354,6 +354,10 @@ table {
     tr.last-executed {
         background-color: #00F45D;
     }
+
+    tr.highlight {
+        background-color: red;
+    }
 }
 
 #ram-table-container {

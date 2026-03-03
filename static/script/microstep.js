@@ -94,8 +94,10 @@ function executeMicroInstruction(id, animate = true, isManual = false) {
         showDataMovementAnimation(microStep.animation);
     }
 
-    // Update microcode table highlighting
-    updateMicrocodeTableHighlighting();
+    // Update microcode table highlighting if not currently recording, to reflect the new microcode counter position
+    if (!isRecording) {
+        updateMicrocodeTableHighlighting();
+    }
 }
 
 
