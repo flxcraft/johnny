@@ -7,6 +7,11 @@
  */
 function recordMicroStep(microStepId) {
     if (!isRecording || recordMicroCodeAddress === null) return;
+    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= project.MICROCODE_SIZE) {
+        console.error(`Record micro step address ${recordMicroCodeAddress} is out of bounds. Stopping recording.`);
+        stopRecording();
+        return;
+    }
 
     project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
