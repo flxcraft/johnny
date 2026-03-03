@@ -149,6 +149,8 @@ function updateRamInputArrowPosition() {
  * @returns {void}
  */
 function scrollToRamAddress(address) {
+    if (!settings.get("autoScrollRam")) return; // only auto-scroll if enabled
+
     const row = document.getElementById(`ram-row-${address}`);
     const container = document.getElementById("ram-table-container");
     if (!row || !container) return;
