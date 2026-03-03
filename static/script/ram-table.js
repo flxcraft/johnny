@@ -105,15 +105,17 @@ function updateRamTable() {
 function updateRamTableHighlighting(scrollToSelected = true) {
     for (let address = 0; address < project.RAM_SIZE; address++) {
         const row = document.getElementById(`ram-row-${address}`);
-        row.classList.remove("selected");
-        row.classList.remove("last-executed");
+
+        // Remove all classes first
+        row.classList.remove("selected", "last-executed");
+
+        // Add the appropriate class based on priority: selected takes precedence over last-executed
         if (address === selectedRamAddress) {
             row.classList.add("selected");
 
             if (scrollToSelected) scrollToRamAddress(address);
             updateRamInputArrowPosition();
-        }
-        if (lastAccessedRamAddress !== null && address === lastAccessedRamAddress) {
+        } else if (lastAccessedRamAddress !== null && address === lastAccessedRamAddress) {
             row.classList.add("last-executed");
         }
     }
