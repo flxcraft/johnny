@@ -129,7 +129,25 @@ function updateMicrocodeTableHighlighting() {
         }
     }
 
-    scrollToMicrocodeAddress(microCodeCounter);
+    scrollToMicroCodeAddress(microCodeCounter);
+}
+
+/**
+ * Highlights a specific row in the microcode table to indicate the current recording position.
+ *
+ * @param {number} address the microcode address to highlight
+ * @returns {void}
+ */
+function highlightMicroCodeTableRow(address) {
+    const row = document.getElementById(`microcode-row-${address}`);
+    
+    // highlighlight for 500ms to indicate the current recording position, but only if the row exists (address is valid)
+    if (row) {
+        row.classList.add("highlight");
+        setTimeout(() => {
+            row.classList.remove("highlight");
+        }, 500);
+    }
 }
 
 /**
@@ -199,7 +217,7 @@ function saveMicroCodeEdit() {
  * @param {number} address the microcode address to scroll to
  * @returns {void}
  */
-function scrollToMicrocodeAddress(address) {
+function scrollToMicroCodeAddress(address) {
     if (!settings.get("autoScrollMicroCode")) return; // only auto-scroll if the setting is enabled
 
     const row = document.getElementById(`microcode-row-${address}`);
