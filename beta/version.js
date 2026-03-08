@@ -1,5 +1,5 @@
 window.BUILD_INFO = {
-  "version": "v1.1.0-beta.1",
+  "version": "v1.1.0-beta.2",
   "channel": "beta",
-  "buildTime": "2026-02-26T22:30:38Z"
+  "buildTime": "2026-03-08T21:19:51Z"
 };

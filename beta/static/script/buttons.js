@@ -280,20 +280,15 @@ function updateControlUnitVisibility() {
 }
 
 /**
- * Toggles the recording state for macro instructions and updates the UI to reflect the current state.
- * When recording is active, the record panel will have a "recording" class added for visual feedback.
+ * Toggles the recording state for macro instruction recording. If recording is currently active, it stops the recording; otherwise, it starts a new recording session.
  * 
  * @returns {void}
  */
 function toggleRecording() {
-    isRecording = !isRecording;
-    const recordPanel = document.getElementById("mc-record-panel");
     if (isRecording) {
-        if (!startRecording()) return;
-        recordPanel.classList.add("recording");
+        stopRecording();
     } else {
-        recordMicroCodeAddress = null;
-        recordPanel.classList.remove("recording");
+        startRecording();
     }
 }
 

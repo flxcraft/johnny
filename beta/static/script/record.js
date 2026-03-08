@@ -7,9 +7,18 @@
  */
 function recordMicroStep(microStepId) {
     if (!isRecording || recordMicroCodeAddress === null) return;
+    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= project.MICROCODE_SIZE) {
+        console.error(`Record micro step address ${recordMicroCodeAddress} is out of bounds. Stopping recording.`);
+        stopRecording();
+        return;
+    }
 
     project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
+
+    scrollToMicroCodeAddress(recordMicroCodeAddress); // Scroll the microcode table to the new address being recorded
+    highlightMicroCodeTableRow(recordMicroCodeAddress); // Highlight the new row being recorded
+    
     recordMicroCodeAddress++; // Move to the next microcode address for the next step
 }
 
@@ -21,6 +30,13 @@ function recordMicroStep(microStepId) {
  * @returns {boolean} true if recording started successfully, false otherwise
  */
 function startRecording() {
+    isRecording = true;
+
+    // Add the "recording" class to the record panel to update its visual state
+    const recordPanel = document.getElementById("mc-record-panel");
+    if (recordPanel) recordPanel.classList.add("recording");
+
+    // Get references to the input elements for the starting microcode address and instruction name
     const recordStartAddressInput = document.getElementById("record-start-address");
     const recordInstructionNameInput = document.getElementById("record-instruction-name");
 
@@ -66,4 +82,19 @@ function startRecording() {
         recordMicroCodeAddress = null;
         return false; // Indicate that recording did not start due to an error
     }
+}
+
+/**
+ * Stops the recording of a macro instruction.
+ * Resets the recording state and updates the visual state of the record panel.
+ * 
+ * @returns {void}
+ */
+function stopRecording() {
+    isRecording = false;
+    recordMicroCodeAddress = null;
+    
+    // Remove the "recording" class from the record panel to update its visual state
+    const recordPanel = document.getElementById("mc-record-panel");
+    if (recordPanel) recordPanel.classList.remove("recording");
 }
