@@ -123,14 +123,30 @@ function updateRamTableHighlighting(scrollToSelected = true) {
 
 /**
  * Moves the arrow indicator to the selected RAM row in the RAM table.
+ * The arrow is only shown if the selected row is visible in the container.
  * 
  * @returns {void}
  */
 function updateRamInputArrowPosition() {
     const arrow = document.getElementById("ram-input-arrow");
     const selectedRow = document.getElementById(`ram-row-${selectedRamAddress}`);
+    const container = document.getElementById("ram-table-container");
 
-    if (!selectedRow) {
+    // If there is no selected row or container, hide the arrow and exit
+    if (!selectedRow || !container) {
+        arrow.style.display = "none";
+        return;
+    }
+
+    // Check if the selected row is visible in the container viewport
+    const rowTop = selectedRow.offsetTop;
+    const rowBottom = rowTop + selectedRow.offsetHeight;
+    const containerTop = container.scrollTop;
+    const containerBottom = container.scrollTop + container.clientHeight;
+
+    const isVisible = rowTop < containerBottom && rowBottom > containerTop;
+
+    if (!isVisible) {
         arrow.style.display = "none";
         return;
     }
