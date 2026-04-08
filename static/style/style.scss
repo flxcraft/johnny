@@ -33,7 +33,7 @@ body {
 
     &#ram-options {
         left: 2dvw;
-        top: 2dvh;
+        top: 1dvh;
     }
 
     &#ram-control-options {
@@ -47,7 +47,7 @@ body {
 
     &#control-unit-toggle {
         left: 40dvw;
-        top: 2dvh;
+        top: 1dvh;
     }
 
     &#mc-options {
@@ -99,8 +99,8 @@ body {
     }
 
     .icon {
-        width: 4dvmin;
-        height: 4dvmin;
+        width: 5dvmin;
+        height: 5dvmin;
 
         &:hover {
             cursor: pointer;
