@@ -70,12 +70,15 @@
     </div>
 
     <div class="header control-unit-element hidden" id="mc-record-panel">
-        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
+        <img src="./static/img/record-macro.png" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
             class="icon" title="Record Instruction">
-        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
-            title="Address of the new Instruction in RAM (must be a multiple of 10)">
-        <input type="text" id="record-instruction-name" maxlength="5" value="NN"
-            title="Name of the Instruction (max. 5 characters)">
+
+        <div class="input-group">
+            <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
+                placeholder="Start Address..." title="Address of the new Instruction in RAM (must be a multiple of 10)">
+            <input type="text" id="record-instruction-name" maxlength="5" value="NN" placeholder="Macro Name..."
+                title="Name of the Instruction (max. 5 characters)">
+        </div>
     </div>
 
     <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>

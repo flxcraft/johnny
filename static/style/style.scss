@@ -57,7 +57,18 @@ body {
 
     &#mc-record-panel {
         left: 60dvw;
-        top: 2dvh;
+        top: 1dvh;
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2dvh;
+
+            input {
+                padding: 0;
+                width: 7dvw;
+            }
+        }
 
         &.recording {
             background-color: red;
@@ -79,11 +90,6 @@ body {
             100% {
                 opacity: 1;
             }
-        }
-
-        input {
-            padding: 0;
-            width: 5dvw;
         }
     }
 
