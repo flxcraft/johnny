@@ -38,7 +38,7 @@ body {
 
     &#ram-control-options {
         left: 12dvw;
-        top: 2dvh;
+        top: 1dvh;
 
         input[type="range"] {
             width: 8dvw;
@@ -111,12 +111,6 @@ body {
         &:hover {
             cursor: pointer;
             filter: brightness(0.8);
-        }
-
-        &.blackborder {
-            width: calc(4dvmin - 2px) !important;
-            height: calc(4dvmin - 2px) !important;
-            border: 1px solid black;
         }
     }
 }
