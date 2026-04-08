@@ -81,7 +81,17 @@
         </div>
     </div>
 
-    <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
+    <div class="header" id="simulator-options">
+        <!-- <img src="./static/img/new-project.png" onclick="javascript:void(0)" tabindex="0" alt="New Project" class="icon"
+            title="New Project"> -->
+        <img src="./static/img/download-project.png" onclick="downloadProjectAsFile()" tabindex="0"
+            alt="Download Project" class="icon" title="Download Project">
+        <img src="./static/img/upload-project.png" onclick="uploadProjectFromFile()" tabindex="0" alt="Upload Project"
+            class="icon" title="Upload Project">
+
+        <img src="./static/img/settings.png" onclick="toggleSettingsModal()" tabindex="0" alt="Settings" class="icon"
+            title="Open Settings">
+    </div>
 
     <!-- manual input fields -->
     <form action="javascript:manualAddressBus();">

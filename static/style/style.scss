@@ -93,15 +93,9 @@ body {
         }
     }
 
-    &#settings-button {
-        position: fixed;
-        left: 90dvw;
-        top: 2.5dvh;
-
-        &:hover {
-            cursor: pointer;
-            filter: brightness(0.8);
-        }
+    &#simulator-options {
+        left: 85dvw;
+        top: 1dvh;
     }
 
     .icon {
