@@ -5,7 +5,7 @@ html * {
 }
 
 body {
-    background-image: url("../img/background.png");
+    background-image: url("../img/background.webp");
     background-size: 100dvw 100dvh;
     background-repeat: no-repeat;
 }
@@ -112,24 +112,24 @@ body {
 // ----- manaual inputs -----
 .manual-input {
     position: fixed;
-    left: 5dvw;
+    left: 2dvw;
 
     &#ab-manual-input {
-        top: 13dvh;
+        top: 13.5dvh;
         width: 5dvw;
     }
 
     &#ab-manual-button {
-        top: 15.5dvh;
+        top: 16.5dvh;
     }
 
     &#db-manual-input {
-        top: 93dvh;
+        top: 90.3dvh;
         width: 5dvw;
     }
 
     &#db-manual-button {
-        top: 95.5dvh;
+        top: 93.3dvh;
     }
 }
 
@@ -147,16 +147,16 @@ body {
 
     &#db-field {
         left: 50dvw;
-        top: 92.5dvh;
+        top: 90dvh;
     }
 
     &#acc-field {
         left: 91dvw;
-        top: 48.5dvh;
+        top: 50dvh;
     }
 
     &#ins-field {
-        left: 49.5dvw;
+        left: 48.5dvw;
         top: 37dvh;
 
         span {
@@ -173,13 +173,13 @@ body {
     }
 
     &#pc-field {
-        left: 67.8dvw;
-        top: 36.5dvh;
+        left: 66dvw;
+        top: 37dvh;
     }
 
     &#mc-field {
-        left: 46.3dvw;
-        top: 54.3dvh;
+        left: 46dvw;
+        top: 54.2dvh;
     }
 }
 
@@ -199,103 +199,103 @@ body {
     }
 
     &#ram-db-button {
-        left: 23.5dvw;
-        top: 86dvh;
+        left: 25dvw;
+        top: 83dvh;
     }
 
     &#db-ram-button {
-        left: 17dvw;
+        left: 17.2dvw;
         top: 86dvh;
     }
 
     &#db-acc-button {
-        left: 80.5dvw;
-        top: 63dvh;
+        left: 79.7dvw;
+        top: 67dvh;
     }
 
     &#acc-db-button {
-        left: 91.5dvw;
-        top: 63dvh;
+        left: 93dvw;
+        top: 67dvh;
     }
 
     &#acc-add-button {
-        left: 80.5dvw;
-        top: 66dvh;
+        left: 79.7dvw;
+        top: 70dvh;
     }
 
     &#acc-sub-button {
-        left: 80.5dvw;
-        top: 69dvh;
+        left: 79.7dvw;
+        top: 73dvh;
     }
 
     &#acc-inc-button {
         left: 90.5dvw;
-        top: 27dvh;
+        top: 33dvh;
     }
 
     &#acc-dec-button {
         left: 90.5dvw;
-        top: 30dvh;
+        top: 36dvh;
     }
 
     &#acc-null-button {
         left: 90.5dvw;
-        top: 33dvh;
+        top: 39dvh;
     }
 
     &#db-ins-button {
-        left: 39dvw;
+        left: 37dvw;
         top: 60dvh;
     }
 
     &#ins-pc-button {
-        left: 58dvw;
+        left: 56dvw;
         top: 39.8dvh;
     }
 
     &#ins-ab-button {
-        left: 51.7dvw;
-        top: 27dvh;
+        left: 48.5dvw;
+        top: 31dvh;
     }
 
     &#ins-mc-button {
-        left: 46.7dvw;
-        top: 49dvh;
+        left: 45.5dvw;
+        top: 49.4dvh;
     }
 
     &#pc-ab-button {
-        left: 67.8dvw;
-        top: 27dvh;
+        left: 66dvw;
+        top: 31dvh;
     }
 
     &#pc-inc-button {
-        left: 68dvw;
+        left: 64.5dvw;
         top: 46dvh;
     }
 
     &#pc-inc-null-button {
-        left: 68dvw;
+        left: 64.5dvw;
         top: 49dvh;
     }
 
     &#mc-null-button {
-        left: 63.5dvw;
+        left: 63dvw;
         top: 80dvh;
     }
 
     &#mc-stop-button {
-        left: 63.5dvw;
+        left: 63dvw;
         top: 83dvh;
     }
 
     &#add-row-above-button {
         left: 10dvw;
-        top: 80dvh;
+        top: 81.65dvh;
     }
 
     &#delete-row-button {
         left: 10dvw;
-        top: 83dvh;
+        top: 84.65dvh;
     }
 }
 
@@ -356,17 +356,17 @@ table {
 
 #ram-table-container {
     position: fixed;
-    left: 9dvw;
-    top: 26dvh;
-    height: 50dvh;
+    left: 9.9dvw;
+    top: 26.3dvh;
+    height: 53dvh;
     width: 23dvw;
     overflow-y: auto;
 }
 
 #microcode-table-container {
     position: fixed;
-    left: 45dvw;
-    top: 58.7dvh;
+    left: 44.4dvw;
+    top: 58.5dvh;
     height: 28dvh;
     width: 15dvw;
     overflow-y: auto;
