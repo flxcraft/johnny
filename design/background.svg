@@ -28,14 +28,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="0.35355339"
-     inkscape:cx="1087.5302"
-     inkscape:cy="473.76154"
+     inkscape:cx="1395.8288"
+     inkscape:cy="683.06515"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer5"
      showguides="true"
      inkscape:lockguides="false"
      showgrid="false"
@@ -795,8 +795,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="labels"
-     inkscape:highlight-color="#2149f3"
-     sodipodi:insensitive="true">
+     inkscape:highlight-color="#2149f3">
     <text
        xml:space="preserve"
        id="text28"
@@ -807,9 +806,9 @@
        y="0"><tspan
          x="2040.2688"
          y="682.57978"
-         id="tspan2"><tspan
+         id="tspan26"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan1">Accumulator</tspan></tspan></text>
+           id="tspan25">Accumulator</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text29"
@@ -820,15 +819,15 @@
        y="0"><tspan
          x="2044.678"
          y="682.57978"
-         id="tspan4"><tspan
+         id="tspan28"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan3">Program
+           id="tspan27">Program
 </tspan></tspan><tspan
          x="2049.4501"
          y="716.11725"
-         id="tspan6"><tspan
+         id="tspan30"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan5">Counter</tspan></tspan></text>
+           id="tspan29">Counter</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text30"
@@ -839,9 +838,9 @@
        y="0"><tspan
          x="2045.6093"
          y="682.57978"
-         id="tspan8"><tspan
+         id="tspan32"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan7">=0?</tspan></tspan></text>
+           id="tspan31">=0?</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text31"
@@ -852,15 +851,15 @@
        y="0"><tspan
          x="2044.4755"
          y="682.57978"
-         id="tspan10"><tspan
+         id="tspan34"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan9">Instruction
+           id="tspan33">Instruction
 </tspan></tspan><tspan
          x="2065.1331"
          y="716.11725"
-         id="tspan12"><tspan
+         id="tspan36"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan11">Register</tspan></tspan></text>
+           id="tspan35">Register</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text32"
@@ -871,35 +870,35 @@
        y="0"><tspan
          x="2044.858"
          y="682.57978"
-         id="tspan14"><tspan
+         id="tspan38"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan13">RAM</tspan></tspan></text>
+           id="tspan37">RAM</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text33"
-       style="font-size:66.6667px;text-align:center;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect33);display:inline;fill:#000000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-       transform="translate(-1554.5497,-461.2534)"
+       style="font-size:66.6667px;text-align:center;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect33);display:inline;fill:#e6e6e6;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+       transform="translate(-1559.9305,-461.2534)"
        inkscape:label="addressbus"
        x="25.380466"
        y="0"><tspan
          x="2046.7535"
          y="718.97478"
-         id="tspan16"><tspan
+         id="tspan40"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan15">Address Bus</tspan></tspan></text>
+           id="tspan39">Address Bus</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text34"
-       style="font-size:66.6667px;text-align:center;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect34);display:inline;fill:#000000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+       style="font-size:66.6667px;text-align:center;letter-spacing:0px;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect34);display:inline;fill:#e6e6e6;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
        transform="translate(-1620.5003,643.7466)"
        inkscape:label="databus"
        x="25.380474"
        y="0"><tspan
          x="2106.0471"
          y="718.97478"
-         id="tspan18"><tspan
+         id="tspan42"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan17">Data Bus</tspan></tspan></text>
+           id="tspan41">Data Bus</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text35"
@@ -910,9 +909,9 @@
        y="0"><tspan
          x="2049.3349"
          y="700.77728"
-         id="tspan20"><tspan
+         id="tspan44"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan19">Memory</tspan></tspan></text>
+           id="tspan43">Memory</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text36"
@@ -923,9 +922,9 @@
        y="0"><tspan
          x="2061.1304"
          y="700.77728"
-         id="tspan22"><tspan
+         id="tspan46"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan21">Control Unit</tspan></tspan></text>
+           id="tspan45">Control Unit</tspan></tspan></text>
     <text
        xml:space="preserve"
        id="text37"
@@ -936,9 +935,9 @@
        y="0"><tspan
          x="2040.3898"
          y="700.77728"
-         id="tspan24"><tspan
+         id="tspan48"><tspan
            style="font-weight:bold;font-family:Georgia;-inkscape-font-specification:'Georgia Bold'"
-           id="tspan23">Arithmetic Logic Unit</tspan></tspan></text>
+           id="tspan47">Arithmetic Logic Unit</tspan></tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
