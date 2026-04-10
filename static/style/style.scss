@@ -303,10 +303,10 @@ body {
 .ram-input {
     position: fixed;
     left: 0.5dvw;
-    top: 45dvh;
-    width: 8dvw;
+    top: 21.2dvh;
+    width: 9.2dvw;
     height: 18dvh;
-    background-image: url("../img/ram-input.png");
+    background-image: url("../img/ram-input-arrow.webp");
     background-size: 100% 100%;
 
     display: flex;
@@ -314,7 +314,7 @@ body {
     justify-content: center;
 
     * {
-        width: 5dvw;
+        width: 6.2dvw;
         height: 2.5dvh;
         margin-left: 0.3dvw;
         margin-top: 0.2rem;
