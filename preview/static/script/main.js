@@ -24,6 +24,7 @@ function initialize() {
     settings = new Settings();
     generateSettingsUI(); // Populate the settings UI based on the loaded settings
     updateControlUnitVisibility(); // Update the control unit visibility based on the loaded settings
+    updateMicroCodeCounterVisibility(); // Update the microcode counter visibility based on the loaded settings
 
     // Initialize the project, which will load RAM and microcode from localStorage or set defaults
     project = new JohnnyProject();
@@ -62,5 +63,30 @@ function showDataMovementAnimation(animation) {
         }
     } else {
         console.warn("Animation element not found for:", animation);
+    }
+}
+
+/**
+ * Updates the visibility of the microcode counter in the UI based on the current setting.
+ * If the setting is enabled, the microcode counter element will be shown and the microcode table container will be in normal mode.
+ * If the setting is disabled, the microcode counter element will be hidden and the microcode table container will switch to large mode.
+ * 
+ * @returns {void}
+ */
+function updateMicroCodeCounterVisibility() {
+    const microCodeCounterElement = document.getElementById("mc-field");
+    const microCodeTableContainer = document.getElementById("microcode-table-container");
+
+    try {
+        if (settings.get("showMicroCodeCounter")) {
+            microCodeCounterElement.style.display = "block";
+            microCodeTableContainer.classList.remove("large-mode");
+        } else {
+            microCodeCounterElement.style.display = "none";
+            microCodeTableContainer.classList.add("large-mode");
+        }
+    } catch (error) {
+        console.error("Error updating microcode counter visibility:", error);
+        alert("An error occurred while updating the microcode counter visibility. Please check the console for details.");
     }
 }
