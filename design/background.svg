@@ -27,15 +27,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1395.8288"
-     inkscape:cy="683.06515"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="444.06306"
+     inkscape:cy="127.27922"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer4"
      showguides="true"
      inkscape:lockguides="false"
      showgrid="false"
@@ -277,7 +277,7 @@
      style="display:inline"
      sodipodi:insensitive="true">
     <rect
-       style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+       style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
        id="rect8"
        width="2130"
        height="120"
@@ -298,9 +298,9 @@
        id="g12"
        inkscape:label="man-db"
        transform="translate(-0.34838209,-0.08709552)"
-       style="fill:#2e9d34;fill-opacity:1">
+       style="fill:#48c43f;fill-opacity:1">
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect10"
          width="220"
          height="120"
@@ -309,7 +309,7 @@
          rx="10" />
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path10"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -324,7 +324,7 @@
          d="M -2.6593082,698.54687 -3.2927444,477.12841 188.77799,587.28907 Z"
          inkscape:transform-center-x="14.091496"
          inkscape:transform-center-y="-17.378089"
-         transform="matrix(0.70753413,0,0,0.87255376,217.70553,827.74798)" />
+         transform="matrix(0.70753413,0,0,0.87255376,216.77811,827.74798)" />
     </g>
     <g
        id="g11"
@@ -355,7 +355,7 @@
          d="M -2.6593082,698.54687 -3.2927444,477.12841 188.77799,587.28907 Z"
          inkscape:transform-center-x="11.697721"
          inkscape:transform-center-y="-19.91635"
-         transform="matrix(0.58734268,0,0,1,170.01923,-352.27248)" />
+         transform="matrix(0.58734268,0,0,1,169.12397,-352.27248)" />
     </g>
     <g
        id="g13"
@@ -391,10 +391,10 @@
     <g
        id="g14"
        inkscape:label="db-ram"
-       style="fill:#2e9d34;fill-opacity:1"
+       style="fill:#48c43f;fill-opacity:1"
        transform="translate(0,-0.23330273)">
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect14"
          width="120"
          height="90"
@@ -402,7 +402,7 @@
          y="1190.2333" />
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path14"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -417,15 +417,15 @@
          d="m 601.5,1219 -131.15897,-0.2753 65.81794,-113.4494 z"
          inkscape:transform-center-x="-1.0553717"
          inkscape:transform-center-y="-8.133669"
-         transform="matrix(1.4486238,0,0,0.43965837,-336.68967,664.03975)" />
+         transform="matrix(1.4486238,0,0,0.43965837,-336.68967,664.28975)" />
     </g>
     <g
        id="g15"
        inkscape:label="ram-db"
-       style="fill:#2e9d34;fill-opacity:1">
+       style="fill:#48c43f;fill-opacity:1">
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path15"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -440,9 +440,10 @@
          d="m 535.98288,1255.0813 -64.13064,-111.1368 128.31264,0.03 z"
          inkscape:transform-center-x="-1.0787887"
          inkscape:transform-center-y="-8.3230759"
-         transform="matrix(1.4807583,0,0,0.44989587,-153.65536,716.11195)" />
+         transform="matrix(1.4807583,0,0,0.44989587,-153.65536,715.34409)"
+         inkscape:label="path15" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect15"
          width="120"
          height="95.5"
@@ -452,10 +453,10 @@
     <g
        id="g17"
        inkscape:label="db-ins"
-       style="fill:#2e9d34;fill-opacity:1">
+       style="fill:#48c43f;fill-opacity:1">
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path17"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -470,9 +471,9 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-16.513825"
          inkscape:transform-center-y="3.6065542"
-         transform="matrix(0.45741018,0,0,0.80145575,594.86053,237.65446)" />
+         transform="matrix(0.45741018,0,0,0.80145575,594.37385,237.65446)" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect17"
          width="150"
          height="100"
@@ -480,7 +481,7 @@
          y="525"
          rx="10" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect16"
          width="100"
          height="700"
@@ -488,7 +489,7 @@
          y="525"
          rx="10" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect67"
          width="100"
          height="280"
@@ -498,10 +499,10 @@
     <g
        id="g19"
        inkscape:label="db-acc"
-       style="fill:#2e9d34;fill-opacity:1">
+       style="fill:#48c43f;fill-opacity:1">
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path18"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -516,9 +517,9 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-10.745571"
          inkscape:transform-center-y="3.3984014"
-         transform="matrix(0.29763883,0,0,0.75520189,1831.788,542.05444)" />
+         transform="matrix(0.29763883,0,0,0.75520189,1831.4672,542.05444)" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect18"
          width="100"
          height="400"
@@ -526,7 +527,7 @@
          y="810"
          rx="10" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect19"
          width="130"
          height="100"
@@ -534,7 +535,7 @@
          y="810"
          rx="10" />
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect59"
          width="100"
          height="180"
@@ -544,9 +545,9 @@
     <g
        id="g20"
        inkscape:label="acc-db"
-       style="fill:#2e9d34;fill-opacity:1">
+       style="fill:#48c43f;fill-opacity:1">
       <rect
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect20"
          width="100"
          height="300"
@@ -554,7 +555,7 @@
          y="925" />
       <path
          sodipodi:type="star"
-         style="fill:#2e9d34;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
+         style="fill:#48c43f;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="path20"
          inkscape:flatsided="true"
          sodipodi:sides="3"
@@ -569,7 +570,7 @@
          d="m 2198,1242.75 -76.8598,-133.125 153.7196,0 z"
          inkscape:transform-center-x="0.5"
          inkscape:transform-center-y="13.3857"
-         transform="matrix(1,0,0,0.62065728,182.01566,509.80316)" />
+         transform="matrix(1,0,0,0.62065728,182.00394,508.67739)" />
     </g>
     <g
        id="g21"
@@ -592,7 +593,7 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-16.513825"
          inkscape:transform-center-y="3.4886699"
-         transform="matrix(0.45741018,0,0,0.7752596,1044.771,248.61824)" />
+         transform="matrix(0.45741018,0,0,0.7752596,1044.3709,248.61824)" />
       <rect
          style="fill:#0000ff;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect21"
@@ -604,7 +605,8 @@
     <g
        id="g23"
        inkscape:label="ins-ab"
-       style="fill:#0000ff">
+       style="fill:#0000ff"
+       transform="translate(-0.02734375,-0.00390625)">
       <rect
          style="fill:#0000ff;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect22"
@@ -629,7 +631,7 @@
          d="m 1131.3536,370.88388 -160.7,0.0124 80.3392,-139.17644 z"
          inkscape:transform-center-x="-0.33369905"
          inkscape:transform-center-y="-14.711549"
-         transform="matrix(1.1200999,0,0,0.6466612,62.813625,144.80041)" />
+         transform="matrix(1.1200999,0,0,0.6466612,62.813625,145.15577)" />
     </g>
     <g
        id="g24"
@@ -659,19 +661,20 @@
          d="m 1131.3536,370.88388 -160.7,0.0124 80.3392,-139.17644 z"
          inkscape:transform-center-x="-0.3336815"
          inkscape:transform-center-y="-14.711539"
-         transform="matrix(1.1200999,0,0,0.6466612,512.93678,145.04676)" />
+         transform="matrix(1.1200999,0,0,0.6466612,512.78834,145.15458)" />
     </g>
     <g
        id="g25"
        inkscape:label="ins-mc"
-       style="fill:#ff0000">
+       style="fill:#ff0000"
+       transform="translate(-0.53423634,-0.30935922)">
       <rect
          style="fill:#ff0000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
          id="rect24"
          width="40"
          height="140"
-         x="1145"
-         y="625" />
+         x="1145.5342"
+         y="625.30939" />
       <path
          sodipodi:type="star"
          style="fill:#ff0000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
@@ -727,7 +730,7 @@
          d="m 1661,593.5 38.1051,66 -76.2102,0 z"
          inkscape:transform-center-x="0.5"
          inkscape:transform-center-y="-10.118435"
-         transform="matrix(1,0,0,0.91429009,98.994949,80.567318)" />
+         transform="matrix(1,0,0,0.91429009,99.017215,82.357182)" />
     </g>
   </g>
   <g
@@ -795,7 +798,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="labels"
-     inkscape:highlight-color="#2149f3">
+     inkscape:highlight-color="#2149f3"
+     sodipodi:insensitive="true">
     <text
        xml:space="preserve"
        id="text28"
@@ -947,13 +951,13 @@
      style="display:none"
      sodipodi:insensitive="true">
     <g
-       id="g72"
+       id="g38"
        inkscape:label="db-ram"
-       style="fill:#008000;fill-opacity:1"
+       style="display:inline;fill:#008000;fill-opacity:1"
        transform="translate(0,-0.23330273)">
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect72"
+         id="rect38"
          width="120"
          height="90"
          x="380"
@@ -961,7 +965,7 @@
       <path
          sodipodi:type="star"
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path72"
+         id="path38"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="536"
@@ -975,16 +979,16 @@
          d="m 601.5,1219 -131.15897,-0.2753 65.81794,-113.4494 z"
          inkscape:transform-center-x="-1.0553717"
          inkscape:transform-center-y="-8.133669"
-         transform="matrix(1.4486238,0,0,0.43965837,-336.68967,664.03975)" />
+         transform="matrix(1.4486238,0,0,0.43965837,-336.68967,664.28975)" />
     </g>
     <g
-       id="g71"
+       id="g27"
        inkscape:label="ram-db"
-       style="fill:#008000;fill-opacity:1">
+       style="display:inline;fill:#008000;fill-opacity:1">
       <path
          sodipodi:type="star"
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path70"
+         id="path1"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="536"
@@ -998,23 +1002,24 @@
          d="m 535.98288,1255.0813 -64.13064,-111.1368 128.31264,0.03 z"
          inkscape:transform-center-x="-1.0787887"
          inkscape:transform-center-y="-8.3230759"
-         transform="matrix(1.4807583,0,0,0.44989587,-153.65536,716.11195)" />
+         transform="matrix(1.4807583,0,0,0.44989587,-153.65536,715.34409)"
+         inkscape:label="path15" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect71"
+         id="rect27"
          width="120"
          height="95.5"
          x="580"
          y="1150" />
     </g>
     <g
-       id="g70"
+       id="g41"
        inkscape:label="db-ins"
-       style="fill:#008000;fill-opacity:1">
+       style="display:inline;fill:#008000;fill-opacity:1">
       <path
          sodipodi:type="star"
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path67"
+         id="path39"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1022"
@@ -1028,10 +1033,10 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-16.513825"
          inkscape:transform-center-y="3.6065542"
-         transform="matrix(0.45741018,0,0,0.80145575,594.86053,237.65446)" />
+         transform="matrix(0.45741018,0,0,0.80145575,594.37385,237.65446)" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect68"
+         id="rect39"
          width="150"
          height="100"
          x="890"
@@ -1039,7 +1044,7 @@
          rx="10" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect69"
+         id="rect40"
          width="100"
          height="700"
          x="890"
@@ -1047,20 +1052,20 @@
          rx="10" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect70"
+         id="rect41"
          width="100"
          height="280"
          x="890"
          y="1000" />
     </g>
     <g
-       id="g62"
+       id="g50"
        inkscape:label="db-acc"
-       style="fill:#008000;fill-opacity:1">
+       style="display:inline;fill:#008000;fill-opacity:1">
       <path
          sodipodi:type="star"
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path59"
+         id="path48"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1022"
@@ -1074,10 +1079,10 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-10.745571"
          inkscape:transform-center-y="3.3984014"
-         transform="matrix(0.29763883,0,0,0.75520189,1831.788,542.05444)" />
+         transform="matrix(0.29763883,0,0,0.75520189,1831.4672,542.05444)" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect60"
+         id="rect48"
          width="100"
          height="400"
          x="1990"
@@ -1085,7 +1090,7 @@
          rx="10" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect61"
+         id="rect49"
          width="130"
          height="100"
          x="1990"
@@ -1093,19 +1098,19 @@
          rx="10" />
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect62"
+         id="rect50"
          width="100"
          height="180"
          x="1990"
          y="1100" />
     </g>
     <g
-       id="g57"
+       id="g51"
        inkscape:label="acc-db"
-       style="fill:#008000;fill-opacity:1">
+       style="display:inline;fill:#008000;fill-opacity:1">
       <rect
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect57"
+         id="rect51"
          width="100"
          height="300"
          x="2330"
@@ -1113,7 +1118,7 @@
       <path
          sodipodi:type="star"
          style="fill:#008000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path57"
+         id="path51"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="2198"
@@ -1127,16 +1132,16 @@
          d="m 2198,1242.75 -76.8598,-133.125 153.7196,0 z"
          inkscape:transform-center-x="0.5"
          inkscape:transform-center-y="13.3857"
-         transform="matrix(1,0,0,0.62065728,182.01566,509.80316)" />
+         transform="matrix(1,0,0,0.62065728,182.00394,508.67739)" />
     </g>
     <g
-       id="g56"
+       id="g45"
        inkscape:label="ins-pc"
-       style="fill:#000080">
+       style="display:inline;fill:#000080">
       <path
          sodipodi:type="star"
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path56"
+         id="path45"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1022"
@@ -1150,22 +1155,23 @@
          d="m 1171,421 -223.49999,129.03777 0,-258.07554 z"
          inkscape:transform-center-x="-16.513825"
          inkscape:transform-center-y="3.4886699"
-         transform="matrix(0.45741018,0,0,0.7752596,1044.771,248.61824)" />
+         transform="matrix(0.45741018,0,0,0.7752596,1044.3709,248.61824)" />
       <rect
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect56"
+         id="rect45"
          width="180"
          height="80"
          x="1350"
          y="535" />
     </g>
     <g
-       id="g64"
+       id="g46"
        inkscape:label="ins-ab"
-       style="display:inline;fill:#000080">
+       style="display:inline;fill:#000080"
+       transform="translate(-0.02734375,-0.00390625)">
       <rect
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect64"
+         id="rect46"
          width="100"
          height="175"
          x="1190"
@@ -1173,7 +1179,7 @@
       <path
          sodipodi:type="star"
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path64"
+         id="path46"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1051"
@@ -1187,15 +1193,15 @@
          d="m 1131.3536,370.88388 -160.7,0.0124 80.3392,-139.17644 z"
          inkscape:transform-center-x="-0.33369905"
          inkscape:transform-center-y="-14.711549"
-         transform="matrix(1.1200999,0,0,0.6466612,62.813625,144.80041)" />
+         transform="matrix(1.1200999,0,0,0.6466612,62.813625,145.15577)" />
     </g>
     <g
-       id="g65"
+       id="g47"
        inkscape:label="pc-ab"
-       style="fill:#000080">
+       style="display:inline;fill:#000080">
       <rect
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect65"
+         id="rect47"
          width="100"
          height="175"
          x="1640"
@@ -1203,7 +1209,7 @@
       <path
          sodipodi:type="star"
          style="fill:#000080;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path65"
+         id="path47"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1051"
@@ -1217,23 +1223,24 @@
          d="m 1131.3536,370.88388 -160.7,0.0124 80.3392,-139.17644 z"
          inkscape:transform-center-x="-0.3336815"
          inkscape:transform-center-y="-14.711539"
-         transform="matrix(1.1200999,0,0,0.6466612,512.93678,145.04676)" />
+         transform="matrix(1.1200999,0,0,0.6466612,512.78834,145.15458)" />
     </g>
     <g
-       id="g53"
+       id="g42"
        inkscape:label="ins-mc"
-       style="fill:#800000">
+       style="display:inline;fill:#800000;fill-opacity:1"
+       transform="translate(-0.53423634,-0.30935922)">
       <rect
          style="fill:#800000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="rect53"
+         id="rect42"
          width="40"
          height="140"
-         x="1145"
-         y="625" />
+         x="1145.5342"
+         y="625.30939" />
       <path
          sodipodi:type="star"
          style="fill:#800000;fill-opacity:1;stroke-width:0;stroke-dasharray:none"
-         id="path53"
+         id="path42"
          inkscape:flatsided="true"
          sodipodi:sides="3"
          sodipodi:cx="1056.75"
@@ -1261,7 +1268,7 @@
     <g
        id="g74"
        inkscape:label="control-unit-cover"
-       style="display:inline">
+       style="display:none">
       <rect
          style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:10.4824;stroke-dasharray:31.4474, 10.4824;stroke-dashoffset:0;stroke-opacity:1"
          id="rect73"
