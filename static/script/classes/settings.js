@@ -32,7 +32,13 @@ class Settings {
             default: true,
             showInModal: true,
             description: "Automatically scroll the RAM table to the selected address"
-        }
+        },
+        showMicroCodeCounter: {
+            type: "boolean",
+            default: true,
+            showInModal: true,
+            description: "Show the microcode counter in the UI (Requires page reload to take effect)"
+        },
     }
 
     constructor() {

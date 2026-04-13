@@ -17,68 +17,81 @@
 
 <body onload="initialize()">
     <!-- data movement images -->
-    <img src="./static/img/overlays/db-ram.png" id="overlay-db-ram" class="overlay"></img>
-    <img src="./static/img/overlays/ram-db.png" id="overlay-ram-db" class="overlay"></img>
-    <img src="./static/img/overlays/db-ins.png" id="overlay-db-ins" class="overlay"></img>
-    <img src="./static/img/overlays/db-acc.png" id="overlay-db-acc" class="overlay"></img>
-    <img src="./static/img/overlays/acc-db.png" id="overlay-acc-db" class="overlay"></img>
-    <img src="./static/img/overlays/ins-mc.png" id="overlay-ins-mc" class="overlay"></img>
-    <img src="./static/img/overlays/ins-ab.png" id="overlay-ins-ab" class="overlay"></img>
-    <img src="./static/img/overlays/ins-pc.png" id="overlay-ins-pc" class="overlay"></img>
-    <img src="./static/img/overlays/pc-ab.png" id="overlay-pc-ab" class="overlay"></img>
-    <img src="./static/img/overlays/equal-zero.png" id="overlay-equal-zero" class="overlay active"></img>
-    <img src="./static/img/overlays/control-unit-cover.png" id="overlay-control-unit-cover"
+    <img src="./static/img/overlays/db-ram.webp" id="overlay-db-ram" class="overlay"></img>
+    <img src="./static/img/overlays/ram-db.webp" id="overlay-ram-db" class="overlay"></img>
+    <img src="./static/img/overlays/db-ins.webp" id="overlay-db-ins" class="overlay"></img>
+    <img src="./static/img/overlays/db-acc.webp" id="overlay-db-acc" class="overlay"></img>
+    <img src="./static/img/overlays/acc-db.webp" id="overlay-acc-db" class="overlay"></img>
+    <img src="./static/img/overlays/ins-mc.webp" id="overlay-ins-mc" class="overlay"></img>
+    <img src="./static/img/overlays/ins-ab.webp" id="overlay-ins-ab" class="overlay"></img>
+    <img src="./static/img/overlays/ins-pc.webp" id="overlay-ins-pc" class="overlay"></img>
+    <img src="./static/img/overlays/pc-ab.webp" id="overlay-pc-ab" class="overlay"></img>
+    <img src="./static/img/overlays/equal-zero.webp" id="overlay-equal-zero" class="overlay active"></img>
+    <img src="./static/img/overlays/control-unit-cover.webp" id="overlay-control-unit-cover"
         class="overlay active"></img>
 
     <!-- simulator header with options -->
     <div class="header" id="ram-options">
-        <img src="./static/img/new-ram.svg" onclick="resetRamToEmpty()" tabindex="0" alt="New RAM" class="icon"
+        <img src="./static/img/new-ram.png" onclick="resetRamToEmpty()" tabindex="0" alt="New RAM" class="icon"
             title="New RAM">
-        <img src="./static/img/save-ram.svg" onclick="downloadRamAsFile()" tabindex="0" alt="Save RAM" class="icon"
+        <img src="./static/img/download-ram.png" onclick="downloadRamAsFile()" tabindex="0" alt="Save RAM" class="icon"
             title="Save RAM">
-        <img src="./static/img/open-ram.svg" onclick="uploadRamAsFile()" tabindex="0" alt="Open RAM" class="icon"
+        <img src="./static/img/upload-ram.png" onclick="uploadRamAsFile()" tabindex="0" alt="Open RAM" class="icon"
             title="Open RAM">
     </div>
 
     <div class="header" id="ram-control-options">
         <img src="./static/img/macro-step.png" onclick="singleMacroStep()" tabindex="0" alt="Macro Step"
-            class="icon blackborder" title="Macro Step">
+            class="icon" title="Macro Step">
         <img src="./static/img/macro-run.png" onclick="runMacroProgram()" tabindex="0" alt="Run Program"
-            class="icon blackborder" title="Run Program">
+            class="icon" title="Run Program">
         <input type="range" min="0" max="1000" step="1" onchange="updateMacroExecutionDelay()" id="macro-run-speed"
             title="Execution Speed">
         <img src="./static/img/macro-pause.png" onclick="stopMacroProgram()" tabindex="0" alt="Pause Program"
-            class="icon blackborder" title="Pause Program">
+            class="icon" title="Pause Program">
         <img src="./static/img/macro-reset.png" onclick="resetSimulator()" tabindex="0" alt="Reset Simulator"
-            class="icon blackborder" title="Reset Simulator">
+            class="icon" title="Reset Simulator">
     </div>
 
     <div class="header" id="control-unit-toggle">
-        <img src="./static/img/control-unit-toggle.svg" onclick="toggleControlUnit()" tabindex="0"
+        <img src="./static/img/control-unit-toggle.png" onclick="toggleControlUnit()" tabindex="0"
             alt="Control Unit Toggle" class="icon" title="Control Unit Toggle">
     </div>
 
     <div class="header control-unit-element hidden" id="mc-options">
-        <img src="./static/img/new-microcode.svg" onclick="resetMicrocodeToDefault()" tabindex="0" alt="New Microcode"
-            class="icon" title="New Microcode">
         <img src="./static/img/micro-step.png" onclick="microStep()" tabindex="0" alt="Micro Step" class="icon"
             title="Micro Step">
-        <img src="./static/img/save-microcode.svg" onclick="downloadMicrocodeAsFile()" tabindex="0" alt="Save Microcode"
-            class="icon" title="Save Microcode">
-        <img src="./static/img/open-microcode.svg" onclick="uploadMicroCodeAsFile()" tabindex="0" alt="Open Microcode"
+        <img src="./static/img/new-microcode.png" onclick="resetMicrocodeToDefault()" tabindex="0" alt="New Microcode"
+            class="icon" title="New Microcode">
+        <img src="./static/img/download-microcode.png" onclick="downloadMicrocodeAsFile()" tabindex="0"
+            alt="Save Microcode" class="icon" title="Save Microcode">
+        <img src="./static/img/upload-microcode.png" onclick="uploadMicroCodeAsFile()" tabindex="0" alt="Open Microcode"
             class="icon" title="Open Microcode">
     </div>
 
     <div class="header control-unit-element hidden" id="mc-record-panel">
-        <img src="./static/img/record-macro.svg" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
+        <img src="./static/img/record-macro.png" onclick="toggleRecording()" tabindex="0" alt="Record Macrocode"
             class="icon" title="Record Instruction">
-        <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
-            title="Address of the new Instruction in RAM (must be a multiple of 10)">
-        <input type="text" id="record-instruction-name" maxlength="5" value="NN"
-            title="Name of the Instruction (max. 5 characters)">
+
+        <div class="input-group">
+            <input type="number" id="record-start-address" min="0" max="199" step="10" value="110"
+                placeholder="Start Address..." title="Address of the new Instruction in RAM (must be a multiple of 10)">
+            <input type="text" id="record-instruction-name" maxlength="5" value="NN" placeholder="Macro Name..."
+                title="Name of the Instruction (max. 5 characters)">
+        </div>
     </div>
 
-    <button class="header" id="settings-button" onclick="toggleSettingsModal()">Settings</button>
+    <div class="header" id="simulator-options">
+        <!-- <img src="./static/img/new-project.png" onclick="javascript:void(0)" tabindex="0" alt="New Project" class="icon"
+            title="New Project"> -->
+        <img src="./static/img/download-project.png" onclick="downloadProjectAsFile()" tabindex="0"
+            alt="Download Project" class="icon" title="Download Project">
+        <img src="./static/img/upload-project.png" onclick="uploadProjectFromFile()" tabindex="0" alt="Upload Project"
+            class="icon" title="Upload Project">
+
+        <img src="./static/img/settings.png" onclick="toggleSettingsModal()" tabindex="0" alt="Settings" class="icon"
+            title="Open Settings">
+    </div>
 
     <!-- manual input fields -->
     <form action="javascript:manualAddressBus();">
