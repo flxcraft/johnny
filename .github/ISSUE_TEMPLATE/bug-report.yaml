@@ -1,0 +1,66 @@
+name: Bug Report
+description: Create a report about a problem you found
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! You are helping me improve the project.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Explain how I can reproduce this bug.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+      
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Project Version
+      description: The version where the problem occurred. Find it in the settings menu (top right).
+      placeholder: e.g. v1.3.2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which environment are you using?
+      options:
+        - Web App (GitHub Pages)
+        - Downloaded .zip Version
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add any other logs, code snippets, or drag-and-drop screenshots here.
+    validations:
+      required: false
