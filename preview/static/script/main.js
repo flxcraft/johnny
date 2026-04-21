@@ -90,3 +90,17 @@ function updateMicroCodeCounterVisibility() {
         alert("An error occurred while updating the microcode counter visibility. Please check the console for details.");
     }
 }
+
+/**
+ * Stops all ongoing executions by setting the isHlt flag to true and stopping any running macro program.
+ * This function can be called when a critical error is encountered to prevent further execution and potential issues.
+ * 
+ * @param {string} cause A description of the cause for stopping executions, which can be used for logging or debugging purposes.
+ * @returns {void}
+ */
+function stopAllExecutions(cause = "Unknown") {
+    isHlt = true;
+    stopMacroProgram();
+    console.warn(`All executions stopped due to: ${cause}`);
+    alert(`Execution stopped!\n\nCause: ${cause}`);
+}
