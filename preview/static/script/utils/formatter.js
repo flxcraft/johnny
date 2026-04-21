@@ -1,23 +1,23 @@
 // A mapping of microcode instruction codes to their human-readable names for display in the microcode table.
 const MicroInstructionNames = Object.freeze({
     0: "---",
-    1: "db ---> ram",
-    2: "ram ---> db",
-    3: "db ---> ins",
-    4: "ins ---> ab",
-    5: "ins ---> mc",
+    1: "db \u2192 ram",
+    2: "ram \u2192 db",
+    3: "db \u2192 ins",
+    4: "ins \u2192 ab",
+    5: "ins \u2192 mc",
     7: "mc:=0",
-    8: "pc ---> ab",
+    8: "pc \u2192 ab",
     9: "pc++",
     10: "acc=0?->pc++",
-    11: "ins ---> pc",
+    11: "ins \u2192 pc",
     12: "acc:=0",
     13: "plus",
     14: "minus",
-    15: "acc ---> db",
+    15: "acc \u2192 db",
     16: "acc++",
     17: "acc--",
-    18: "db ---> acc",
+    18: "db \u2192 acc",
     19: "stop"
 });
 

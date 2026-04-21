@@ -1,5 +1,5 @@
 window.BUILD_INFO = {
-  "version": "bdf0bb3dfd41a465cfde860e7b4b083170dc5b85",
+  "version": "242e695471f3e28e0a0779347017f3c6363d424b",
   "channel": "preview",
-  "buildTime": "2026-04-21T19:49:52Z"
+  "buildTime": "2026-04-21T20:42:02Z"
 };
