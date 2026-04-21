@@ -16,8 +16,14 @@ function loadVersionInfo() {
         // If it's a preview build, show only the first 7 characters of the version hash (e.g., "abc1234"), otherwise show the full version (e.g., "1.0.0")
         const displayVersion = window.BUILD_INFO.channel === "preview" ? window.BUILD_INFO.version.substring(0, 7) : window.BUILD_INFO.version;
 
-        // Display version and channel under the settings modal title, e.g., "1.0.0 (stable)" or "abc1234 (preview)"
-        versionTag.innerHTML = `${displayVersion} <span>(${window.BUILD_INFO.channel})</span>`;
+        // Display version and channel under the settings modal title and link to GitHub releases page, e.g., "1.0.0 (stable)" or "abc1234 (preview)"
+        const innerContent = `${displayVersion} <span>(${window.BUILD_INFO.channel})</span>`;
+        if (window.BUILD_INFO.channel === "stable" || window.BUILD_INFO.channel === "beta") {
+            const releaseLink = `https://github.com/flxcraft/johnny/releases/tag/${window.BUILD_INFO.version}`;
+            versionTag.innerHTML = `<a href="${releaseLink}" target="_blank">${innerContent}</a>`;
+        } else {
+            versionTag.innerHTML = innerContent;
+        }
 
         // Display build time in the footer of the settings modal, formatted as a local date and time string, e.g., "Build: 6/30/2024, 10:15:30 AM"
         const date = new Date(window.BUILD_INFO.buildTime).toLocaleString();
