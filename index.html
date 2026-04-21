@@ -97,12 +97,12 @@
     <!-- manual input fields -->
     <form action="javascript:manualAddressBus();">
         <input type="number" class="manual-input" id="ab-manual-input" min="0" max="999">
-        <button type="submit" class="manual-input" id="ab-manual-button" title="Set Address Bus">Manual AB</button>
+        <button type="submit" class="manual-input" id="ab-manual-button" title="Set Address Bus">Manual ab</button>
     </form>
 
     <form action="javascript:manualDataBus();">
         <input type="number" class="manual-input" id="db-manual-input" min="0" max="19999">
-        <button type="submit" class="manual-input" id="db-manual-button" title="Set Data Bus">Manual DB</button>
+        <button type="submit" class="manual-input" id="db-manual-button" title="Set Data Bus">Manual db</button>
     </form>
 
     <!-- display fields -->
@@ -116,41 +116,41 @@
 
     <!-- normal buttons -->
     <button class="button" id="ram-db-button" onclick="manualMicroStep(2)"
-        title="Set Data Bus to value from RAM">RAM&#x2192;DB</button>
+        title="Set Data Bus to value from RAM">ram&#x2192;db</button>
     <button class="button" id="db-ram-button" onclick="manualMicroStep(1)"
-        title="Set value from Data Bus in RAM">DB&#x2192;RAM</button>
+        title="Set value from Data Bus in RAM">db&#x2192;ram</button>
     <button class="button" id="db-acc-button" onclick="manualMicroStep(18)"
-        title="Set Accumulator to value from Data Bus">DB&#x2192;ACC</button>
+        title="Set Accumulator to value from Data Bus">db&#x2192;acc</button>
     <button class="button" id="acc-db-button" onclick="manualMicroStep(15)"
-        title="Set value from Accumulator in Data Bus">ACC&#x2192;DB</button>
+        title="Set value from Accumulator in Data Bus">acc&#x2192;db</button>
     <button class="button" id="acc-add-button" onclick="manualMicroStep(13)"
         title="Add value from Data Bus to Accumulator">Plus</button>
     <button class="button" id="acc-sub-button" onclick="manualMicroStep(14)"
         title="Subtract value from Data Bus from Accumulator">Minus</button>
     <button class="button" id="acc-inc-button" onclick="manualMicroStep(16)"
-        title="Increment Accumulator">ACC++</button>
+        title="Increment Accumulator">acc++</button>
     <button class="button" id="acc-dec-button" onclick="manualMicroStep(17)"
-        title="Decrement Accumulator">ACC--</button>
+        title="Decrement Accumulator">acc--</button>
     <button class="button" id="acc-null-button" onclick="manualMicroStep(12)"
-        title="Set Accumulator to Zero">ACC:=0</button>
+        title="Set Accumulator to Zero">acc:=0</button>
 
     <!-- control unit buttons -->
     <button class="button control-unit-element hidden" id="db-ins-button" onclick="manualMicroStep(3)"
-        title="Set Instruction Register to value from Data Bus">DB&#x2192;INS</button>
+        title="Set Instruction Register to value from Data Bus">db&#x2192;ins</button>
     <button class="button control-unit-element hidden" id="ins-pc-button" onclick="manualMicroStep(11)"
-        title="Set Program Counter to value from Instruction Register">INS&#x2192;PC</button>
+        title="Set Program Counter to value from Instruction Register">ins&#x2192;pc</button>
     <button class="button control-unit-element hidden" id="ins-ab-button" onclick="manualMicroStep(4)"
-        title="Set Address Bus to value from Instruction Register">INS&#x2192;AB</button>
+        title="Set Address Bus to value from Instruction Register">ins&#x2192;ab</button>
     <button class="button control-unit-element hidden" id="ins-mc-button" onclick="manualMicroStep(5)"
-        title="Set Microcode to value from Instruction Register">INS&#x2192;MC</button>
+        title="Set Microcode to value from Instruction Register">ins&#x2192;mc</button>
     <button class="button control-unit-element hidden" id="pc-ab-button" onclick="manualMicroStep(8)"
-        title="Set Address Bus to value from Program Counter">PC&#x2192;AB</button>
+        title="Set Address Bus to value from Program Counter">pc&#x2192;ab</button>
     <button class="button control-unit-element hidden" id="pc-inc-button" onclick="manualMicroStep(9)"
-        title="Increment Program Counter">PC++</button>
+        title="Increment Program Counter">pc++</button>
     <button class="button control-unit-element hidden" id="pc-inc-null-button" onclick="manualMicroStep(10)"
-        title="Increment Program Counter if Accumulator is Zero">=0?PC++</button>
+        title="Increment Program Counter if Accumulator is Zero">=0?pc++</button>
     <button class="button control-unit-element hidden" id="mc-null-button" onclick="manualMicroStep(7)"
-        title="Set Microcode to Zero">MC:=0</button>
+        title="Set Microcode to Zero">mc:=0</button>
     <button class="button control-unit-element hidden" id="mc-stop-button" onclick="manualMicroStep(19)"
         title="Stop Microcode">STOP</button>
 
