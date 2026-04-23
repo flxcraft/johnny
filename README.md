@@ -146,23 +146,23 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 | Value | Micro instruction               |
 |-------|---------------------------------|
 | 0     | No control signals active (NOP) |
-| 1     | db ---> ram                     |
-| 2     | ram ---> db                     |
-| 3     | db ---> ins                     |
-| 4     | ins ---> ab                     |
-| 5     | ins ---> mc                     |
+| 1     | db → ram                        |
+| 2     | ram → db                        |
+| 3     | db → ins                        |
+| 4     | ins → ab                        |
+| 5     | ins → mc                        |
 | 7     | mc := 0                         |
-| 8     | pc ---> ab                      |
+| 8     | pc → ab                         |
 | 9     | pc++                            |
-| 10    | acc=0? -> pc++                  |
-| 11    | ins ---> pc                     |
+| 10    | acc=0? → pc++                   |
+| 11    | ins → pc                        |
 | 12    | acc := 0                        |
 | 13    | plus                            |
 | 14    | minus                           |
-| 15    | acc ---> db                     |
+| 15    | acc → db                        |
 | 16    | acc++                           |
 | 17    | acc--                           |
-| 18    | db ---> acc                     |
+| 18    | db → acc                        |
 | 19    | stop (halt)                     |
 
 </details>
