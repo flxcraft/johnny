@@ -12,6 +12,8 @@ The whole project is implemented in **HTML, SCSS and JavaScript** and runs entir
 
 ## Table of Contents
 - [Live Demo & Versions](#live-demo--versions)
+- [Run Locally](#run-locally)
+- [Browser Compatibility](#browser-compatibility)
 - [Features](#features)
 - [File Format Specifications](#file-format-specifications)
     - [`.johnny` File Format](#johnny-file-format)
@@ -29,6 +31,17 @@ The project is hosted on GitHub Pages and is available in different versions. No
 | Stable  | The latest stable version with all tested features and bug fixes. Updated regularly. | [https://flxcraft.github.io/johnny/](https://flxcraft.github.io/johnny/) |
 | Beta    | The latest beta version with new features and changes that are still being tested. May contain bugs and is updated less frequently. | [https://flxcraft.github.io/johnny/beta/](https://flxcraft.github.io/johnny/beta/) |
 | Preview | The latest preview version with the most recent changes and features that are still in development. May contain significant bugs and is updated very frequently. | [https://flxcraft.github.io/johnny/preview/](https://flxcraft.github.io/johnny/preview/) |
+
+## Run Locally
+You can also run the simulator locally using a `.zip` file from any release. Simply download the zip, extract it and open the `index.html` file in your browser. This is the easiest way to run the simulator offline without any setup. It is also the recommended way for exams.
+
+## Browser Compatibility
+The simulator is designed for modern desktop browsers:
+- Chrome (latest)
+- Firefox (latest)
+- Edge (latest)
+
+It is responsive and works on smaller screens, but the best learning experience is on desktop due to the table-heavy UI.
 
 ## Features
 - Simulation of a simple Von Neumann computer with RAM, a control unit (with microcode) and an ALU (Arithmetic Logic Unit)
@@ -133,23 +146,23 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 | Value | Micro instruction               |
 |-------|---------------------------------|
 | 0     | No control signals active (NOP) |
-| 1     | db ---> ram                     |
-| 2     | ram ---> db                     |
-| 3     | db ---> ins                     |
-| 4     | ins ---> ab                     |
-| 5     | ins ---> mc                     |
+| 1     | db → ram                        |
+| 2     | ram → db                        |
+| 3     | db → ins                        |
+| 4     | ins → ab                        |
+| 5     | ins → mc                        |
 | 7     | mc := 0                         |
-| 8     | pc ---> ab                      |
+| 8     | pc → ab                         |
 | 9     | pc++                            |
-| 10    | acc=0? -> pc++                  |
-| 11    | ins ---> pc                     |
+| 10    | acc=0? → pc++                   |
+| 11    | ins → pc                        |
 | 12    | acc := 0                        |
 | 13    | plus                            |
 | 14    | minus                           |
-| 15    | acc ---> db                     |
+| 15    | acc → db                        |
 | 16    | acc++                           |
 | 17    | acc--                           |
-| 18    | db ---> acc                     |
+| 18    | db → acc                        |
 | 19    | stop (halt)                     |
 
 </details>
@@ -158,7 +171,7 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 - **One number per line**
 - Each line corresponds to **one microinstruction**, starting at address `0`
 - Only **non-negative integers** are allowed
-- The valid value range is: `0-5` and `7-19` (don't know why 6 is not used, but I want to keep it consistent with the original version)
+- The valid value range is: `0-5` and `7-19` (`6` is not used to keep the mapping consistent with the original johnny simulator)
 
 #### Comments & Empty Lines
 - **Empty lines** are ignored
@@ -166,8 +179,9 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 - In-line comments are also supported: any text after a `#` on a line is ignored, allowing for comments at the end of lines with values
 
 #### File Length
-- The file may **not be shorter than the microcode size**, as the **names of the macro instructions are stored at the end**
-- Microcode may only be defined up to address `MICROCODE_SIZE - 1 (default: 199)`, as the addresses after that are reserved for the names of the macro instructions
+- The file must contain **at least `MICROCODE_SIZE` numeric lines** for microcode instructions (default: `200`)
+- Additional lines after that are interpreted as macro instruction names (optional, but recommended)
+- Microcode may only be defined up to address `MICROCODE_SIZE - 1` (default: `199`)
 
 #### Invalid Values
 - Invalid values (non-integers or out of the valid range) are replaced with `0` and a warning is issued in the console
@@ -394,10 +408,10 @@ HLT
 ## Notes & Limitations
 - This simulator is designed for educational purposes, not performance
 - RAM and microcode changes are persisted using `localStorage`. While there is no built-in versioning, you can easily create backups by regularly exporting your projects as `.johnny` files
-- The RAM and microcode sizes are fixed (default: 1000 RAM addresses, 200 Micro Code Addresses), but can be changed in the code if needed (see `RAM_SIZE` and `MICROCODE_SIZE` constants in `main.js` - ***Warning:** Changing these values has not been thoroughly tested and may cause unexpected issues. Maybe you also need to adjust some places in the code where these constants aren't used)*
+- The RAM and microcode sizes are fixed by default (`RAM_SIZE = 1000`, `MICROCODE_SIZE = 200`) and are defined in `static/script/classes/johnny-project.js`. Changing these values has not been thoroughly tested and may require additional code adjustments. But this is something I might add in the future as a customizable setting in the app.
 
 ### Styling
-The project uses SCSS for styling, which is compiled to CSS for production (hosting on GitHub Pages) using GitHub Actions. The SCSS source files are located at `./static/style/`, and the production CSS files is generated in the same directory. For development, I use the `Live Sass Compiler` extension in VS Code to automatically compile SCSS to CSS on save.
+The project uses SCSS for styling, which is compiled to CSS for production (GitHub Pages) using GitHub Actions. The SCSS source files are located at `./static/style/`, and the production CSS files are generated in the same directory. For development, `Live Sass Compiler` can be used to automatically compile SCSS to CSS on save.
 
 ## Motivation & Future Plans
 The motivation for this project was to create a more modern, user-friendly and feature-rich version of the original Johnny simulator, which was a great learning tool but had some limitations in terms of code quality, maintainability and user experience. I wanted to rewrite the codebase from scratch to improve these aspects and add new features that I think would enhance the learning experience.
@@ -407,4 +421,5 @@ I'm very proud that my entire computer science advanced course (LK) uses my vers
 In the future, I plan to add more features such as:
 - **✅ Implemented:** Support for importing and exporting RAM and microcode as a single project file (e.g. JSON format) to allow saving and sharing complete setups
 - Some predefined example RAM and microcode files for common algorithms (e.g. addition, multiplication, loops, etc.) to provide ready-to-use examples for learning and testing
-- **✅ Implemented (more following):** Settings to to customize some aspects of the simulator without changing the code
+- **✅ Implemented (more following):** Settings to customize some aspects of the simulator without changing the code
+- An option to change the RAM and microcode sizes (currently fixed at 1000 and 200 respectively) to allow for larger or smaller programs
