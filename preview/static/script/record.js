@@ -30,12 +30,6 @@ function recordMicroStep(microStepId) {
  * @returns {boolean} true if recording started successfully, false otherwise
  */
 function startRecording() {
-    isRecording = true;
-
-    // Add the "recording" class to the record panel to update its visual state
-    const recordPanel = document.getElementById("mc-record-panel");
-    if (recordPanel) recordPanel.classList.add("recording");
-
     // Get references to the input elements for the starting microcode address and instruction name
     const recordStartAddressInput = document.getElementById("record-start-address");
     const recordInstructionNameInput = document.getElementById("record-instruction-name");
@@ -63,6 +57,13 @@ function startRecording() {
         if (instructionName.length > 5) {
             throw new Error("Instruction name is too long (max 5 characters).");
         }
+
+        // If all validations pass, set the recording state to true
+        isRecording = true;
+
+        // Add the "recording" class to the record panel to update its visual state
+        const recordPanel = document.getElementById("mc-record-panel");
+        if (recordPanel) recordPanel.classList.add("recording");
 
         // Update the instructionNames mapping with the new instruction name for the corresponding opcode
         const opcode = recordMicroCodeAddress / 10;
