@@ -9,7 +9,7 @@ const MicroInstructionNames = Object.freeze({
     7: "mc:=0",
     8: "pc \u2192 ab",
     9: "pc++",
-    10: "acc=0?->pc++",
+    10: "acc=0? \u2192 pc++",
     11: "ins \u2192 pc",
     12: "acc:=0",
     13: "plus",
