@@ -101,7 +101,7 @@
     </form>
 
     <form action="javascript:manualDataBus();">
-        <input type="number" class="manual-input" id="db-manual-input" min="0" max="19999">
+        <input type="number" class="manual-input" id="db-manual-input" min="0" max="19999" step="0.001">
         <button type="submit" class="manual-input" id="db-manual-button" title="Set Data Bus">Manual db</button>
     </form>
 
@@ -188,14 +188,7 @@
             <h2>Settings<small id="version-tag">Loading...</small></h2>
 
             <div id="settings-container">
-                <!-- <div>
-                    <input type="checkbox" id="auto-scroll-ram-toggle" onchange="toggleAutoScrollRAM()">
-                    <label for="auto-scroll-ram-toggle">Auto-Scroll RAM</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="auto-scroll-microcode-toggle" onchange="toggleAutoScrollMicroCode()">
-                    <label for="auto-scroll-microcode-toggle">Auto-Scroll Microcode</label>
-                </div> -->
+                <!-- Settings will be dynamically generated here -->
             </div>
 
             <p id="license-info">This program is licensed under the <b>GNU Affero General Public License (AGPL)</b>. You
