@@ -23,7 +23,7 @@ function manualAddressBus() {
  */
 function manualDataBus() {
     try {
-        let inputData = toNumberStrict(document.getElementById("db-manual-input").value, "Data bus input");
+        let inputData = toNumberStrict(document.getElementById("db-manual-input").value.replace(/^0+/, '').replace(/\./g, '').replace(/,/g, '').trim(), "Data bus input");
         if (isNaN(inputData) || inputData < 0 || inputData > project.MAX_RAM_VALUE) {
             throw new RangeError("Invalid data! Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
         }
