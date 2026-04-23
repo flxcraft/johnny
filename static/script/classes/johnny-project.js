@@ -368,9 +368,9 @@ class JohnnyProject {
         try {
             const projectData = this.#toJSON();
             localStorage.setItem(JohnnyProject.STORAGE_KEY, JSON.stringify(projectData));
-            console.debug("Project saved to localStorage.");
+            console.debug("[#saveProject] Project saved to localStorage.");
         } catch (error) {
-            console.error("Failed to save project to localStorage:", error);
+            console.error("[#saveProject] Failed to save project to localStorage:", error);
         }
     }
 
@@ -387,12 +387,12 @@ class JohnnyProject {
             const projectData = JSON.parse(localStorage.getItem(JohnnyProject.STORAGE_KEY));
             if (projectData) {
                 this.#fromJSON(projectData);
-                console.debug("Project loaded from localStorage.");
+                console.debug("[#loadProject] Project loaded from localStorage.");
             } else {
-                console.warn("No project found in localStorage to load.");
+                console.info("[#loadProject] No project found in localStorage.");
             }
         } catch (error) {
-            console.error("Failed to load project from localStorage:", error);
+            console.error("[#loadProject] Failed to load project from localStorage:", error);
         }
     }
 
@@ -408,12 +408,12 @@ class JohnnyProject {
         try {
             const projectData = JSON.parse(jsonString);
             this.#fromJSON(projectData);
-            console.debug("Project imported from JSON string.");
+            console.debug("[import] Project imported from JSON string.");
 
             // After importing, we should save the imported project to localStorage
             this.#saveProject();
         } catch (error) {
-            console.error("Failed to import project from JSON string:", error);
+            console.error("[import] Failed to import project from JSON string:", error);
         }
     }
 
@@ -429,7 +429,7 @@ class JohnnyProject {
             const projectData = this.#toJSON();
             return JSON.stringify(projectData);
         } catch (error) {
-            console.error("Failed to export project to JSON string:", error);
+            console.error("[export] Failed to export project to JSON string:", error);
             return null;
         }
     }
@@ -449,7 +449,7 @@ class JohnnyProject {
                 .filter(line => line); // Remove empty lines
 
             if (lines.length > this.RAM_SIZE) {
-                console.warn(`Too many lines in legacy RAM import: expected at most ${this.RAM_SIZE}, got ${lines.length}.`);
+                console.warn(`[importLegacyRam] Legacy RAM import contains more than ${this.RAM_SIZE} lines: received ${lines.length}. Extra lines will be ignored.`);
             }
 
             this.#initRam(); // Clear existing RAM before importing new data
@@ -459,7 +459,7 @@ class JohnnyProject {
                 const line = lines[i];
                 const value = Number(line);
                 if (!Number.isInteger(value) || value < 0 || value > this.MAX_RAM_VALUE) {
-                    console.warn(`Invalid legacy RAM value at line ${i + 1}: "${line}" → 0`);
+                    console.warn(`[importLegacyRam] Invalid RAM value at line ${i + 1}: "${line}". Falling back to 0.`);
                     this.setRam(i, 0, false);
                 } else {
                     this.setRam(i, value, false);
@@ -467,9 +467,9 @@ class JohnnyProject {
             }
 
             this.#saveProject(); // Save the imported RAM data to localStorage
-            console.debug("Legacy RAM imported from string.");
+            console.debug("[importLegacyRam] Legacy RAM imported from string.");
         } catch (error) {
-            console.error("Failed to import legacy RAM from string:", error);
+            console.error("[importLegacyRam] Failed to import legacy RAM from string:", error);
         }
     }
 
@@ -498,7 +498,7 @@ class JohnnyProject {
                 .filter(line => line); // Remove empty lines
 
             if (lines.length < this.MICROCODE_SIZE) {
-                console.error(`Invalid legacy microcode file: expected at least ${this.MICROCODE_SIZE} lines, but got ${lines.length}.`);
+                console.error(`[importLegacyMicroCode] Legacy microcode file has too few lines: expected at least ${this.MICROCODE_SIZE}, received ${lines.length}.`);
                 return;
             }
 
@@ -510,7 +510,7 @@ class JohnnyProject {
                 const value = Number(line);
 
                 if (!Number.isInteger(value) || value < 0 || value > 19 || value === 6) {
-                    console.warn(`Invalid microcode value at line ${i + 1}: "${line}" → 0`);
+                    console.warn(`[importLegacyMicroCode] Invalid microcode value at line ${i + 1}: "${line}". Falling back to 0.`);
                     this.setMicroCode(i, 0, false);
                 } else {
                     this.setMicroCode(i, value, false);
@@ -525,9 +525,9 @@ class JohnnyProject {
             }
 
             this.#saveProject(); // Save the imported microcode data to localStorage
-            console.debug("Legacy microcode imported from string.");
+            console.debug("[importLegacyMicroCode] Legacy microcode imported from string.");
         } catch (error) {
-            console.error("Failed to import legacy microcode from string:", error);
+            console.error("[importLegacyMicroCode] Failed to import legacy microcode from string:", error);
         }
     }
 

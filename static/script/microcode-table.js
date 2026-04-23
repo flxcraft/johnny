@@ -91,7 +91,7 @@ function updateMicroCodeTableRow(address) {
 function updateMicroCodeTableMacroInstructionName(opCode) {
     const element = document.getElementById(`microcode-row-${opCode * 10}`).children[0];
     if (!element) {
-        console.warn(`Microcode table row not found for opcode ${opCode}. Cannot update macro instruction name.`);
+        console.warn(`[updateMicroCodeTableMacroInstructionName] No table row found for opcode ${opCode}.`);
         return;
     }
 
@@ -206,8 +206,8 @@ function saveMicroCodeEdit() {
         updateMicroCodeTableRow(address);
         closeMicroCodeEditModal();
     } catch (error) {
-        console.error("Error saving microcode edit:", error);
-        alert("An error occurred while saving the microcode edit. Please try again.");
+        console.error("[saveMicroCodeEdit] Failed to save microcode edit:", error);
+        alert("Could not save the microcode change. Please try again.");
     }
 }
 

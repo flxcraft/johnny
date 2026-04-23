@@ -193,14 +193,14 @@ function insertRamRowAbove() {
 
     // If there is no empty address to shift down, we cannot insert a new row
     if (lastUsedAddress >= project.RAM_SIZE - 1) {
-        console.error("Cannot insert new row: RAM is full.");
-        alert("Cannot insert new row: RAM is full.");
+        console.error("[insertRamRowAbove] RAM is full. Cannot insert a new row.");
+        alert("The RAM is full. Delete some entries first.");
         return;
     }
 
     // Shift rows down from the last used address to the selected address to create space for the new row
     for (let i = lastUsedAddress + 1; i > selectedRamAddress; i--) {
-        console.debug(`Shifting RAM address ${i - 1} to ${i}`);
+        console.debug(`[insertRamRowAbove] Shifting RAM address ${i - 1} to ${i}.`);
         project.setRam(i, project.getRam(i - 1), false);
         updateRamTableRow(i);
     }
@@ -226,7 +226,7 @@ function deleteRamRow() {
 
     // Shift rows up from the selected address to the last used address to fill the gap of the deleted row
     for (let i = selectedRamAddress; i < lastUsedAddress; i++) {
-        console.debug(`Shifting RAM address ${i + 1} to ${i}`);
+        console.debug(`[deleteRamRow] Shifting RAM address ${i + 1} to ${i}.`);
         project.setRam(i, project.getRam(i + 1), false);
         updateRamTableRow(i);
     }

@@ -8,7 +8,7 @@
 function recordMicroStep(microStepId) {
     if (!isRecording || recordMicroCodeAddress === null) return;
     if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= project.MICROCODE_SIZE) {
-        console.error(`Record micro step address ${recordMicroCodeAddress} is out of bounds. Stopping recording.`);
+        console.error(`[recordMicroStep] Recording address ${recordMicroCodeAddress} is out of bounds.`);
         stopRecording();
         return;
     }
@@ -73,9 +73,8 @@ function startRecording() {
 
         return true; // Indicate that recording has successfully started
     } catch (error) {
-        console.error("Error starting recording:", error);
-        alert("Error starting recording. Please check your inputs.\n" +
-            "See console for details.");
+        console.error("[startRecording] Failed to start recording:", error);
+        alert("Could not start recording. Please check the start address and instruction name.");
 
         // Reset recording state on error
         isRecording = false;
