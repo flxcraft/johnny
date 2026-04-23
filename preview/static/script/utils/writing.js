@@ -14,7 +14,9 @@ function writeToRam(address, value) {
         project.setRam(address, value);
         updateRamTableRow(address);
     } catch (error) {
-        stopAllExecutions("Invalid RAM address or data value");
+        console.error("[writeToRam] Invalid RAM address or value.", error);
+        alert("Invalid RAM address or value.");
+        stopAllExecutions();
     }
 }
 
@@ -30,7 +32,9 @@ function writeToAddressBus(value) {
         addressBus = normalizeInt(value, 0, project.RAM_SIZE - 1, "Address bus value");
         document.getElementById("ab-field").innerText = formatRamAddress(addressBus);
     } catch (error) {
-        stopAllExecutions("Invalid address bus value");
+        console.error("[writeToAddressBus] Invalid address bus value.", error);
+        alert("Invalid address bus value.");
+        stopAllExecutions();
     }
 }
 
@@ -46,7 +50,9 @@ function writeToDataBus(value) {
         dataBus = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Data bus value");
         document.getElementById("db-field").innerText = formatData(dataBus);
     } catch (error) {
-        stopAllExecutions("Invalid data bus value");
+        console.error("[writeToDataBus] Invalid data bus value.", error);
+        alert("Invalid data bus value.");
+        stopAllExecutions();
     }
 }
 
@@ -62,7 +68,9 @@ function writeToAccumulator(value) {
         accumulator = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Accumulator value");
         document.getElementById("acc-field").innerText = formatData(accumulator);
     } catch (error) {
-        stopAllExecutions("Invalid accumulator value");
+        console.error("[writeToAccumulator] Invalid accumulator value.", error);
+        alert("Invalid accumulator value.");
+        stopAllExecutions();
     }
 
     // Update accumulator zero indicator
@@ -87,7 +95,9 @@ function writeToProgramCounter(value) {
         programCounter = normalizeInt(value, 0, project.RAM_SIZE - 1, "Program counter value");
         document.getElementById("pc-field").innerText = formatRamAddress(programCounter);
     } catch (error) {
-        stopAllExecutions("Invalid program counter value");
+        console.error("[writeToProgramCounter] Invalid program counter value.", error);
+        alert("Invalid program counter value.");
+        stopAllExecutions();
     }
 }
 
@@ -104,7 +114,9 @@ function writeToInstructionRegister(value) {
         document.getElementById("ins-high").innerText = formatDataHigh(instructionRegister);
         document.getElementById("ins-low").innerText = formatDataLow(instructionRegister);
     } catch (error) {
-        stopAllExecutions("Invalid instruction register value");
+        console.error("[writeToInstructionRegister] Invalid instruction register value.", error);
+        alert("Invalid instruction register value.");
+        stopAllExecutions();
     }
 }
 
@@ -121,7 +133,9 @@ function writeToMicroCodeCounter(value) {
         document.getElementById("mc-field").innerText = formatMicroCodeAddress(microCodeCounter);
         updateMicrocodeTableHighlighting();
     } catch (error) {
-        stopAllExecutions("Invalid microcode counter value");
+        console.error("[writeToMicroCodeCounter] Invalid microcode counter value.", error);
+        alert("Invalid microcode counter value.");
+        stopAllExecutions();
     }
 }
 

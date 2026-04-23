@@ -11,8 +11,8 @@ function manualAddressBus() {
         }
         writeToAddressBus(inputAddress);
     } catch (error) {
-        console.error("Error processing manual address bus input:", error);
-        alert("An error occurred while processing the address bus input. Please enter a valid number.");
+        console.error("Manual address bus input failed:", error);
+        alert("Invalid address. Please enter a number between 0 and " + (project.RAM_SIZE - 1) + ".");
     }
 }
 
@@ -29,8 +29,8 @@ function manualDataBus() {
         }
         writeToDataBus(inputData);
     } catch (error) {
-        console.error("Error processing manual data bus input:", error);
-        alert("An error occurred while processing the data bus input. Please enter a valid number.");
+        console.error("Manual data bus input failed:", error);
+        alert("Invalid data. Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -49,8 +49,8 @@ function instructionSelectOnChange() {
         inputValue = `${selectedValue}${formatDataLow(inputValue)}`;
         inputElement.value = formatData(inputValue);
     } catch (error) {
-        console.error("Error processing instruction select change:", error);
-        alert("An error occurred while processing the instruction selection. Please try again.");
+        console.error("Instruction select update failed:", error);
+        alert("Could not update the selected instruction. Please try again.");
     }
 }
 
@@ -93,8 +93,8 @@ function manualRamInput() {
         selectedRamAddress = (selectedRamAddress + 1) % project.RAM_SIZE; // Modulo to wrap around to the beginning of RAM
         updateRamTableHighlighting(false); // Update highlighting without scrolling to selected address
     } catch (error) {
-        console.error("Error processing manual RAM input:", error);
-        alert("An error occurred while processing the RAM input. Please enter a valid number.");
+        console.error("Manual RAM input failed:", error);
+        alert("Invalid RAM value. Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -108,8 +108,8 @@ function updateMacroExecutionDelay() {
         const speedSlider = document.getElementById("macro-run-speed");
         macroExecutionDelay = 1000 - toNumberStrict(speedSlider.value, "Macro run speed");
     } catch (error) {
-        console.error("Error processing macro run speed input:", error);
-        alert("An error occurred while processing the macro run speed input. Please enter a valid number.");
+        console.error("Macro execution speed update failed:", error);
+        alert("Invalid speed value. Please use the slider or enter a valid number.");
     }
 }
 
@@ -134,10 +134,10 @@ function uploadRamAsFile() {
             project.importLegacyRam(fileContent);
             resetSimulator();
             updateRamTable();
-            console.info("RAM imported from file:", filename);
+            console.info("RAM file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing RAM from file:", error);
-            alert("An error occurred while importing RAM from the file. Please make sure the file is a valid .ram file.");
+            console.error("RAM file import failed:", error);
+            alert("Could not import the RAM file. Please check that it uses the .ram format.");
         }
     });
 }
@@ -166,10 +166,10 @@ function uploadMicroCodeAsFile() {
             populateInstructionSelect();
             updateMicroCodeTableMacroInstructionNames();
             updateRamTable(); // Update RAM table to reflect any changes in instruction names
-            console.info("Micro Code imported from file:", filename);
+            console.info("Microcode file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing Micro Code from file:", error);
-            alert("An error occurred while importing Micro Code from the file. Please make sure the file is a valid .mc file.");
+            console.error("Microcode file import failed:", error);
+            alert("Could not import the microcode file. Please check that it uses the .mc format.");
         }
     });
 }
@@ -198,10 +198,10 @@ function uploadProjectFromFile() {
             updateMicroCodeTable();
             populateInstructionSelect();
             updateMicroCodeTableMacroInstructionNames();
-            console.info("Project imported from file:", filename);
+            console.info("Project file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing project from file:", error);
-            alert("An error occurred while importing the project. Please make sure the file is a valid .johnny project file.");
+            console.error("Project file import failed:", error);
+            alert("Could not import the project file. Please check that it uses the .johnny format.");
         }
     });
 }
@@ -238,8 +238,8 @@ function toggleControlUnit() {
     try {
         settings.set("showControlUnit", !settings.get("showControlUnit"));
     } catch (error) {
-        console.error("Error toggling control unit visibility:", error);
-        alert("An error occurred while toggling control unit visibility.");
+        console.error("Control unit visibility toggle failed:", error);
+        alert("Could not change the control unit visibility setting.");
         return;
     }
 
@@ -274,8 +274,8 @@ function updateControlUnitVisibility() {
             }
         }
     } catch (error) {
-        console.error("Error updating control unit visibility:", error);
-        alert("An error occurred while updating control unit visibility.");
+        console.error("Control unit visibility update failed:", error);
+        alert("Could not update the control unit visibility.");
     }
 }
 

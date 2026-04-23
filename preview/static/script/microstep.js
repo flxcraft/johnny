@@ -6,7 +6,7 @@
  */
 function microStep(animate = true) {
     if (isHlt) {
-        console.warn("Program has halted. No further micro-steps can be executed. Only manual steps are allowed. Please reset the simulator to continue.");
+        console.warn("[microStep] Execution is halted. Micro-steps are disabled until the simulator is reset. Only manual micro-steps are allowed.");
         return;
     }
 
@@ -19,14 +19,18 @@ function microStep(animate = true) {
 
         // If the instruction is 0, the FETCH instruction is calling itself repeatedly, which is likely an error in the program code.
         if (instruction === 0) {
-            stopAllExecutions(`Unexpected instruction with opcode 0. This may indicate an error in the program code at the RAM address ${programCounter}. Please check the code and ensure it is correct. Maybe you forgot a HLT instruction?`);
+            console.error(`[microStep] Invalid opcode 0 during FETCH at RAM address ${programCounter}.`);
+            alert(`Invalid instruction detected at RAM address ${programCounter}. Please check your program and make sure it reaches HLT.`);
+            stopAllExecutions();
             return;
         }
     }
 
     // Handle the case where microcode at the current counter is 0 (no-op) - this may indicate an error in the microcode for the current instruction
     if (id === 0) {
-        stopAllExecutions(`Microcode error at counter ${microCodeCounter}. Micro-instruction ID is 0, which is a no-op. This may indicate an error in the microcode for the current instruction. Please check the microcode for the current instruction and ensure it is correct.`);
+        console.error(`[microStep] Invalid microcode entry at address ${microCodeCounter}: micro-instruction ID 0.`);
+        alert(`Invalid microcode entry detected at address ${microCodeCounter}. Please check the microcode table. Maybe forgot "mc:=0" at the end of the instruction sequence?`);
+        stopAllExecutions();
         return;
     }
 
@@ -57,7 +61,9 @@ function executeMicroInstruction(id, animate = true, isManual = false) {
 
     // Handle invalid micro-instruction ID
     if (!microStep) {
-        stopAllExecutions(`Invalid micro-instruction ID ${id} at microcode counter ${microCodeCounter}. This may indicate an error in the microcode for the current instruction. Please check the microcode and ensure it is correct.`);
+        console.error(`[executeMicroInstruction] Invalid micro-instruction ID ${id} at microcode address ${microCodeCounter}.`);
+        alert(`Unknown micro-instruction detected at microcode address ${microCodeCounter}. Please verify the microcode table.`);
+        stopAllExecutions();
         return;
     }
 
@@ -175,7 +181,7 @@ function stopStep() {
     isHlt = true;
 
     setTimeout(() => { // delay alert to allow UI updates before blocking
-        alert("Program stopped");
+        alert("Program stopped.");
     }, 0);
 }
 

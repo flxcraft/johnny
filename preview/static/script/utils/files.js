@@ -38,7 +38,7 @@ function uploadData(fileAccept, callback) {
         // Get the selected file from the file input
         const file = event.target.files[0];
         if (!file) {
-            console.warn("No file selected for upload.");
+            console.info("[uploadData] No file selected.");
             return;
         }
 
@@ -50,8 +50,8 @@ function uploadData(fileAccept, callback) {
 
         // Handle errors that may occur during file reading
         reader.onerror = (e) => {
-            console.error("Error reading file:", e);
-            alert("An error occurred while reading the file. Please try again.");
+            console.error("[uploadData] File read failed:", e);
+            alert("Could not read the file. Please try again.");
         };
         reader.readAsText(file);
     };

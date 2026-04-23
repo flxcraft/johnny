@@ -41,7 +41,7 @@ function initialize() {
 
     // Mark the simulator as initialized to allow other functions to check this state if needed
     initialized = true;
-    console.info("Simulator initialized.");
+    console.info("[initialize] Simulator initialized successfully.");
 }
 
 /**
@@ -62,7 +62,7 @@ function showDataMovementAnimation(animation) {
             }, 800); // show for 800ms
         }
     } else {
-        console.warn("Animation element not found for:", animation);
+        console.warn("[showDataMovementAnimation] Animation element not found:", animation);
     }
 }
 
@@ -86,8 +86,8 @@ function updateMicroCodeCounterVisibility() {
             microCodeTableContainer.classList.add("large-mode");
         }
     } catch (error) {
-        console.error("Error updating microcode counter visibility:", error);
-        alert("An error occurred while updating the microcode counter visibility. Please check the console for details.");
+        console.error("[updateMicroCodeCounterVisibility] Failed to update microcode counter visibility:", error);
+        alert("Could not update the microcode counter display.");
     }
 }
 
@@ -95,12 +95,9 @@ function updateMicroCodeCounterVisibility() {
  * Stops all ongoing executions by setting the isHlt flag to true and stopping any running macro program.
  * This function can be called when a critical error is encountered to prevent further execution and potential issues.
  * 
- * @param {string} cause A description of the cause for stopping executions, which can be used for logging or debugging purposes.
  * @returns {void}
  */
-function stopAllExecutions(cause = "Unknown") {
+function stopAllExecutions() {
     isHlt = true;
     stopMacroProgram();
-    console.warn(`All executions stopped due to: ${cause}`);
-    alert(`Execution stopped!\n\nCause: ${cause}`);
 }

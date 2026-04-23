@@ -41,7 +41,7 @@ function loadVersionInfo() {
  * @returns {void}
  */
 function generateSettingsUI() {
-    console.log("Generating settings UI...");
+    console.debug("[generateSettingsUI] Building settings UI.");
     const settingsContainer = document.getElementById('settings-container');
     settingsContainer.innerHTML = ''; // Clear existing content
 
@@ -96,7 +96,7 @@ function updateSetting(key, value) {
 
         settings.set(key, value);
     } catch (error) {
-        console.error(`Failed to update setting "${key}".`, error);
-        alert(`Failed to update setting "${key}". Please check console for details.`);
+        console.error(`[updateSetting] Failed to update setting "${key}":`, error);
+        alert(`Could not save the setting "${key}".`);
     }
 }
