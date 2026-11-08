@@ -94,7 +94,7 @@ class JohnnyProject {
      */
     getRam(address) {
         // Validate address range
-        if (address < 0 || address >= this.RAM_SIZE) {
+        if (!Number.isInteger(address) || address < 0 || address >= this.RAM_SIZE) {
             throw new Error(`RAM address out of bounds: ${address}`);
         }
 
@@ -113,13 +113,13 @@ class JohnnyProject {
      */
     setRam(address, value, save = true) {
         // Validate address range
-        if (address < 0 || address >= this.RAM_SIZE) {
+        if (!Number.isInteger(address) || address < 0 || address >= this.RAM_SIZE) {
             throw new Error(`RAM address out of bounds: ${address}`);
         }
 
         // Validate value type (to ensure it's a number)
-        if (typeof value !== "number") {
-            throw new Error(`RAM value must be a number: ${value}`);
+        if (!Number.isInteger(value)) {
+            throw new Error(`RAM value must be an integer: ${value}`);
         }
 
         // Validate value range (to ensure values are within 0 and MAX_RAM_VALUE)
@@ -154,7 +154,7 @@ class JohnnyProject {
      */
     getMicroCode(address) {
         // Validate address range
-        if (address < 0 || address >= this.MICROCODE_SIZE) {
+        if (!Number.isInteger(address) || address < 0 || address >= this.MICROCODE_SIZE) {
             throw new Error(`Microcode address out of bounds: ${address}`);
         }
 
@@ -173,13 +173,13 @@ class JohnnyProject {
      */
     setMicroCode(address, value, save = true) {
         // Validate address range
-        if (address < 0 || address >= this.MICROCODE_SIZE) {
+        if (!Number.isInteger(address) || address < 0 || address >= this.MICROCODE_SIZE) {
             throw new Error(`Microcode address out of bounds: ${address}`);
         }
 
         // Validate value type (to ensure it's a number)
-        if (typeof value !== "number") {
-            throw new Error(`Microcode value must be a number: ${value}`);
+        if (!Number.isInteger(value)) {
+            throw new Error(`Microcode value must be an integer: ${value}`);
         }
 
         // Validate value range (to ensure microcode values are within 0 and 19, and not equal to 6 which is not used)
@@ -250,7 +250,7 @@ class JohnnyProject {
      */
     setInstructionName(opCode, name) {
         // Validate opcode type and range
-        if (typeof opCode !== "number" || opCode < 0 || opCode >= this.MICROCODE_SIZE / 10) {
+        if (!Number.isInteger(opCode) || opCode < 0 || opCode >= this.MICROCODE_SIZE / 10) {
             throw new Error(`Opcode out of bounds: ${opCode}`);
         }
 
@@ -316,16 +316,24 @@ class JohnnyProject {
         //     this.MICROCODE_SIZE = json.MICROCODE_SIZE;
         // }
 
-        // Validate and set RAM
-        if (json.ram && Array.isArray(json.ram)) {
+        if (!json || typeof json !== "object") {
+            throw new Error("Invalid project data. Expected an object.");
+        }
+
+        let importedRam;
+        let importedMicroCode;
+        let importedInstructionNames;
+
+        // Validate RAM into a temporary array before changing the current project.
+        if (Array.isArray(json.ram)) {
             // Pad with zeros if the array is shorter than RAM_SIZE
             const paddedRam = [...json.ram];
             while (paddedRam.length < this.RAM_SIZE) {
                 paddedRam.push(0);
             }
             
-            if (paddedRam.length === this.RAM_SIZE && paddedRam.every(val => typeof val === "number" && val >= 0 && val <= this.MAX_RAM_VALUE)) {
-                this.#ram = paddedRam;
+            if (paddedRam.length === this.RAM_SIZE && paddedRam.every(val => Number.isInteger(val) && val >= 0 && val <= this.MAX_RAM_VALUE)) {
+                importedRam = paddedRam;
             } else {
                 throw new Error("Invalid RAM values in imported data.");
             }
@@ -333,16 +341,16 @@ class JohnnyProject {
             throw new Error("Invalid RAM data in imported JSON. Expected an array.");
         }
 
-        // Validate and set microcode
-        if (json.microCode && Array.isArray(json.microCode)) {
+        // Validate microcode into a temporary array before changing the current project.
+        if (Array.isArray(json.microCode)) {
             // Pad with zeros if the array is shorter than MICROCODE_SIZE
             const paddedMicroCode = [...json.microCode];
             while (paddedMicroCode.length < this.MICROCODE_SIZE) {
                 paddedMicroCode.push(0);
             }
             
-            if (paddedMicroCode.length === this.MICROCODE_SIZE && paddedMicroCode.every(val => typeof val === "number" && val >= 0 && val <= 19 && val !== 6)) {
-                this.#microCode = paddedMicroCode;
+            if (paddedMicroCode.length === this.MICROCODE_SIZE && paddedMicroCode.every(val => Number.isInteger(val) && val >= 0 && val <= 19 && val !== 6)) {
+                importedMicroCode = paddedMicroCode;
             } else {
                 throw new Error("Invalid microcode values in imported data.");
             }
@@ -351,11 +359,16 @@ class JohnnyProject {
         }
 
         // Validate and set instruction names
-        if (json.instructionNames && typeof json.instructionNames === "object") {
-            this.#instructionNames = json.instructionNames;
+        if (json.instructionNames && typeof json.instructionNames === "object" && !Array.isArray(json.instructionNames)) {
+            importedInstructionNames = { ...json.instructionNames };
         } else {
             throw new Error("Invalid instruction names in imported JSON.");
         }
+
+        // If all validations pass, update the current project state with the imported data
+        this.#ram = importedRam;
+        this.#microCode = importedMicroCode;
+        this.#instructionNames = importedInstructionNames;
     }
 
     /**
@@ -402,7 +415,7 @@ class JohnnyProject {
      * If the JSON string is valid and contains the required data, it updates the current project state with the imported data. If there is an error during parsing or if the data is invalid, it logs an error message.
      * 
      * @param {string} jsonString the JSON string containing the project state to import
-     * @returns {void}
+     * @returns {boolean} whether the project was imported successfully
      */
     import(jsonString) {
         try {
@@ -412,8 +425,10 @@ class JohnnyProject {
 
             // After importing, we should save the imported project to localStorage
             this.#saveProject();
+            return true;
         } catch (error) {
             console.error("[import] Failed to import project from JSON string:", error);
+            return false;
         }
     }
 
@@ -440,7 +455,7 @@ class JohnnyProject {
      * After importing the RAM data, it saves the updated project state to localStorage to ensure the changes are persisted.
      * 
      * @param {string} fileContent the string containing the RAM data in legacy format
-     * @returns {void}
+     * @returns {boolean} whether the legacy RAM was imported successfully
      */
     importLegacyRam(fileContent) {
         try {
@@ -452,24 +467,25 @@ class JohnnyProject {
                 console.warn(`[importLegacyRam] Legacy RAM import contains more than ${this.RAM_SIZE} lines: received ${lines.length}. Extra lines will be ignored.`);
             }
 
-            this.#initRam(); // Clear existing RAM before importing new data
+            const importedRam = new Array(this.RAM_SIZE).fill(0);
 
             // Import RAM values line by line, up to the RAM_SIZE limit
             for (let i = 0; i < lines.length && i < this.RAM_SIZE; i++) {
                 const line = lines[i];
                 const value = Number(line);
                 if (!Number.isInteger(value) || value < 0 || value > this.MAX_RAM_VALUE) {
-                    console.warn(`[importLegacyRam] Invalid RAM value at line ${i + 1}: "${line}". Falling back to 0.`);
-                    this.setRam(i, 0, false);
-                } else {
-                    this.setRam(i, value, false);
+                    throw new Error(`Invalid RAM value at line ${i + 1}: "${line}".`);
                 }
+                importedRam[i] = value;
             }
 
+            this.#ram = importedRam;
             this.#saveProject(); // Save the imported RAM data to localStorage
             console.debug("[importLegacyRam] Legacy RAM imported from string.");
+            return true;
         } catch (error) {
             console.error("[importLegacyRam] Failed to import legacy RAM from string:", error);
+            return false;
         }
     }
 
@@ -489,7 +505,7 @@ class JohnnyProject {
      * After importing the microcode data, it saves the updated project state to localStorage to ensure the changes are persisted.
      * 
      * @param {string} fileContent the string containing the microcode data in legacy format
-     * @returns {void}
+     * @returns {boolean} whether the legacy microcode was imported successfully
      */
     importLegacyMicroCode(fileContent) {
         try {
@@ -498,8 +514,7 @@ class JohnnyProject {
                 .filter(line => line); // Remove empty lines
 
             if (lines.length < this.MICROCODE_SIZE) {
-                console.error(`[importLegacyMicroCode] Legacy microcode file has too few lines: expected at least ${this.MICROCODE_SIZE}, received ${lines.length}.`);
-                return;
+                throw new Error(`Legacy microcode file has too few lines: expected at least ${this.MICROCODE_SIZE}, received ${lines.length}.`);
             }
 
             this.#initMicroCode(); // Clear existing microcode before importing new data
@@ -526,8 +541,10 @@ class JohnnyProject {
 
             this.#saveProject(); // Save the imported microcode data to localStorage
             console.debug("[importLegacyMicroCode] Legacy microcode imported from string.");
+            return true;
         } catch (error) {
             console.error("[importLegacyMicroCode] Failed to import legacy microcode from string:", error);
+            return false;
         }
     }
 

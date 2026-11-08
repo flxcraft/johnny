@@ -17,12 +17,20 @@ function loadVersionInfo() {
         const displayVersion = window.BUILD_INFO.channel === "preview" ? window.BUILD_INFO.version.substring(0, 7) : window.BUILD_INFO.version;
 
         // Display version and channel under the settings modal title and link to GitHub releases page, e.g., "1.0.0 (stable)" or "abc1234 (preview)"
-        const innerContent = `${displayVersion} <span>(${window.BUILD_INFO.channel})</span>`;
-        if (window.BUILD_INFO.channel === "stable" || window.BUILD_INFO.channel === "beta") {
+        versionTag.textContent = displayVersion;
+        const channelElement = document.createElement('span');
+        channelElement.textContent = ` (${window.BUILD_INFO.channel})`;
+        if (window.BUILD_INFO.channel === "stable" || window.BUILD_INFO.channel === "beta") { // Only link to GitHub releases for stable and beta channels
             const releaseLink = `https://github.com/flxcraft/johnny/releases/tag/${window.BUILD_INFO.version}`;
-            versionTag.innerHTML = `<a href="${releaseLink}" target="_blank">${innerContent}</a>`;
+            const releaseLinkElement = document.createElement('a');
+            releaseLinkElement.href = releaseLink;
+            releaseLinkElement.target = "_blank";
+            releaseLinkElement.rel = "noopener noreferrer";
+            releaseLinkElement.textContent = displayVersion;
+            releaseLinkElement.appendChild(channelElement);
+            versionTag.replaceChildren(releaseLinkElement);
         } else {
-            versionTag.innerHTML = innerContent;
+            versionTag.appendChild(channelElement);
         }
 
         // Display build time in the footer of the settings modal, formatted as a local date and time string, e.g., "Build: 6/30/2024, 10:15:30 AM"
@@ -30,7 +38,10 @@ function loadVersionInfo() {
         versionFooter.textContent = `Build: ${date} (© Felix Heidisch aka flxcraft)`;
     } catch (error) {
         // If there's an error (e.g., version.js not loaded), show a default message indicating it's a local development build
-        versionTag.innerHTML = `dev-build <span>(local)</span>`;
+        versionTag.textContent = "dev-build";
+        const localChannelElement = document.createElement('span');
+        localChannelElement.textContent = " (local)";
+        versionTag.appendChild(localChannelElement);
         versionFooter.textContent = "Local development environment";
     }
 }
