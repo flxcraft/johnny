@@ -146,7 +146,7 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 
 | Value | Micro instruction               |
 |-------|---------------------------------|
-| 0     | No control signals active (NOP) |
+| 0     | Placeholder (not executable)    |
 | 1     | db → ram                        |
 | 2     | ram → db                        |
 | 3     | db → ins                        |

@@ -26,10 +26,10 @@ function microStep(animate = true) {
         }
     }
 
-    // Handle the case where microcode at the current counter is 0 (no-op) - this may indicate an error in the microcode for the current instruction
+    // ID 0 is a placeholder, not an executable no-op.
     if (id === 0) {
-        console.error(`[microStep] Invalid microcode entry at address ${microCodeCounter}: micro-instruction ID 0.`);
-        alert(`Invalid microcode entry detected at address ${microCodeCounter}. Please check the microcode table. Maybe forgot "mc:=0" at the end of the instruction sequence?`);
+        console.error(`[microStep] Invalid microcode placeholder at address ${microCodeCounter}: micro-instruction ID 0.`);
+        alert(`Invalid microcode entry detected at address ${microCodeCounter}. Please check the microcode table. Instruction sequences should end with micro-instruction 7 (mc := 0).`);
         stopAllExecutions();
         return;
     }
