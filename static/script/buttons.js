@@ -160,7 +160,9 @@ function downloadMicrocodeAsFile() {
 function uploadMicroCodeAsFile() {
     uploadData(".mc", function (fileContent, filename) {
         try {
-            project.importLegacyMicroCode(fileContent);
+            if (!project.importLegacyMicroCode(fileContent)) {
+                throw new Error("Legacy microcode import failed.");
+            }
             resetSimulator();
             updateMicroCodeTable();
             populateInstructionSelect();
@@ -192,7 +194,9 @@ function downloadProjectAsFile() {
 function uploadProjectFromFile() {
     uploadData(".johnny", function (fileContent, filename) {
         try {
-            project.import(fileContent);
+            if (!project.import(fileContent)) {
+                throw new Error("Project import failed.");
+            }
             resetSimulator();
             updateRamTable();
             updateMicroCodeTable();
