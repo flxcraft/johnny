@@ -36,10 +36,11 @@ The project is hosted on GitHub Pages and is available in different versions. No
 You can also run the simulator locally using a `.zip` file from any release. Simply download the zip, extract it and open the `index.html` file in your browser. This is the easiest way to run the simulator offline without any setup. It is also the recommended way for exams.
 
 ## Browser Compatibility
-The simulator is designed for modern desktop browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Edge (latest)
+The simulator is designed for modern desktop browsers and has been tested with the latest versions available at the time of each release for the following browsers:
+- Brave
+- Chrome
+- Firefox
+- Edge
 
 It is responsive and works on smaller screens, but the best learning experience is on desktop due to the table-heavy UI.
 
