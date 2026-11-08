@@ -218,11 +218,31 @@ function insertRamRowAbove() {
  * @returns {void}
  */
 function deleteRamRow() {
+    if (!Number.isInteger(selectedRamAddress) || selectedRamAddress < 0 || selectedRamAddress >= project.RAM_SIZE) {
+        console.warn(`[deleteRamRow] Invalid selected RAM address: ${selectedRamAddress}.`);
+        return;
+    }
+
     // Find last used address in RAM (the last address that is not 0; if all are 0, it will be -1)
     let lastUsedAddress = project.getLastUsedRamAddress();
 
     // If RAM is empty, we don't need to do anything
-    if (lastUsedAddress === -1) return;
+    if (lastUsedAddress === -1 || selectedRamAddress > lastUsedAddress) return;
+
+    // // If the setting to fix operands after RAM shift is enabled, check if any instruction references the selected RAM address before deleting it
+    // if (settings.get("fixRamAfterShift")) {
+    //     for (let address = 0; address < project.RAM_SIZE; address++) {
+    //         const data = project.getRam(address);
+    //         const opcode = getDataHigh(data);
+    //         const operand = getDataLow(data);
+
+    //         if (opcode !== 0 && opcode !== 10 && operand === selectedRamAddress) {
+    //             console.warn(`[deleteRamRow] Cannot delete RAM address ${selectedRamAddress}; instruction at address ${address} references it.`);
+    //             alert(`RAM address ${selectedRamAddress} is still referenced by an instruction at address ${address}. Update the reference before deleting this row.`);
+    //             return;
+    //         }
+    //     }
+    // }
 
     // Shift rows up from the selected address to the last used address to fill the gap of the deleted row
     for (let i = selectedRamAddress; i < lastUsedAddress; i++) {
