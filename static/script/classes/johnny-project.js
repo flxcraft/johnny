@@ -118,8 +118,8 @@ class JohnnyProject {
         }
 
         // Validate value type (to ensure it's a number)
-        if (!Number.isFinite(value)) {
-            throw new Error(`RAM value must be a number: ${value}`);
+        if (!Number.isInteger(value)) {
+            throw new Error(`RAM value must be an integer: ${value}`);
         }
 
         // Validate value range (to ensure values are within 0 and MAX_RAM_VALUE)
@@ -178,8 +178,8 @@ class JohnnyProject {
         }
 
         // Validate value type (to ensure it's a number)
-        if (!Number.isFinite(value)) {
-            throw new Error(`Microcode value must be a number: ${value}`);
+        if (!Number.isInteger(value)) {
+            throw new Error(`Microcode value must be an integer: ${value}`);
         }
 
         // Validate value range (to ensure microcode values are within 0 and 19, and not equal to 6 which is not used)
@@ -467,20 +467,19 @@ class JohnnyProject {
                 console.warn(`[importLegacyRam] Legacy RAM import contains more than ${this.RAM_SIZE} lines: received ${lines.length}. Extra lines will be ignored.`);
             }
 
-            this.#initRam(); // Clear existing RAM before importing new data
+            const importedRam = new Array(this.RAM_SIZE).fill(0);
 
             // Import RAM values line by line, up to the RAM_SIZE limit
             for (let i = 0; i < lines.length && i < this.RAM_SIZE; i++) {
                 const line = lines[i];
                 const value = Number(line);
                 if (!Number.isInteger(value) || value < 0 || value > this.MAX_RAM_VALUE) {
-                    console.warn(`[importLegacyRam] Invalid RAM value at line ${i + 1}: "${line}". Falling back to 0.`);
-                    this.setRam(i, 0, false);
-                } else {
-                    this.setRam(i, value, false);
+                    throw new Error(`Invalid RAM value at line ${i + 1}: "${line}".`);
                 }
+                importedRam[i] = value;
             }
 
+            this.#ram = importedRam;
             this.#saveProject(); // Save the imported RAM data to localStorage
             console.debug("[importLegacyRam] Legacy RAM imported from string.");
             return true;

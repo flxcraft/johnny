@@ -131,7 +131,9 @@ function downloadRamAsFile() {
 function uploadRamAsFile() {
     uploadData(".ram", function (fileContent, filename) {
         try {
-            project.importLegacyRam(fileContent);
+            if (!project.importLegacyRam(fileContent)) {
+                throw new Error("Legacy RAM import failed.");
+            }
             resetSimulator();
             updateRamTable();
             console.info("RAM file imported successfully:", filename);
