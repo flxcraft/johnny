@@ -12,14 +12,15 @@ function downloadData(filename, content, contentType = 'text/plain') {
 
     // Create a temporary link element to trigger the download
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
+    link.href = objectUrl;
     link.download = filename;
 
     // Click the link to trigger the download
     link.click();
 
     // Clean up the temporary URL object
-    URL.revokeObjectURL(link.href);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
 }
 
 /**
