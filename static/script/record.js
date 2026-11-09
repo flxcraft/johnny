@@ -7,13 +7,14 @@
  */
 function recordMicroStep(microStepId) {
     if (!isRecording || recordMicroCodeAddress === null) return;
-    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= project.MICROCODE_SIZE) {
+    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= microCodeStore.MICROCODE_SIZE) {
         console.error(`[recordMicroStep] Recording address ${recordMicroCodeAddress} is out of bounds.`);
         stopRecording();
         return;
     }
 
-    project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
+    microCodeStore.set(recordMicroCodeAddress, microStepId);
+    JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
 
     scrollToMicroCodeAddress(recordMicroCodeAddress); // Scroll the microcode table to the new address being recorded
@@ -39,7 +40,7 @@ function startRecording() {
         recordMicroCodeAddress = toNumberStrict(recordStartAddressInput.value, "Record start address");
 
         // Check if the given address is within the valid range for microcode addresses
-        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (project.MICROCODE_SIZE - 10)) {
+        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (microCodeStore.MICROCODE_SIZE - 10)) {
             throw new Error("Record start address is out of bounds.");
         }
 
@@ -67,7 +68,8 @@ function startRecording() {
 
         // Update the instructionNames mapping with the new instruction name for the corresponding opcode
         const opcode = recordMicroCodeAddress / 10;
-        project.setInstructionName(opcode, instructionName); // Update the instruction name for the given opcode in the project data
+        microCodeStore.setInstructionName(opcode, instructionName);
+        JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
         updateMicroCodeTableMacroInstructionName(opcode); // Update the corresponding row in the microcode table with the new instruction name
         populateInstructionSelect(); // Update the instruction select dropdown with the new instruction name
         updateRamTable(); // Update the RAM table to reflect any changes in instruction names

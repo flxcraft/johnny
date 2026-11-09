@@ -9,7 +9,8 @@ let selectedRamAddress = 0; // yellow
 let lastAccessedRamAddress = null; // green | null means no address
 
 let settings; // instance of the Settings class to manage user settings
-let project; // instance of the JohnnyProject class to manage project state (RAM + microcode)
+let ramStore;
+let microCodeStore;
 let initialized = false; // indicates if the simulator has been initialized
 
 let isHlt = false; // indicates if the program has reached a HLT instruction
@@ -26,8 +27,8 @@ function initialize() {
     updateControlUnitVisibility(); // Update the control unit visibility based on the loaded settings
     updateMicroCodeCounterVisibility(); // Update the microcode counter visibility based on the loaded settings
 
-    // Initialize the project, which will load RAM and microcode from localStorage or set defaults
-    project = new JohnnyProject();
+    // Load RAM and microcode from localStorage or use their default stores
+    ({ ramStore, microCodeStore } = JohnnyProjectIO.loadProjectFromLocalStorage());
 
     // Generate the tables in the UI based on the loaded data
     generateRamTable();

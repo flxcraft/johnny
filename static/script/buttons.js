@@ -6,13 +6,13 @@
 function manualAddressBus() {
     try {
         let inputAddress = toNumberStrict(document.getElementById("ab-manual-input").value, "Address bus input");
-        if (isNaN(inputAddress) || inputAddress < 0 || inputAddress >= project.RAM_SIZE) {
-            throw new RangeError("Invalid address! Please enter a number between 0 and " + (project.RAM_SIZE - 1) + ".");
+        if (isNaN(inputAddress) || inputAddress < 0 || inputAddress >= ramStore.RAM_SIZE) {
+            throw new RangeError("Invalid address! Please enter a number between 0 and " + (ramStore.RAM_SIZE - 1) + ".");
         }
         writeToAddressBus(inputAddress);
     } catch (error) {
         console.error("Manual address bus input failed:", error);
-        alert("Invalid address. Please enter a number between 0 and " + (project.RAM_SIZE - 1) + ".");
+        alert("Invalid address. Please enter a number between 0 and " + (ramStore.RAM_SIZE - 1) + ".");
     }
 }
 
@@ -24,13 +24,13 @@ function manualAddressBus() {
 function manualDataBus() {
     try {
         let inputData = toNumberStrict(document.getElementById("db-manual-input").value.replace(/^0+/, '').replace(/\./g, '').replace(/,/g, '').trim(), "Data bus input");
-        if (isNaN(inputData) || inputData < 0 || inputData > project.MAX_RAM_VALUE) {
-            throw new RangeError("Invalid data! Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        if (isNaN(inputData) || inputData < 0 || inputData > ramStore.MAX_RAM_VALUE) {
+            throw new RangeError("Invalid data! Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
         }
         writeToDataBus(inputData);
     } catch (error) {
         console.error("Manual data bus input failed:", error);
-        alert("Invalid data. Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        alert("Invalid data. Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -66,8 +66,8 @@ function populateInstructionSelect() {
     instructionSelect.innerHTML = "";
 
     // Append macro instruction names if present
-    for (let opcode = 1; opcode <= getObjectBiggestKey(project.getInstructionNames()); opcode++) {
-        const instructionName = project.getInstructionName(opcode);
+    for (let opcode = 1; opcode <= getObjectBiggestKey(microCodeStore.getInstructionNames()); opcode++) {
+        const instructionName = microCodeStore.getInstructionName(opcode);
         if (instructionName) {
             const option = document.createElement("option");
             option.value = opcode;
@@ -85,16 +85,16 @@ function populateInstructionSelect() {
 function manualRamInput() {
     try {
         let inputData = toNumberStrict(document.getElementById("ram-input").value.replace(/^0+/, '').replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
-        if (isNaN(inputData) || inputData < 0 || inputData > project.MAX_RAM_VALUE) {
-            throw new RangeError("Invalid RAM value! Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        if (isNaN(inputData) || inputData < 0 || inputData > ramStore.MAX_RAM_VALUE) {
+            throw new RangeError("Invalid RAM value! Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
         }
 
         writeToRam(selectedRamAddress, inputData);
-        selectedRamAddress = (selectedRamAddress + 1) % project.RAM_SIZE; // Modulo to wrap around to the beginning of RAM
+        selectedRamAddress = (selectedRamAddress + 1) % ramStore.RAM_SIZE; // Modulo to wrap around to the beginning of RAM
         updateRamTableHighlighting(false); // Update highlighting without scrolling to selected address
     } catch (error) {
         console.error("Manual RAM input failed:", error);
-        alert("Invalid RAM value. Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        alert("Invalid RAM value. Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -119,7 +119,7 @@ function updateMacroExecutionDelay() {
  * @returns {void}
  */
 function downloadRamAsFile() {
-    downloadData("ram.ram", project.exportLegacyRam());
+    downloadData("ram.ram", JohnnyProjectIO.serializeLegacyRam(ramStore));
 }
 
 /** 
@@ -131,9 +131,8 @@ function downloadRamAsFile() {
 function uploadRamAsFile() {
     uploadData(".ram", function (fileContent, filename) {
         try {
-            if (!project.importLegacyRam(fileContent)) {
-                throw new Error("Legacy RAM import failed.");
-            }
+            ramStore = JohnnyProjectIO.parseLegacyRam(fileContent);
+            JohnnyProjectIO.saveRamToLocalStorage(ramStore);
             resetSimulator();
             updateRamTable();
             console.info("RAM file imported successfully:", filename);
@@ -150,7 +149,7 @@ function uploadRamAsFile() {
  * @returns {void}
  */
 function downloadMicrocodeAsFile() {
-    downloadData("microcode.mc", project.exportLegacyMicroCode());
+    downloadData("microcode.mc", JohnnyProjectIO.serializeLegacyMicroCode(microCodeStore));
 }
 
 /** 
@@ -162,9 +161,8 @@ function downloadMicrocodeAsFile() {
 function uploadMicroCodeAsFile() {
     uploadData(".mc", function (fileContent, filename) {
         try {
-            if (!project.importLegacyMicroCode(fileContent)) {
-                throw new Error("Legacy microcode import failed.");
-            }
+            microCodeStore = JohnnyProjectIO.parseLegacyMicroCode(fileContent);
+            JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
             resetSimulator();
             updateMicroCodeTable();
             populateInstructionSelect();
@@ -184,7 +182,7 @@ function uploadMicroCodeAsFile() {
  * @returns {void}
  */
 function downloadProjectAsFile() {
-    downloadData("project.johnny", project.export(), "application/json");
+    downloadData("project.johnny", JohnnyProjectIO.serializeProjectJSON(ramStore, microCodeStore), "application/json");
 }
 
 /**
@@ -196,9 +194,8 @@ function downloadProjectAsFile() {
 function uploadProjectFromFile() {
     uploadData(".johnny", function (fileContent, filename) {
         try {
-            if (!project.import(fileContent)) {
-                throw new Error("Project import failed.");
-            }
+            ({ ramStore, microCodeStore } = JohnnyProjectIO.parseProjectJSON(fileContent));
+            JohnnyProjectIO.saveProjectToLocalStorage(ramStore, microCodeStore);
             resetSimulator();
             updateRamTable();
             updateMicroCodeTable();
@@ -218,7 +215,8 @@ function uploadProjectFromFile() {
  * @returns {void}
  */
 function resetRamToEmpty() {
-    project.resetRam(); // Reset RAM to default values (0 for all addresses)
+    ramStore.reset();
+    JohnnyProjectIO.saveRamToLocalStorage(ramStore);
     updateRamTable();
 }
 
@@ -228,7 +226,8 @@ function resetRamToEmpty() {
  * @returns {void}
  */
 function resetMicrocodeToDefault() {
-    project.resetMicroCode(); // Reset microcode to default values
+    microCodeStore.reset();
+    JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
     updateMicroCodeTable();
     populateInstructionSelect();
     updateMicroCodeTableMacroInstructionNames();

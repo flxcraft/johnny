@@ -2,16 +2,17 @@
  * Writes a value to the specified RAM address and updates the RAM table.
  * If an invalid address or value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} address RAM address (0 … project.RAM_SIZE-1)
- * @param {number|string} value Data value to write (0 … project.MAX_RAM_VALUE)
+ * @param {number|string} address RAM address (0 … ramStore.RAM_SIZE-1)
+ * @param {number|string} value Data value to write (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToRam(address, value) {
     try {
-        address = normalizeInt(address, 0, project.RAM_SIZE - 1, "RAM address");
-        value = normalizeInt(value, 0, project.MAX_RAM_VALUE, "RAM data");
+        address = normalizeInt(address, 0, ramStore.RAM_SIZE - 1, "RAM address");
+        value = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "RAM data");
 
-        project.setRam(address, value);
+        ramStore.set(address, value);
+        JohnnyProjectIO.saveRamToLocalStorage(ramStore);
         updateRamTableRow(address);
     } catch (error) {
         console.error("[writeToRam] Invalid RAM address or value.", error);
@@ -24,12 +25,12 @@ function writeToRam(address, value) {
  * Writes a value to the address bus and updates the display.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Address value (0 … project.RAM_SIZE-1)
+ * @param {number|string} value Address value (0 … ramStore.RAM_SIZE-1)
  * @returns {void}
  */
 function writeToAddressBus(value) {
     try {
-        addressBus = normalizeInt(value, 0, project.RAM_SIZE - 1, "Address bus value");
+        addressBus = normalizeInt(value, 0, ramStore.RAM_SIZE - 1, "Address bus value");
         document.getElementById("ab-field").innerText = formatRamAddress(addressBus);
     } catch (error) {
         console.error("[writeToAddressBus] Invalid address bus value.", error);
@@ -42,12 +43,12 @@ function writeToAddressBus(value) {
  * Writes a value to the data bus and updates the display.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Data value (0 … project.MAX_RAM_VALUE)
+ * @param {number|string} value Data value (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToDataBus(value) {
     try {
-        dataBus = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Data bus value");
+        dataBus = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Data bus value");
         document.getElementById("db-field").innerText = formatData(dataBus);
     } catch (error) {
         console.error("[writeToDataBus] Invalid data bus value.", error);
@@ -60,12 +61,12 @@ function writeToDataBus(value) {
  * Writes a value to the accumulator and updates the display.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Accumulator value (0 … project.MAX_RAM_VALUE)
+ * @param {number|string} value Accumulator value (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToAccumulator(value) {
     try {
-        accumulator = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Accumulator value");
+        accumulator = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Accumulator value");
         document.getElementById("acc-field").innerText = formatData(accumulator);
     } catch (error) {
         console.error("[writeToAccumulator] Invalid accumulator value.", error);
@@ -87,12 +88,12 @@ function writeToAccumulator(value) {
  * Writes a value to the program counter and updates the display.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Program counter value (0 … project.RAM_SIZE-1)
+ * @param {number|string} value Program counter value (0 … ramStore.RAM_SIZE-1)
  * @returns {void}
  */
 function writeToProgramCounter(value) {
     try {
-        programCounter = normalizeInt(value, 0, project.RAM_SIZE - 1, "Program counter value");
+        programCounter = normalizeInt(value, 0, ramStore.RAM_SIZE - 1, "Program counter value");
         document.getElementById("pc-field").innerText = formatRamAddress(programCounter);
     } catch (error) {
         console.error("[writeToProgramCounter] Invalid program counter value.", error);
@@ -105,12 +106,12 @@ function writeToProgramCounter(value) {
  * Writes a value to the instruction register and updates the display.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Instruction word (0 … project.MAX_RAM_VALUE)
+ * @param {number|string} value Instruction word (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToInstructionRegister(value) {
     try {
-        instructionRegister = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Instruction register value");
+        instructionRegister = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Instruction register value");
         document.getElementById("ins-high").innerText = formatDataHigh(instructionRegister);
         document.getElementById("ins-low").innerText = formatDataLow(instructionRegister);
     } catch (error) {
@@ -124,12 +125,12 @@ function writeToInstructionRegister(value) {
  * Writes a value to the microcode counter and updates the display and highlighting.
  * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Microcode address (0 … project.MICROCODE_SIZE-1)
+ * @param {number|string} value Microcode address (0 … microCodeStore.MICROCODE_SIZE-1)
  * @returns {void}
  */
 function writeToMicroCodeCounter(value) {
     try {
-        microCodeCounter = normalizeInt(value, 0, project.MICROCODE_SIZE - 1, "Microcode counter value");
+        microCodeCounter = normalizeInt(value, 0, microCodeStore.MICROCODE_SIZE - 1, "Microcode counter value");
         document.getElementById("mc-field").innerText = formatMicroCodeAddress(microCodeCounter);
         updateMicrocodeTableHighlighting();
     } catch (error) {

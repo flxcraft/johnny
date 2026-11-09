@@ -18,7 +18,7 @@ function generateMicroCodeTable() {
     mcTable.appendChild(headerRow);
 
     // Create table rows for each microcode entry
-    for (let address = 0; address < project.MICROCODE_SIZE; address++) {
+    for (let address = 0; address < microCodeStore.MICROCODE_SIZE; address++) {
         const newRow = document.createElement("tr");
         const addressCell = document.createElement("td");
         const actionCell = document.createElement("td");
@@ -26,7 +26,7 @@ function generateMicroCodeTable() {
         // Add instruction names for addresses that are multiples of 10 (macro instruction entries)
         if (address % 10 === 0) {
             const instructionNumber = address / 10;
-            const instructionName = project.getInstructionName(instructionNumber);
+            const instructionName = microCodeStore.getInstructionName(instructionNumber);
             if (instructionName) {
                 addressCell.textContent = `${formatMicroCodeAddress(address)} ${instructionName}:`;
             } else {
@@ -37,7 +37,7 @@ function generateMicroCodeTable() {
         }
 
         // Convert microcode entry to human-readable text and set it in the action cell
-        actionCell.textContent = getMicroInstructionName(project.getMicroCode(address));
+        actionCell.textContent = getMicroInstructionName(microCodeStore.get(address));
 
         // Set row ID for future reference
         newRow.id = `microcode-row-${address}`;
@@ -65,7 +65,7 @@ function generateMicroCodeTable() {
  * @return {void}
  */
 function updateMicroCodeTable() {
-    for (let address = 0; address < project.MICROCODE_SIZE; address++) {
+    for (let address = 0; address < microCodeStore.MICROCODE_SIZE; address++) {
         updateMicroCodeTableRow(address);
     }
 }
@@ -79,7 +79,7 @@ function updateMicroCodeTable() {
 function updateMicroCodeTableRow(address) {
     const row = document.getElementById(`microcode-row-${address}`);
     const actionCell = row.children[1];
-    actionCell.textContent = getMicroInstructionName(project.getMicroCode(address));
+    actionCell.textContent = getMicroInstructionName(microCodeStore.get(address));
 }
 
 /**
@@ -95,7 +95,7 @@ function updateMicroCodeTableMacroInstructionName(opCode) {
         return;
     }
 
-    const instructionName = project.getInstructionName(opCode);
+    const instructionName = microCodeStore.getInstructionName(opCode);
     if (instructionName) {
         element.textContent = `${formatMicroCodeAddress(opCode * 10)} ${instructionName}:`;
     } else {
@@ -109,7 +109,7 @@ function updateMicroCodeTableMacroInstructionName(opCode) {
  * @returns {void}
  */
 function updateMicroCodeTableMacroInstructionNames() {
-    for (let opcode = 0; opcode < project.MICROCODE_SIZE / 10; opcode++) {
+    for (let opcode = 0; opcode < microCodeStore.MICROCODE_SIZE / 10; opcode++) {
         updateMicroCodeTableMacroInstructionName(opcode);
     }
 }
@@ -120,7 +120,7 @@ function updateMicroCodeTableMacroInstructionNames() {
  * @returns {void}
  */
 function updateMicrocodeTableHighlighting() {
-    for (let address = 0; address < project.MICROCODE_SIZE; address++) {
+    for (let address = 0; address < microCodeStore.MICROCODE_SIZE; address++) {
         const row = document.getElementById(`microcode-row-${address}`);
         if (address === microCodeCounter) {
             row.classList.add("selected");
@@ -171,7 +171,7 @@ function openMicroCodeEditModal(address) {
         option.textContent = `${code}: ${description}`;
 
         // Pre-select the current microcode value for the address
-        if (Number(code) === project.getMicroCode(address)) {
+        if (Number(code) === microCodeStore.get(address)) {
             option.selected = true;
         }
 
@@ -201,7 +201,8 @@ function saveMicroCodeEdit() {
         const address = Number(document.getElementById("microcode-edit-address").textContent);
         const microInstructionSelect = document.getElementById("micro-instruction-select");
         const selectedMicroInstruction = Number(microInstructionSelect.value);
-        project.setMicroCode(address, selectedMicroInstruction); // assume the dropdown values are valid, so they can be used directly without additional validation
+        microCodeStore.set(address, selectedMicroInstruction);
+        JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
 
         updateMicroCodeTableRow(address);
         closeMicroCodeEditModal();
