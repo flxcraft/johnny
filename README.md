@@ -116,7 +116,7 @@ A `.ram` file defines the initial contents of the RAM. Each line corresponds to 
 - If the file contains **more lines than RAM addresses**, the excess lines are ignored
 
 #### Invalid Values
-- Invalid values (non-integers or out of the valid range) are replaced with `0` and a warning is issued in the console
+- Invalid values (non-integers or out of the valid range) cause the import to fail with an error
 
 #### Example
 <details>
@@ -184,7 +184,7 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 - Microcode may only be defined up to address `MICROCODE_SIZE - 1` (default: `199`)
 
 #### Invalid Values
-- Invalid values (non-integers or out of the valid range) are replaced with `0` and a warning is issued in the console
+- Invalid values (non-integers or out of the valid range) cause the import to fail with an error
 
 #### Example
 <details>

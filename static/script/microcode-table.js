@@ -95,7 +95,7 @@ function updateMicroCodeTableRow(address) {
  * @returns {void}
  */
 function updateMicroCodeTableMacroInstructionName(opCode) {
-    const element = document.getElementById(`microcode-row-${opCode * 10}`).children[0];
+    const element = document.getElementById(`microcode-row-${opCode * 10}`)?.children[0];
     if (!element) {
         console.warn(`[updateMicroCodeTableMacroInstructionName] No table row found for opcode ${opCode}.`);
         return;
@@ -147,7 +147,7 @@ function updateMicrocodeTableHighlighting() {
 function highlightMicroCodeTableRow(address) {
     const row = document.getElementById(`microcode-row-${address}`);
     
-    // highlighlight for 500ms to indicate the current recording position, but only if the row exists (address is valid)
+    // highlight for 500ms to indicate the current recording position, but only if the row exists (address is valid)
     if (row) {
         row.classList.add("highlight");
         setTimeout(() => {

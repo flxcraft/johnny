@@ -8,7 +8,7 @@
  * Stores and validates the simulator's RAM values.
  */
 class RamStore {
-    static RAM_SIZE = 1000; // later dynamically changable, but for now it's fixed at 1000
+    static RAM_SIZE = 1000; // later dynamically changeable, but for now it's fixed at 1000
     static MAX_RAM_VALUE = 19999; // later dynamically calculated, but for now it's fixed at 19999
 
     // Private field to store RAM values

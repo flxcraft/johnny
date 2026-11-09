@@ -8,7 +8,7 @@
  * Stores and validates the simulator's microcode and macro instruction names.
  */
 class MicroCodeStore {
-    static MICROCODE_SIZE = 200; // later dynamically changable, but for now it's fixed at 200
+    static MICROCODE_SIZE = 200; // later dynamically changeable, but for now it's fixed at 200
     static MAX_MICROCODE_VALUE = 19; // the maximum value for a microcode instruction id
     static UNUSED_MICROCODE_VALUE = 6;
 

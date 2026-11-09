@@ -12,7 +12,7 @@
 function singleMacroStep() {
     do {
         microStep(false);
-    } while (microCodeCounter != 0 && !isHlt); // continue until microcode counter resets to 0 (end of instruction) or HLT reached
+    } while (microCodeCounter !== 0 && !isHlt); // continue until microcode counter resets to 0 (end of instruction) or HLT reached
 }
 
 /**
