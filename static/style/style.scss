@@ -10,6 +10,53 @@ body {
     background-repeat: no-repeat;
 }
 
+button,
+input,
+select {
+    box-sizing: border-box;
+    border: 1px solid rgba(32, 45, 58, 0.35);
+    border-radius: 0.35rem;
+    padding: 0.25dvh 0.45dvw;
+    background-color: rgba(255, 255, 255, 0.86);
+    color: #16212b;
+    transition:
+        background-color 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        filter 0.18s ease;
+}
+
+button {
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+        filter: brightness(0.96);
+        box-shadow: 0 0.25rem 0.55rem rgba(20, 32, 44, 0.22);
+    }
+
+    &:active {
+        filter: brightness(0.9);
+        box-shadow: inset 0 0.1rem 0.2rem rgba(20, 32, 44, 0.22);
+    }
+}
+
+input,
+select {
+    font-family: monospace;
+
+    &:hover {
+        border-color: rgba(32, 45, 58, 0.6);
+    }
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid rgba(32, 111, 178, 0.75);
+    outline-offset: 2px;
+}
+
 .overlay {
     position: fixed;
     left: 0;
@@ -186,6 +233,7 @@ body {
 // ----- button positions -----
 .button {
     position: fixed;
+    width: max-content;
     min-width: 5dvw;
     white-space: nowrap;
     transform: translate(-50%, -50%);
@@ -291,11 +339,13 @@ body {
     &#add-row-above-button {
         left: 10dvw;
         top: 81.65dvh;
+        min-width: 6dvw;
     }
 
     &#delete-row-button {
         left: 10dvw;
         top: 84.65dvh;
+        min-width: 6dvw;
     }
 }
 
@@ -313,12 +363,13 @@ body {
     flex-direction: column;
     justify-content: center;
 
-    * {
+    input,
+    select,
+    button {
         width: 6.2dvw;
         height: 2.5dvh;
         margin-left: 0.3dvw;
         margin-top: 0.2rem;
-        padding: 0;
     }
 }
 

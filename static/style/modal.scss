@@ -81,30 +81,7 @@
             }
 
             select {
-                padding: 10px 12px;
-                border-radius: 6px;
-                border: 1px solid #ccc;
-                font-family: monospace;
-                font-size: 0.95rem;
-
-                &:focus {
-                    outline: none;
-                    border-color: #3b82f6;
-                    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
-                }
-            }
-
-            button {
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 6px;
-                cursor: pointer;
-
-                &:hover {
-                    background-color: #45a049;
-                }
+                min-height: 2.2rem;
             }
         }
 
@@ -113,30 +90,20 @@
             justify-content: flex-end;
             gap: 12px;
 
-
             button {
+                border-color: transparent;
                 padding: 8px 16px;
-                border-radius: 6px;
-                border: none;
-                cursor: pointer;
+                font-weight: 500;
+            }
 
-                &.save-button {
-                    background-color: #4CAF50;
-                    color: white;
+            .save-button {
+                background-color: #4caf50;
+                color: white;
+            }
 
-                    &:hover {
-                        background-color: #45a049;
-                    }
-                }
-
-                &.cancel-button {
-                    background-color: #f44336;
-                    color: white;
-
-                    &:hover {
-                        background-color: #da190b;
-                    }
-                }
+            .cancel-button {
+                background-color: #f44336;
+                color: white;
             }
         }
 
