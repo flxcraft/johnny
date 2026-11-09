@@ -44,7 +44,9 @@ function instructionSelectOnChange() {
     try {
         const inputElement = document.getElementById("ram-input");
         const selectedValue = document.getElementById("ram-input-instruction-select").value;
-        let inputValue = toNumberStrict(inputElement.value.replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
+        let inputValue = inputElement.value.trim() === ""
+            ? 0
+            : toNumberStrict(inputElement.value.replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
 
         inputValue = `${selectedValue}${formatDataLow(inputValue)}`;
         inputElement.value = formatData(inputValue);
