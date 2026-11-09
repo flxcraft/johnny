@@ -32,6 +32,10 @@ select {
         filter 0.18s ease;
 }
 
+input[type="range"] {
+    padding: 0;
+}
+
 button {
     cursor: pointer;
     font-weight: 600;
