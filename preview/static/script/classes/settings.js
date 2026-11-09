@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * The Settings class manages user-configurable settings for the application, providing functionality to load, save, and validate settings against a defined scheme.
  * It uses localStorage to persist settings across sessions and includes comprehensive error handling to ensure robustness in various environments and scenarios.

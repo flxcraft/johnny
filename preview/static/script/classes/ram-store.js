@@ -1,8 +1,14 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Stores and validates the simulator's RAM values.
  */
 class RamStore {
-    static RAM_SIZE = 1000; // later dynamically changable, but for now it's fixed at 1000
+    static RAM_SIZE = 1000; // later dynamically changeable, but for now it's fixed at 1000
     static MAX_RAM_VALUE = 19999; // later dynamically calculated, but for now it's fixed at 19999
 
     // Private field to store RAM values

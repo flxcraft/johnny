@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Generates the RAM table in the HTML document and populates it with data from the RAM array.
  * 
@@ -76,6 +82,11 @@ function generateRamTable() {
  */
 function updateRamTableRow(address) {
     const row = document.getElementById(`ram-row-${address}`);
+    if (!row) {
+        console.warn(`[updateRamTableRow] No table row found for RAM address ${address}.`);
+        return;
+    }
+
     const dataCell = row.children[1];
     const assemblerCell = row.children[2];
     const operandCell = row.children[3];
@@ -131,6 +142,9 @@ function updateRamInputArrowPosition() {
     const arrow = document.getElementById("ram-input-arrow");
     const selectedRow = document.getElementById(`ram-row-${selectedRamAddress}`);
     const container = document.getElementById("ram-table-container");
+
+    // If the arrow is missing, there is nothing to update
+    if (!arrow) return;
 
     // If there is no selected row or container, hide the arrow and exit
     if (!selectedRow || !container) {

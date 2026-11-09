@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Writes a value to the specified RAM address and updates the RAM table.
  * If an invalid address or value is provided, it stops all executions and shows an error message.
@@ -144,6 +150,7 @@ function writeToMicroCodeCounter(value) {
  * Converts a value to a finite number. Throws an error if conversion fails.
  *
  * @param {number|string} value Value to convert
+ * @param {string} context Context used for logging (default: "Value")
  * @returns {number} Converted finite number
  * @throws {TypeError} If value is not a finite number
  */
@@ -168,7 +175,7 @@ function toNumberStrict(value, context = "Value") {
  * @param {number} min Minimum allowed value
  * @param {number} max Maximum allowed value
  * @param {string} context Context used for logging (default: "Value")
- * @returns {number} Normalized (finite and clamped) number
+ * @returns {number} Normalized finite integer
  * @throws {TypeError} If the value cannot be converted to a finite number
  * @throws {RangeError} If the value is outside the specified range
  */

@@ -2,11 +2,9 @@
 This project is a **web-based simulator of a simple Von Neumann computer.**
 It visualizes RAM, microcode and execution flow step by step and is mainly intended for **learning, teaching, and understanding basic computer architecture.**
 
-The design and behavior of this simulator are inspired by the following projects:
-- [https://github.com/Laubersheini/johnny](https://github.com/Laubersheini/johnny)
-- [https://github.com/TobisMa/johnny](https://github.com/TobisMa/johnny)
+The design and behavior of this simulator are inspired by the original [Laubersheini/johnny](https://github.com/Laubersheini/johnny) project. This repository contains no source code from that project. The simulator in this repository was written from scratch based on the original project's behavior.
 
-Many thanks to the original authors for their work and inspiration. This project is a complete rewrite of the original codebase to improve code quality, maintainability and add new features. It also incorporates some ideas from other similar projects and adds some of my own ideas to enhance the learning experience.
+Many thanks to the original authors for their work and inspiration. This project is a complete rewrite with independently written source code that improves maintainability and adds new features.
 
 The whole project is implemented in **HTML, SCSS and JavaScript** and runs entirely in the browser, so no installation is required. If you want to run it locally you can simply download the zip from any release and open the `index.html` file in your browser. Alternatively, you can also clone the repository and run it with a local development server (e.g. using the `Live Server` extension in VS Code) to get live reloading during development.
 
@@ -22,6 +20,7 @@ The whole project is implemented in **HTML, SCSS and JavaScript** and runs entir
 - [Notes & Limitations](#notes--limitations)
     - [Styling](#styling)
 - [Motivation & Future Plans](#motivation--future-plans)
+- [License](#license)
 
 ## Live Demo & Versions
 The project is hosted on GitHub Pages and is available in different versions. Note that the Beta version is only updated during pre-releases and may not always be available or differ from the stable version.
@@ -117,7 +116,7 @@ A `.ram` file defines the initial contents of the RAM. Each line corresponds to 
 - If the file contains **more lines than RAM addresses**, the excess lines are ignored
 
 #### Invalid Values
-- Invalid values (non-integers or out of the valid range) are replaced with `0` and a warning is issued in the console
+- Invalid values (non-integers or out of the valid range) cause the import to fail with an error
 
 #### Example
 <details>
@@ -185,7 +184,7 @@ A `.mc` file describes the initial contents of the microcode. Each line correspo
 - Microcode may only be defined up to address `MICROCODE_SIZE - 1` (default: `199`)
 
 #### Invalid Values
-- Invalid values (non-integers or out of the valid range) are replaced with `0` and a warning is issued in the console
+- Invalid values (non-integers or out of the valid range) cause the import to fail with an error
 
 #### Example
 <details>
@@ -424,3 +423,9 @@ In the future, I plan to add more features such as:
 - Some predefined example RAM and microcode files for common algorithms (e.g. addition, multiplication, loops, etc.) to provide ready-to-use examples for learning and testing
 - **✅ Implemented (more following):** Settings to customize some aspects of the simulator without changing the code
 - An option to change the RAM and microcode sizes (currently fixed at 1000 and 200 respectively) to allow for larger or smaller programs
+
+## License
+Copyright (C) 2026 Felix Heidisch (flxcraft)
+
+This project is licensed under the GNU Affero General Public License, version 3
+or any later version. See [LICENSE](LICENSE) for the full license text.
