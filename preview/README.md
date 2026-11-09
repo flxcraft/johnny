@@ -409,7 +409,7 @@ HLT
 ## Notes & Limitations
 - This simulator is designed for educational purposes, not performance
 - RAM and microcode changes are persisted using `localStorage`. While there is no built-in versioning, you can easily create backups by regularly exporting your projects as `.johnny` files
-- The RAM and microcode sizes are fixed by default (`RAM_SIZE = 1000`, `MICROCODE_SIZE = 200`) and are defined in `static/script/classes/johnny-project.js`. Changing these values has not been thoroughly tested and may require additional code adjustments. But this is something I might add in the future as a customizable setting in the app.
+- The RAM and microcode sizes are fixed by default (`RAM_SIZE = 1000`, `MICROCODE_SIZE = 200`) and are defined in `static/script/classes/ram-store.js` and `static/script/classes/micro-code-store.js`. Changing these values has not been thoroughly tested and may require additional code adjustments. But this is something I might add in the future as a customizable setting in the app.
 
 ### Styling
 The project uses SCSS for styling, which is compiled to CSS for production (GitHub Pages) using GitHub Actions. The SCSS source files are located at `./static/style/`, and the production CSS files are generated in the same directory. For development, `Live Sass Compiler` can be used to automatically compile SCSS to CSS on save.

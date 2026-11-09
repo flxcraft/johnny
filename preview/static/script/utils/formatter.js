@@ -49,7 +49,7 @@ function getNumberLength(number) {
  * @returns {string}
  */
 function formatRamAddress(address) {
-    const length = getNumberLength(project.RAM_SIZE - 1);
+    const length = getNumberLength(ramStore.RAM_SIZE - 1);
     return String(address).padStart(length, '0');
 }
 
@@ -60,7 +60,7 @@ function formatRamAddress(address) {
  * @returns {string}
  */
 function formatMicroCodeAddress(address) {
-    const length = getNumberLength(project.MICROCODE_SIZE - 1);
+    const length = getNumberLength(microCodeStore.MICROCODE_SIZE - 1);
     return String(address).padStart(length, '0');
 }
 
@@ -71,7 +71,7 @@ function formatMicroCodeAddress(address) {
  * @returns {string}
  */
 function formatData(data) {
-    const length = getNumberLength(project.MAX_RAM_VALUE);
+    const length = getNumberLength(ramStore.MAX_RAM_VALUE);
     const s = String(data).padStart(length, '0');
     return s.slice(0, length - 3) + '.' + s.slice(length - 3);
 }
@@ -103,7 +103,7 @@ function getDataLow(data) {
  * @returns {string}
  */
 function formatDataHigh(data) {
-    const length = getNumberLength(project.MAX_RAM_VALUE) - 3; // 3 digits for the low part
+    const length = getNumberLength(ramStore.MAX_RAM_VALUE) - 3; // 3 digits for the low part
     return String(getDataHigh(data)).padStart(length, '0');
 }
 
@@ -128,7 +128,7 @@ function dataToAsm(data) {
     const opCode = getDataHigh(data);
     const operand = getDataLow(data);
 
-    const instruction = project.getInstructionName(opCode);
+    const instruction = microCodeStore.getInstructionName(opCode);
     if (!instruction || opCode === 0) { // if opcode is 0 (FETCH) or not found in instructionNames, treat as empty
         return { instruction: "", operand: operand };
     }
