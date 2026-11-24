@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Executes the current micro-instruction pointed to by the microcode counter.
  *
@@ -6,12 +12,12 @@
  */
 function microStep(animate = true) {
     if (isHlt) {
-        console.warn("Program has halted. No further micro-steps can be executed. Only manual steps are allowed. Please reset the simulator to continue.");
+        console.warn("[microStep] Execution is halted. Micro-steps are disabled until the simulator is reset. Only manual micro-steps are allowed.");
         return;
     }
 
     // Get the micro-instruction ID from the microcode at the current counter
-    const id = Number(project.getMicroCode(microCodeCounter));
+    const id = Number(microCodeStore.get(microCodeCounter));
 
     // Check if FETCH is getting an instruction with opcode 0, which is leading to an infinite loop of executing the FETCH instruction.
     if (id === 5) { // 5 is the ins --> mc step, which is the last step of the FETCH instruction sequence
@@ -19,23 +25,18 @@ function microStep(animate = true) {
 
         // If the instruction is 0, the FETCH instruction is calling itself repeatedly, which is likely an error in the program code.
         if (instruction === 0) {
-            console.error(`FETCH error - stopping execution! Unexpected instruction with opcode 0. This may indicate an error in the program code at the RAM address ${programCounter}. Please check the code and ensure it is correct. Maybe you forgot a HLT instruction?`);
-            alert(`FETCH error! Program stopped!\n\n` +
-                `Unexpected instruction with opcode 0 at RAM address ${programCounter}.\n` +
-                `This may indicate an error in the program code. Please check the code and ensure it is correct. Maybe you forgot a HLT instruction?`);
-            isHlt = true;
-            stopMacroProgram();
+            console.error(`[microStep] Invalid opcode 0 during FETCH at RAM address ${programCounter}.`);
+            alert(`Invalid instruction detected at RAM address ${programCounter}. Please check your program and make sure it reaches HLT.`);
+            stopAllExecutions();
             return;
         }
     }
 
-    // Handle the case where microcode at the current counter is 0 (no-op) - this may indicate an error in the microcode for the current instruction
+    // ID 0 is a placeholder, not an executable no-op.
     if (id === 0) {
-        console.warn(`Microcode at counter ${microCodeCounter} is 0, which is a no-op. This may indicate an error in the microcode for the current instruction. Halting program execution. Please check the microcode for the current instruction and ensure it is correct.`);
-        alert(`Microcode error! Program stopped!\n\n` +
-            `Microcode at counter ${microCodeCounter} is 0, which is a no-op. This may indicate an error in the microcode for the current instruction.`);
-        isHlt = true;
-        stopMacroProgram();
+        console.error(`[microStep] Invalid microcode placeholder at address ${microCodeCounter}: micro-instruction ID 0.`);
+        alert(`Invalid microcode entry detected at address ${microCodeCounter}. Please check the microcode table. Instruction sequences should end with micro-instruction 7 (mc := 0).`);
+        stopAllExecutions();
         return;
     }
 
@@ -66,14 +67,9 @@ function executeMicroInstruction(id, animate = true, isManual = false) {
 
     // Handle invalid micro-instruction ID
     if (!microStep) {
-        isHlt = true;
-        stopMacroProgram();
-
-        console.error(`Invalid micro-instruction ID ${id} at MC=${microCodeCounter}`);
-        alert(`Microcode error! Program stopped!\n\n` +
-            `Unknown micro-instruction ID: ${id}\n` +
-            `Microcode Counter: ${microCodeCounter}`);
-
+        console.error(`[executeMicroInstruction] Invalid micro-instruction ID ${id} at microcode address ${microCodeCounter}.`);
+        alert(`Unknown micro-instruction detected at microcode address ${microCodeCounter}. Please verify the microcode table.`);
+        stopAllExecutions();
         return;
     }
 
@@ -108,7 +104,7 @@ function dbToRamStep() {
 }
 
 function ramToDbStep() {
-    writeToDataBus(project.getRam(addressBus));
+    writeToDataBus(ramStore.get(addressBus));
     lastAccessedRamAddress = addressBus;
     updateRamTableHighlighting();
 }
@@ -191,7 +187,7 @@ function stopStep() {
     isHlt = true;
 
     setTimeout(() => { // delay alert to allow UI updates before blocking
-        alert("Program stopped");
+        alert("Program stopped.");
     }, 0);
 }
 

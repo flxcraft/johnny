@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Records a micro-operation during the recording process and updates the microcode table accordingly.
  * Also saves the updated microcode to localStorage.
@@ -7,13 +13,14 @@
  */
 function recordMicroStep(microStepId) {
     if (!isRecording || recordMicroCodeAddress === null) return;
-    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= project.MICROCODE_SIZE) {
-        console.error(`Record micro step address ${recordMicroCodeAddress} is out of bounds. Stopping recording.`);
+    if (recordMicroCodeAddress < 0 || recordMicroCodeAddress >= microCodeStore.MICROCODE_SIZE) {
+        console.error(`[recordMicroStep] Recording address ${recordMicroCodeAddress} is out of bounds.`);
         stopRecording();
         return;
     }
 
-    project.setMicroCode(recordMicroCodeAddress, microStepId); // assume the microStepId is valid, so it can be used directly without additional validation
+    microCodeStore.set(recordMicroCodeAddress, microStepId);
+    JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
     updateMicroCodeTableRow(recordMicroCodeAddress); // Update the corresponding row in the microcode table
 
     scrollToMicroCodeAddress(recordMicroCodeAddress); // Scroll the microcode table to the new address being recorded
@@ -30,12 +37,6 @@ function recordMicroStep(microStepId) {
  * @returns {boolean} true if recording started successfully, false otherwise
  */
 function startRecording() {
-    isRecording = true;
-
-    // Add the "recording" class to the record panel to update its visual state
-    const recordPanel = document.getElementById("mc-record-panel");
-    if (recordPanel) recordPanel.classList.add("recording");
-
     // Get references to the input elements for the starting microcode address and instruction name
     const recordStartAddressInput = document.getElementById("record-start-address");
     const recordInstructionNameInput = document.getElementById("record-instruction-name");
@@ -45,7 +46,7 @@ function startRecording() {
         recordMicroCodeAddress = toNumberStrict(recordStartAddressInput.value, "Record start address");
 
         // Check if the given address is within the valid range for microcode addresses
-        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (project.MICROCODE_SIZE - 10)) {
+        if (recordMicroCodeAddress < 0 || recordMicroCodeAddress > (microCodeStore.MICROCODE_SIZE - 10)) {
             throw new Error("Record start address is out of bounds.");
         }
 
@@ -64,18 +65,25 @@ function startRecording() {
             throw new Error("Instruction name is too long (max 5 characters).");
         }
 
+        // If all validations pass, set the recording state to true
+        isRecording = true;
+
+        // Add the "recording" class to the record panel to update its visual state
+        const recordPanel = document.getElementById("mc-record-panel");
+        if (recordPanel) recordPanel.classList.add("recording");
+
         // Update the instructionNames mapping with the new instruction name for the corresponding opcode
         const opcode = recordMicroCodeAddress / 10;
-        project.setInstructionName(opcode, instructionName); // Update the instruction name for the given opcode in the project data
+        microCodeStore.setInstructionName(opcode, instructionName);
+        JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
         updateMicroCodeTableMacroInstructionName(opcode); // Update the corresponding row in the microcode table with the new instruction name
         populateInstructionSelect(); // Update the instruction select dropdown with the new instruction name
         updateRamTable(); // Update the RAM table to reflect any changes in instruction names
 
         return true; // Indicate that recording has successfully started
     } catch (error) {
-        console.error("Error starting recording:", error);
-        alert("Error starting recording. Please check your inputs.\n" +
-            "See console for details.");
+        console.error("[startRecording] Failed to start recording:", error);
+        alert("Could not start recording. Please check the start address and instruction name.");
 
         // Reset recording state on error
         isRecording = false;

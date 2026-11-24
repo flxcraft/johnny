@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 let addressBus = 0;
 let dataBus = 0;
 let accumulator = 0;
@@ -9,7 +15,8 @@ let selectedRamAddress = 0; // yellow
 let lastAccessedRamAddress = null; // green | null means no address
 
 let settings; // instance of the Settings class to manage user settings
-let project; // instance of the JohnnyProject class to manage project state (RAM + microcode)
+let ramStore;
+let microCodeStore;
 let initialized = false; // indicates if the simulator has been initialized
 
 let isHlt = false; // indicates if the program has reached a HLT instruction
@@ -26,8 +33,8 @@ function initialize() {
     updateControlUnitVisibility(); // Update the control unit visibility based on the loaded settings
     updateMicroCodeCounterVisibility(); // Update the microcode counter visibility based on the loaded settings
 
-    // Initialize the project, which will load RAM and microcode from localStorage or set defaults
-    project = new JohnnyProject();
+    // Load RAM and microcode from localStorage or use their default stores
+    ({ ramStore, microCodeStore } = JohnnyProjectIO.loadProjectFromLocalStorage());
 
     // Generate the tables in the UI based on the loaded data
     generateRamTable();
@@ -41,7 +48,7 @@ function initialize() {
 
     // Mark the simulator as initialized to allow other functions to check this state if needed
     initialized = true;
-    console.info("Simulator initialized.");
+    console.info("[initialize] Simulator initialized successfully.");
 }
 
 /**
@@ -62,7 +69,7 @@ function showDataMovementAnimation(animation) {
             }, 800); // show for 800ms
         }
     } else {
-        console.warn("Animation element not found for:", animation);
+        console.warn("[showDataMovementAnimation] Animation element not found:", animation);
     }
 }
 
@@ -86,7 +93,18 @@ function updateMicroCodeCounterVisibility() {
             microCodeTableContainer.classList.add("large-mode");
         }
     } catch (error) {
-        console.error("Error updating microcode counter visibility:", error);
-        alert("An error occurred while updating the microcode counter visibility. Please check the console for details.");
+        console.error("[updateMicroCodeCounterVisibility] Failed to update microcode counter visibility:", error);
+        alert("Could not update the microcode counter display.");
     }
+}
+
+/**
+ * Stops all ongoing executions by setting the isHlt flag to true and stopping any running macro program.
+ * This function can be called when a critical error is encountered to prevent further execution and potential issues.
+ * 
+ * @returns {void}
+ */
+function stopAllExecutions() {
+    isHlt = true;
+    stopMacroProgram();
 }

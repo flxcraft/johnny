@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Sets the address bus to the value entered in the manual input field.
  * 
@@ -6,13 +12,13 @@
 function manualAddressBus() {
     try {
         let inputAddress = toNumberStrict(document.getElementById("ab-manual-input").value, "Address bus input");
-        if (isNaN(inputAddress) || inputAddress < 0 || inputAddress >= project.RAM_SIZE) {
-            throw new RangeError("Invalid address! Please enter a number between 0 and " + (project.RAM_SIZE - 1) + ".");
+        if (isNaN(inputAddress) || inputAddress < 0 || inputAddress >= ramStore.RAM_SIZE) {
+            throw new RangeError("Invalid address! Please enter a number between 0 and " + (ramStore.RAM_SIZE - 1) + ".");
         }
         writeToAddressBus(inputAddress);
     } catch (error) {
-        console.error("Error processing manual address bus input:", error);
-        alert("An error occurred while processing the address bus input. Please enter a valid number.");
+        console.error("Manual address bus input failed:", error);
+        alert("Invalid address. Please enter a number between 0 and " + (ramStore.RAM_SIZE - 1) + ".");
     }
 }
 
@@ -23,14 +29,14 @@ function manualAddressBus() {
  */
 function manualDataBus() {
     try {
-        let inputData = toNumberStrict(document.getElementById("db-manual-input").value, "Data bus input");
-        if (isNaN(inputData) || inputData < 0 || inputData > project.MAX_RAM_VALUE) {
-            throw new RangeError("Invalid data! Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        let inputData = toNumberStrict(document.getElementById("db-manual-input").value.replace(/^0+/, '').replace(/\./g, '').replace(/,/g, '').trim(), "Data bus input");
+        if (isNaN(inputData) || inputData < 0 || inputData > ramStore.MAX_RAM_VALUE) {
+            throw new RangeError("Invalid data! Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
         }
         writeToDataBus(inputData);
     } catch (error) {
-        console.error("Error processing manual data bus input:", error);
-        alert("An error occurred while processing the data bus input. Please enter a valid number.");
+        console.error("Manual data bus input failed:", error);
+        alert("Invalid data. Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -44,13 +50,15 @@ function instructionSelectOnChange() {
     try {
         const inputElement = document.getElementById("ram-input");
         const selectedValue = document.getElementById("ram-input-instruction-select").value;
-        let inputValue = toNumberStrict(inputElement.value.replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
+        let inputValue = inputElement.value.trim() === ""
+            ? 0
+            : toNumberStrict(inputElement.value.replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
 
         inputValue = `${selectedValue}${formatDataLow(inputValue)}`;
         inputElement.value = formatData(inputValue);
     } catch (error) {
-        console.error("Error processing instruction select change:", error);
-        alert("An error occurred while processing the instruction selection. Please try again.");
+        console.error("Instruction select update failed:", error);
+        alert("Could not update the selected instruction. Please try again.");
     }
 }
 
@@ -66,8 +74,8 @@ function populateInstructionSelect() {
     instructionSelect.innerHTML = "";
 
     // Append macro instruction names if present
-    for (let opcode = 1; opcode <= getObjectBiggestKey(project.getInstructionNames()); opcode++) {
-        const instructionName = project.getInstructionName(opcode);
+    for (let opcode = 1; opcode <= getObjectBiggestKey(microCodeStore.getInstructionNames()); opcode++) {
+        const instructionName = microCodeStore.getInstructionName(opcode);
         if (instructionName) {
             const option = document.createElement("option");
             option.value = opcode;
@@ -85,16 +93,16 @@ function populateInstructionSelect() {
 function manualRamInput() {
     try {
         let inputData = toNumberStrict(document.getElementById("ram-input").value.replace(/^0+/, '').replace(/\./g, '').replace(/,/g, '').trim(), "RAM input");
-        if (isNaN(inputData) || inputData < 0 || inputData > project.MAX_RAM_VALUE) {
-            throw new RangeError("Invalid RAM value! Please enter a number between 0 and " + project.MAX_RAM_VALUE + ".");
+        if (isNaN(inputData) || inputData < 0 || inputData > ramStore.MAX_RAM_VALUE) {
+            throw new RangeError("Invalid RAM value! Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
         }
 
         writeToRam(selectedRamAddress, inputData);
-        selectedRamAddress = (selectedRamAddress + 1) % project.RAM_SIZE; // Modulo to wrap around to the beginning of RAM
+        selectedRamAddress = (selectedRamAddress + 1) % ramStore.RAM_SIZE; // Modulo to wrap around to the beginning of RAM
         updateRamTableHighlighting(false); // Update highlighting without scrolling to selected address
     } catch (error) {
-        console.error("Error processing manual RAM input:", error);
-        alert("An error occurred while processing the RAM input. Please enter a valid number.");
+        console.error("Manual RAM input failed:", error);
+        alert("Invalid RAM value. Please enter a number between 0 and " + ramStore.MAX_RAM_VALUE + ".");
     }
 }
 
@@ -108,8 +116,8 @@ function updateMacroExecutionDelay() {
         const speedSlider = document.getElementById("macro-run-speed");
         macroExecutionDelay = 1000 - toNumberStrict(speedSlider.value, "Macro run speed");
     } catch (error) {
-        console.error("Error processing macro run speed input:", error);
-        alert("An error occurred while processing the macro run speed input. Please enter a valid number.");
+        console.error("Macro execution speed update failed:", error);
+        alert("Invalid speed value. Please use the slider or enter a valid number.");
     }
 }
 
@@ -119,7 +127,7 @@ function updateMacroExecutionDelay() {
  * @returns {void}
  */
 function downloadRamAsFile() {
-    downloadData("ram.ram", project.exportLegacyRam());
+    downloadData("ram.ram", JohnnyProjectIO.serializeLegacyRam(ramStore));
 }
 
 /** 
@@ -131,13 +139,14 @@ function downloadRamAsFile() {
 function uploadRamAsFile() {
     uploadData(".ram", function (fileContent, filename) {
         try {
-            project.importLegacyRam(fileContent);
+            ramStore = JohnnyProjectIO.parseLegacyRam(fileContent);
+            JohnnyProjectIO.saveRamToLocalStorage(ramStore);
             resetSimulator();
             updateRamTable();
-            console.info("RAM imported from file:", filename);
+            console.info("RAM file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing RAM from file:", error);
-            alert("An error occurred while importing RAM from the file. Please make sure the file is a valid .ram file.");
+            console.error("RAM file import failed:", error);
+            alert("Could not import the RAM file. Please check that it uses the .ram format.");
         }
     });
 }
@@ -148,7 +157,7 @@ function uploadRamAsFile() {
  * @returns {void}
  */
 function downloadMicrocodeAsFile() {
-    downloadData("microcode.mc", project.exportLegacyMicroCode());
+    downloadData("microcode.mc", JohnnyProjectIO.serializeLegacyMicroCode(microCodeStore));
 }
 
 /** 
@@ -160,16 +169,17 @@ function downloadMicrocodeAsFile() {
 function uploadMicroCodeAsFile() {
     uploadData(".mc", function (fileContent, filename) {
         try {
-            project.importLegacyMicroCode(fileContent);
+            microCodeStore = JohnnyProjectIO.parseLegacyMicroCode(fileContent);
+            JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
             resetSimulator();
             updateMicroCodeTable();
             populateInstructionSelect();
             updateMicroCodeTableMacroInstructionNames();
             updateRamTable(); // Update RAM table to reflect any changes in instruction names
-            console.info("Micro Code imported from file:", filename);
+            console.info("Microcode file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing Micro Code from file:", error);
-            alert("An error occurred while importing Micro Code from the file. Please make sure the file is a valid .mc file.");
+            console.error("Microcode file import failed:", error);
+            alert("Could not import the microcode file. Please check that it uses the .mc format.");
         }
     });
 }
@@ -180,7 +190,7 @@ function uploadMicroCodeAsFile() {
  * @returns {void}
  */
 function downloadProjectAsFile() {
-    downloadData("project.johnny", project.export(), "application/json");
+    downloadData("project.johnny", JohnnyProjectIO.serializeProjectJSON(ramStore, microCodeStore), "application/json");
 }
 
 /**
@@ -192,16 +202,17 @@ function downloadProjectAsFile() {
 function uploadProjectFromFile() {
     uploadData(".johnny", function (fileContent, filename) {
         try {
-            project.import(fileContent);
+            ({ ramStore, microCodeStore } = JohnnyProjectIO.parseProjectJSON(fileContent));
+            JohnnyProjectIO.saveProjectToLocalStorage(ramStore, microCodeStore);
             resetSimulator();
             updateRamTable();
             updateMicroCodeTable();
             populateInstructionSelect();
             updateMicroCodeTableMacroInstructionNames();
-            console.info("Project imported from file:", filename);
+            console.info("Project file imported successfully:", filename);
         } catch (error) {
-            console.error("Error importing project from file:", error);
-            alert("An error occurred while importing the project. Please make sure the file is a valid .johnny project file.");
+            console.error("Project file import failed:", error);
+            alert("Could not import the project file. Please check that it uses the .johnny format.");
         }
     });
 }
@@ -212,7 +223,8 @@ function uploadProjectFromFile() {
  * @returns {void}
  */
 function resetRamToEmpty() {
-    project.resetRam(); // Reset RAM to default values (0 for all addresses)
+    ramStore.reset();
+    JohnnyProjectIO.saveRamToLocalStorage(ramStore);
     updateRamTable();
 }
 
@@ -222,7 +234,8 @@ function resetRamToEmpty() {
  * @returns {void}
  */
 function resetMicrocodeToDefault() {
-    project.resetMicroCode(); // Reset microcode to default values
+    microCodeStore.reset();
+    JohnnyProjectIO.saveMicroCodeToLocalStorage(microCodeStore);
     updateMicroCodeTable();
     populateInstructionSelect();
     updateMicroCodeTableMacroInstructionNames();
@@ -238,8 +251,8 @@ function toggleControlUnit() {
     try {
         settings.set("showControlUnit", !settings.get("showControlUnit"));
     } catch (error) {
-        console.error("Error toggling control unit visibility:", error);
-        alert("An error occurred while toggling control unit visibility.");
+        console.error("Control unit visibility toggle failed:", error);
+        alert("Could not change the control unit visibility setting.");
         return;
     }
 
@@ -274,8 +287,8 @@ function updateControlUnitVisibility() {
             }
         }
     } catch (error) {
-        console.error("Error updating control unit visibility:", error);
-        alert("An error occurred while updating control unit visibility.");
+        console.error("Control unit visibility update failed:", error);
+        alert("Could not update the control unit visibility.");
     }
 }
 

@@ -1,49 +1,84 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Writes a value to the specified RAM address and updates the RAM table.
+ * If an invalid address or value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} address RAM address (0 … RAM_SIZE-1)
- * @param {number|string} value Data value to write (0 … DATA_MAX_SIZE-1)
+ * @param {number|string} address RAM address (0 … ramStore.RAM_SIZE-1)
+ * @param {number|string} value Data value to write (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToRam(address, value) {
-    address = normalizeInt(address, 0, project.RAM_SIZE - 1, "RAM address");
-    value = normalizeInt(value, 0, project.MAX_RAM_VALUE, "RAM data");
+    try {
+        address = normalizeInt(address, 0, ramStore.RAM_SIZE - 1, "RAM address");
+        value = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "RAM data");
 
-    project.setRam(address, value);
-    updateRamTableRow(address);
+        ramStore.set(address, value);
+        JohnnyProjectIO.saveRamToLocalStorage(ramStore);
+        updateRamTableRow(address);
+    } catch (error) {
+        console.error("[writeToRam] Invalid RAM address or value.", error);
+        alert("Invalid RAM address or value.");
+        stopAllExecutions();
+    }
 }
 
 /**
  * Writes a value to the address bus and updates the display.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Address value (0 … RAM_SIZE-1)
+ * @param {number|string} value Address value (0 … ramStore.RAM_SIZE-1)
  * @returns {void}
  */
 function writeToAddressBus(value) {
-    addressBus = normalizeInt(value, 0, project.RAM_SIZE - 1, "Address bus value");
-    document.getElementById("ab-field").innerText = formatRamAddress(addressBus);
+    try {
+        addressBus = normalizeInt(value, 0, ramStore.RAM_SIZE - 1, "Address bus value");
+        document.getElementById("ab-field").innerText = formatRamAddress(addressBus);
+    } catch (error) {
+        console.error("[writeToAddressBus] Invalid address bus value.", error);
+        alert("Invalid address bus value.");
+        stopAllExecutions();
+    }
 }
 
 /**
  * Writes a value to the data bus and updates the display.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Data value (0 … DATA_MAX_SIZE-1)
+ * @param {number|string} value Data value (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToDataBus(value) {
-    dataBus = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Data bus value");
-    document.getElementById("db-field").innerText = formatData(dataBus);
+    try {
+        dataBus = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Data bus value");
+        document.getElementById("db-field").innerText = formatData(dataBus);
+    } catch (error) {
+        console.error("[writeToDataBus] Invalid data bus value.", error);
+        alert("Invalid data bus value.");
+        stopAllExecutions();
+    }
 }
 
 /**
  * Writes a value to the accumulator and updates the display.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Accumulator value (0 … DATA_MAX_SIZE-1)
+ * @param {number|string} value Accumulator value (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToAccumulator(value) {
-    accumulator = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Accumulator value");
-    document.getElementById("acc-field").innerText = formatData(accumulator);
+    try {
+        accumulator = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Accumulator value");
+        document.getElementById("acc-field").innerText = formatData(accumulator);
+    } catch (error) {
+        console.error("[writeToAccumulator] Invalid accumulator value.", error);
+        alert("Invalid accumulator value.");
+        stopAllExecutions();
+    }
 
     // Update accumulator zero indicator
     const accZeroIndicator = document.getElementById("overlay-equal-zero");
@@ -57,91 +92,104 @@ function writeToAccumulator(value) {
 
 /**
  * Writes a value to the program counter and updates the display.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Program counter value (0 … RAM_SIZE-1)
+ * @param {number|string} value Program counter value (0 … ramStore.RAM_SIZE-1)
  * @returns {void}
  */
 function writeToProgramCounter(value) {
-    programCounter = normalizeInt(value, 0, project.RAM_SIZE - 1, "Program counter value");
-    document.getElementById("pc-field").innerText = formatRamAddress(programCounter);
+    try {
+        programCounter = normalizeInt(value, 0, ramStore.RAM_SIZE - 1, "Program counter value");
+        document.getElementById("pc-field").innerText = formatRamAddress(programCounter);
+    } catch (error) {
+        console.error("[writeToProgramCounter] Invalid program counter value.", error);
+        alert("Invalid program counter value.");
+        stopAllExecutions();
+    }
 }
 
 /**
  * Writes a value to the instruction register and updates the display.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Instruction word (0 … DATA_MAX_SIZE-1)
+ * @param {number|string} value Instruction word (0 … ramStore.MAX_RAM_VALUE)
  * @returns {void}
  */
 function writeToInstructionRegister(value) {
-    instructionRegister = normalizeInt(value, 0, project.MAX_RAM_VALUE, "Instruction register value");
-    document.getElementById("ins-high").innerText = formatDataHigh(instructionRegister);
-    document.getElementById("ins-low").innerText = formatDataLow(instructionRegister);
+    try {
+        instructionRegister = normalizeInt(value, 0, ramStore.MAX_RAM_VALUE, "Instruction register value");
+        document.getElementById("ins-high").innerText = formatDataHigh(instructionRegister);
+        document.getElementById("ins-low").innerText = formatDataLow(instructionRegister);
+    } catch (error) {
+        console.error("[writeToInstructionRegister] Invalid instruction register value.", error);
+        alert("Invalid instruction register value.");
+        stopAllExecutions();
+    }
 }
 
 /**
  * Writes a value to the microcode counter and updates the display and highlighting.
+ * If an invalid value is provided, it stops all executions and shows an error message.
  *
- * @param {number|string} value Microcode address (0 … MICROCODE_SIZE-1)
+ * @param {number|string} value Microcode address (0 … microCodeStore.MICROCODE_SIZE-1)
  * @returns {void}
  */
 function writeToMicroCodeCounter(value) {
-    microCodeCounter = normalizeInt(value, 0, project.MICROCODE_SIZE - 1, "Microcode counter value");
-    document.getElementById("mc-field").innerText = formatMicroCodeAddress(microCodeCounter);
-    updateMicrocodeTableHighlighting();
+    try {
+        microCodeCounter = normalizeInt(value, 0, microCodeStore.MICROCODE_SIZE - 1, "Microcode counter value");
+        document.getElementById("mc-field").innerText = formatMicroCodeAddress(microCodeCounter);
+        updateMicrocodeTableHighlighting();
+    } catch (error) {
+        console.error("[writeToMicroCodeCounter] Invalid microcode counter value.", error);
+        alert("Invalid microcode counter value.");
+        stopAllExecutions();
+    }
 }
 
 /**
- * Converts a value to a finite number.
- * Throws an error if conversion fails.
+ * Converts a value to a finite number. Throws an error if conversion fails.
  *
  * @param {number|string} value Value to convert
- * @param {string} context Optional context for error messages (default: "Value")
+ * @param {string} context Context used for logging (default: "Value")
  * @returns {number} Converted finite number
  * @throws {TypeError} If value is not a finite number
  */
 function toNumberStrict(value, context = "Value") {
+    // If the value is a string, attempt to convert it to a number
     if (typeof value === "string") {
-        value = Number(value.trim()); // Convert string to number, trimming whitespace
+        value = Number(value.trim());
     }
 
-    if (!Number.isFinite(value)) { // check for NaN and Infinity
-        console.error(context + " is not a valid finite number:", value);
-        throw new TypeError(context + " is not a valid finite number: " + value);
+    // Check if the value is a finite number (not NaN or Infinity)
+    if (!Number.isFinite(value)) {
+        throw new TypeError(`${context} is not a valid finite number: ` + value);
     }
     return value;
 }
 
 /**
- * Clamps a numeric value between a minimum and maximum.
- *
- * @param {number} value Value to clamp
- * @param {number} min Minimum allowed value
- * @param {number} max Maximum allowed value
- * @returns {number} Clamped value
- */
-function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-}
-
-/**
- * Converts a value to a finite integer and clamps it within given bounds.
- * Logs a warning if the value is outside the allowed range.
+ * Tries to convert a value to a finite integer and checks if it's within the allowed range.
+ * In case of an invalid input, it throws an error.
  *
  * @param {number|string} value Value to normalize
  * @param {number} min Minimum allowed value
  * @param {number} max Maximum allowed value
  * @param {string} context Context used for logging (default: "Value")
- * @returns {number} Normalized (finite and clamped) number
+ * @returns {number} Normalized finite integer
+ * @throws {TypeError} If the value cannot be converted to a finite number
+ * @throws {RangeError} If the value is outside the specified range
  */
 function normalizeInt(value, min, max, context = "Value") {
-    try {
-        const num = Math.trunc(toNumberStrict(value, context));
-        if (num < min || num > max) {
-            console.warn(`${context} out of range: ${num} (clamped to ${min}-${max})`);
-        }
-        return clamp(num, min, max);
-    } catch (error) {
-        console.error(`Error normalizing ${context}. Returning default value: 0`, error);
-        return 0; // Return a default value (0) instead of throwing the error
+    // Convert the value to a finite number and convert to an integer
+    // If the conversion fails (e.g., value is not a number or is infinite), a TypeError will be thrown
+    const num = Math.trunc(toNumberStrict(value, context));
+
+    // Check if the number is within the specified range
+    // If it's not, throw a RangeError with a descriptive message
+    if (num < min || num > max) {
+        throw new RangeError(`${context} is not in the range of ${min} to ${max}.`);
     }
+
+    // If the number is valid, return it
+    return num;
 }

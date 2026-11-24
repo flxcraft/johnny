@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Executes a single macro step (all micro steps for the current instruction).
  *
@@ -6,7 +12,7 @@
 function singleMacroStep() {
     do {
         microStep(false);
-    } while (microCodeCounter != 0 && !isHlt); // continue until microcode counter resets to 0 (end of instruction) or HLT reached
+    } while (microCodeCounter !== 0 && !isHlt); // continue until microcode counter resets to 0 (end of instruction) or HLT reached
 }
 
 /**
@@ -17,15 +23,15 @@ function singleMacroStep() {
  */
 function runMacroProgram() {
     if (isHlt) {
-        console.warn("Program has reached HLT instruction; cannot run further.");
+        console.warn("[runMacroProgram] Execution is already halted because a HLT instruction was reached.");
         return;
     }
 
     if (isMacroRunning) {
-        console.warn("Macro program is already running. Maybe stuck in an endless loop? Check for missing HLT instruction.");
+        console.warn("[runMacroProgram] Start request ignored because macro execution is already running.");
         alert(
-            "The program is already running. Please stop it before starting again.\n\n" +
-            "Maybe stuck in an endless loop? Check for missing HLT instruction or other issues in the code that might prevent it from reaching a HLT instruction."
+            "The program is already running.\n\n" +
+            "Please stop it before starting it again."
         );
         return;
     }
@@ -35,7 +41,7 @@ function runMacroProgram() {
     function step() {
         if (!isMacroRunning) return; // stop if macro running flag is cleared
         if (isHlt) {
-            console.info("Program has reached HLT instruction; stopping execution.");
+            console.info("[runMacroProgram] HLT reached. Macro execution stopped.");
             isMacroRunning = false;
             return;
         }

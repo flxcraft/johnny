@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * The Settings class manages user-configurable settings for the application, providing functionality to load, save, and validate settings against a defined scheme.
  * It uses localStorage to persist settings across sessions and includes comprehensive error handling to ensure robustness in various environments and scenarios.
@@ -13,31 +19,31 @@ class Settings {
             type: "boolean",
             default: false,
             showInModal: false,
-            description: "Show the control unit in the UI"
+            description: "Show the control unit panel"
         },
         fixRamAfterShift: {
             type: "boolean",
             default: true,
             showInModal: true,
-            description: "Automatically fix operands of RAM values after shifting rows (e.g. inserting / deleting)"
+            description: "Adjust addresses after inserting or deleting RAM rows"
         },
         autoScrollMicroCode: {
             type: "boolean",
             default: true,
             showInModal: true,
-            description: "Automatically scroll the microcode table to the current instruction"
+            description: "Auto-scroll the microcode table to the active instruction"
         },
         autoScrollRam: {
             type: "boolean",
             default: true,
             showInModal: true,
-            description: "Automatically scroll the RAM table to the selected address"
+            description: "Auto-scroll the RAM table to the selected address"
         },
         showMicroCodeCounter: {
             type: "boolean",
             default: true,
             showInModal: true,
-            description: "Show the microcode counter in the UI (Requires page reload to take effect)"
+            description: "Show the microcode counter in the interface (reload required)"
         },
     }
 
@@ -71,11 +77,11 @@ class Settings {
         try {
             rawSettings = localStorage.getItem(Settings.STORAGE_KEY);
             if (!rawSettings) {
-                console.info("No settings found in localStorage. Keeping default settings.");
+                console.info("[#load] No settings found in localStorage. Using defaults.");
                 return; // No settings to load, keep defaults
             }
         } catch (error) {
-            console.error("Failed to access localStorage. Keeping default settings.", error);
+            console.error("[#load] Failed to access localStorage. Using defaults.", error);
             return;
         }
 
@@ -84,13 +90,13 @@ class Settings {
         try {
             parsedSettings = JSON.parse(rawSettings);
         } catch (error) {
-            console.error("Failed to parse settings from localStorage. Keeping default settings.", error);
+            console.error("[#load] Failed to parse settings from localStorage. Using defaults.", error);
             return;
         }
 
         // Validate that the parsed settings is an object, with error handling for unexpected data types
         if (typeof parsedSettings !== "object" || parsedSettings === null) {
-            console.error("Loaded settings from localStorage is not a valid object. Keeping default settings.");
+            console.error("[#load] Settings data from localStorage is not a valid object. Using defaults.");
             return;
         }
 
@@ -100,7 +106,7 @@ class Settings {
 
             if (loadedValue === undefined) continue; // Missing setting, keep default
             if (typeof loadedValue !== settingScheme.type) {
-                console.warn(`Invalid type for setting "${settingKey}". Expected ${settingScheme.type} but got ${typeof loadedValue}. Keeping default value.`);
+                console.warn(`[#load] Invalid type for setting "${settingKey}": expected ${settingScheme.type}, got ${typeof loadedValue}. Keeping default value.`);
                 continue; // Invalid type, keep default
             }
 
@@ -123,8 +129,8 @@ class Settings {
         try {
             localStorage.setItem(Settings.STORAGE_KEY, JSON.stringify(outputSettings));
         } catch (error) {
-            console.error("Failed to save settings to localStorage.", error);
-            alert("Failed to save settings. Please check console for details.");
+            console.error("[#save] Failed to save settings to localStorage.", error);
+            alert("Could not save the settings to localStorage.");
         }
     }
 

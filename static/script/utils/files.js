@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Downloads the given data as a text file with the specified filename.
  * 
@@ -12,14 +18,15 @@ function downloadData(filename, content, contentType = 'text/plain') {
 
     // Create a temporary link element to trigger the download
     const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
+    link.href = objectUrl;
     link.download = filename;
 
     // Click the link to trigger the download
     link.click();
 
     // Clean up the temporary URL object
-    URL.revokeObjectURL(link.href);
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
 }
 
 /**
@@ -38,7 +45,7 @@ function uploadData(fileAccept, callback) {
         // Get the selected file from the file input
         const file = event.target.files[0];
         if (!file) {
-            console.warn("No file selected for upload.");
+            console.info("[uploadData] No file selected.");
             return;
         }
 
@@ -50,8 +57,8 @@ function uploadData(fileAccept, callback) {
 
         // Handle errors that may occur during file reading
         reader.onerror = (e) => {
-            console.error("Error reading file:", e);
-            alert("An error occurred while reading the file. Please try again.");
+            console.error("[uploadData] File read failed:", e);
+            alert("Could not read the file. Please try again.");
         };
         reader.readAsText(file);
     };

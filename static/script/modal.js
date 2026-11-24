@@ -1,3 +1,9 @@
+// Copyright (C) 2026 Felix Heidisch (flxcraft)
+// This program is free software: you can redistribute it and/or modify it under
+// the terms of the GNU Affero General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option) any
+// later version. See LICENSE for the full license text.
+
 /**
  * Loads version information into the settings modal.
  * 
@@ -16,15 +22,32 @@ function loadVersionInfo() {
         // If it's a preview build, show only the first 7 characters of the version hash (e.g., "abc1234"), otherwise show the full version (e.g., "1.0.0")
         const displayVersion = window.BUILD_INFO.channel === "preview" ? window.BUILD_INFO.version.substring(0, 7) : window.BUILD_INFO.version;
 
-        // Display version and channel under the settings modal title, e.g., "1.0.0 (stable)" or "abc1234 (preview)"
-        versionTag.innerHTML = `${displayVersion} <span>(${window.BUILD_INFO.channel})</span>`;
+        // Display version and channel under the settings modal title and link to GitHub releases page, e.g., "1.0.0 (stable)" or "abc1234 (preview)"
+        versionTag.textContent = displayVersion;
+        const channelElement = document.createElement('span');
+        channelElement.textContent = ` (${window.BUILD_INFO.channel})`;
+        if (window.BUILD_INFO.channel === "stable" || window.BUILD_INFO.channel === "beta") { // Only link to GitHub releases for stable and beta channels
+            const releaseLink = `https://github.com/flxcraft/johnny/releases/tag/${window.BUILD_INFO.version}`;
+            const releaseLinkElement = document.createElement('a');
+            releaseLinkElement.href = releaseLink;
+            releaseLinkElement.target = "_blank";
+            releaseLinkElement.rel = "noopener noreferrer";
+            releaseLinkElement.textContent = displayVersion;
+            releaseLinkElement.appendChild(channelElement);
+            versionTag.replaceChildren(releaseLinkElement);
+        } else {
+            versionTag.appendChild(channelElement);
+        }
 
         // Display build time in the footer of the settings modal, formatted as a local date and time string, e.g., "Build: 6/30/2024, 10:15:30 AM"
         const date = new Date(window.BUILD_INFO.buildTime).toLocaleString();
         versionFooter.textContent = `Build: ${date} (© Felix Heidisch aka flxcraft)`;
     } catch (error) {
         // If there's an error (e.g., version.js not loaded), show a default message indicating it's a local development build
-        versionTag.innerHTML = `dev-build <span>(local)</span>`;
+        versionTag.textContent = "dev-build";
+        const localChannelElement = document.createElement('span');
+        localChannelElement.textContent = " (local)";
+        versionTag.appendChild(localChannelElement);
         versionFooter.textContent = "Local development environment";
     }
 }
@@ -35,7 +58,7 @@ function loadVersionInfo() {
  * @returns {void}
  */
 function generateSettingsUI() {
-    console.log("Generating settings UI...");
+    console.debug("[generateSettingsUI] Building settings UI.");
     const settingsContainer = document.getElementById('settings-container');
     settingsContainer.innerHTML = ''; // Clear existing content
 
@@ -90,7 +113,7 @@ function updateSetting(key, value) {
 
         settings.set(key, value);
     } catch (error) {
-        console.error(`Failed to update setting "${key}".`, error);
-        alert(`Failed to update setting "${key}". Please check console for details.`);
+        console.error(`[updateSetting] Failed to update setting "${key}":`, error);
+        alert(`Could not save the setting "${key}".`);
     }
 }
